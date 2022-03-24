@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?><!--发帖页面-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/editor_page_linearlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/editor_page_linearlayout_1"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal">
+        <!--返回按钮-->
+        <ImageButton
+            android:id="@+id/editor_page_1_button_back"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="90dp"
+            android:layout_toLeftOf="@+id/editor_page_1_textview_post"
+            android:background="@drawable/background_button_left"
+            app:srcCompat="@drawable/back" />
+        <!--发帖子文本显示框-->
+        <TextView
+            android:id="@+id/editor_page_1_textview_post"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="发帖子"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--发布按钮-->
+        <Button
+            android:id="@+id/editor_page_1_button_release"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right"
+            android:layout_marginLeft="60dp"
+            android:background="@drawable/background_button"
+            android:gravity="center"
+            android:text="发布"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </LinearLayout>
+    <!--输入标题框-->
+    <EditText
+        android:id="@+id/editor_page_edittext_title"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="15dp"
+        android:hint="请输入你的标题"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+    <!--输入正文框-->
+    <EditText
+        android:id="@+id/editor_page_edittext_text"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_marginTop="15dp"
+        android:gravity="top"
+        android:hint="说点什么吧..."
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:id="@+id/editor_page_linearlayout_2"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal">
+        <!--插入图片按钮-->
+        <ImageButton
+            android:id="@+id/editor_page_2_button_insert_picture"
+            android:layout_width="62dp"
+            android:layout_height="52dp"
+            app:srcCompat="@android:drawable/ic_input_add"
+
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="22dp"
+            tools:layout_editor_absoluteY="594dp" />
+        <!--插入图片文本显示-->
+        <TextView
+            android:id="@+id/editor_page_2_textview_insert_picture"
+            android:layout_width="88dp"
+            android:layout_height="38dp"
+            android:gravity="center"
+            android:text="点击图片插入"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="93dp"
+            tools:layout_editor_absoluteY="600dp" />
+
+    </LinearLayout>
+</LinearLayout>

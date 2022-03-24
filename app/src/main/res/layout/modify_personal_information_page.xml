@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?><!--修改个人信息页面-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/modify_personal_information_page_linearlayout"
+    android:layout_marginTop="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/modify_personal_information_page_linearlayout_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="100dp">
+        <!--用户名文本显示框-->
+        <TextView
+            android:id="@+id/modify_personal_information_page_1_textview_username"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
+            android:text="用户名"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+        <!--输入昵称框-->
+        <EditText
+            android:id="@+id/modify_personal_information_page_1_edittext_exchange_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/background_text"
+            android:gravity="right"
+            android:ellipsize="start"
+            android:hint="输入你的新昵称"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/modify_personal_information_page_linearlayout_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal">
+        <!--签名文本显示框-->
+        <TextView
+            android:id="@+id/modify_personal_information_page_2_textview_sign"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
+            android:text="签名"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+        <!--签名文本编辑框-->
+        <EditText
+            android:id="@+id/modify_personal_information_page_2_edittext_sign"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/background_text"
+            android:gravity="right"
+            android:ellipsize="start"
+            android:hint="输入你的个性签名"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/modify_personal_information_page_linearlayout_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal">
+        <!--性别文本显示框-->
+        <TextView
+            android:id="@+id/modify_personal_information_page_3_textview_sex"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
+            android:text="性别"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+        <!--性别文本编辑框-->
+        <EditText
+            android:id="@+id/modify_personal_information_page_3_edittext_sex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/background_text"
+            android:gravity="right"
+            android:ellipsize="start"
+            android:hint="建议男或者女"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/modify_personal_information_page_linearlayout_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal">
+        <!--出生日期文本显示框-->
+        <TextView
+            android:id="@+id/modify_personal_information_page_4_textview_date"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
+            android:text="年龄"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+        <!--出生日期文本编辑框-->
+        <EditText
+            android:id="@+id/modify_personal_information_page_4_edittext_date"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/background_text"
+            android:gravity="right"
+            android:ellipsize="start"
+            android:hint="输入你的年龄"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/modify_personal_information_page_linearlayout_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="50dp">
+        <Button
+            android:id="@+id/modify_personal_information_page_linearlayout_5_button_ensure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_text"
+            android:text="确定"
+            android:textSize="30sp"/>
+
+        <Button
+            android:id="@+id/modify_personal_information_page_linearlayout_5_button_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/background_text"
+            android:text="退出"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+</LinearLayout>

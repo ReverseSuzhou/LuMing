@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8"?><!--搜索页面-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search_page_linearlayout"
+    android:layout_marginTop="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/search_page_linearlayout_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:id="@+id/search_page_linearlayout_1_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            android:layout_weight="1"
+            <!--取消按钮-->
+            <ImageButton
+                android:id="@+id/search_page_1_2_button_cancel"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/background_button"
+                android:src="@drawable/back" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/search_page_linearlayout_1_1"
+
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_search"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/search_page_linearlayout_1_1_1"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <!--搜索图像显示-->
+                <ImageButton
+                    android:id="@+id/search_page_1_1_1_imagebutton_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7dp"
+                    android:src="@drawable/search" />
+                <!--搜索输入提示框-->
+                <AutoCompleteTextView
+
+                    android:id="@+id/search_page_1_1_1_autocompletetextview_mEditSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:dropDownVerticalOffset="10dp"
+                    android:ellipsize="end"
+                    android:hint="荒野求生贝爷"
+                    android:imeOptions="actionSearch"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColorHighlight="#B4DF87"
+                    android:textSize="18dp" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/search_page_linearlayout_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--热搜文本显示框-->
+        <TextView
+            android:id="@+id/search_page_2_textview_hot_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="热搜"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/search_page_linearlayout_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/search_page_linearlayout_3_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/search_page_linearlayout_3_1_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+                <!--热索序号显示-->
+                <TextView
+                    android:id="@+id/search_page_3_1_1_textview_sequence1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:textSize="20dp" />
+                <!--热索内容显示-->
+                <TextView
+                    android:id="@+id/search_page_3_1_1_textview_news1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:paddingLeft="10dp"
+                    android:singleLine="true"
+                    android:text="俄罗斯的猫被制裁"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/search_page_linearlayout_3_1_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+                <!--热索序号显示-->
+                <TextView
+                    android:id="@+id/search_page_3_1_2_textview_sequence2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2"
+                    android:textSize="20dp" />
+                <!--热索内容显示-->
+                <TextView
+                    android:id="@+id/search_page_3_1_2_textview_news2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:paddingLeft="10dp"
+                    android:singleLine="true"
+                    android:text="仁科客基来B战了"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/search_page_linearlayout_3_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/search_page_linearlayout_3_2_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+                <!--热索序号显示-->
+                <TextView
+                    android:id="@+id/search_page_3_2_1_textview_sequence3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3"
+                    android:textSize="20dp" />
+                <!--热索内容显示-->
+                <TextView
+                    android:id="@+id/search_page_3_2_1_textview_news3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:paddingLeft="10dp"
+                    android:singleLine="true"
+                    android:text="俄乌局势"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/search_page_linearlayout_3_2_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+                <!--热索序号显示-->
+                <TextView
+                    android:id="@+id/search_page_3_2_2_textview_sequence4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4"
+                    android:textSize="20dp" />
+                <!--热索内容显示-->
+                <TextView
+                    android:id="@+id/search_page_3_2_2_textview_news4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:paddingLeft="10dp"
+                    android:singleLine="true"
+                    android:text="LGD EDG"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/search_page_linearlayout_3_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/search_page_linearlayout_3_3_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+                <!--热索序号显示-->
+                <TextView
+                    android:id="@+id/search_page_3_3_1_textview_sequence5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5"
+                    android:textSize="20dp" />
+                <!--热索内容显示-->
+                <TextView
+                    android:id="@+id/search_page_3_3_1_textview_news5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:paddingLeft="10dp"
+                    android:singleLine="true"
+                    android:text="X教授承认回归"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/search_page_linearlayout_3_3_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+                <!--热索序号显示-->
+                <TextView
+                    android:id="@+id/search_page_3_3_2_textview_sequence6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="6"
+                    android:textSize="20dp" />
+                <!--热索内容显示-->
+                <TextView
+                    android:id="@+id/search_page_3_3_2_textview_news6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:paddingLeft="10dp"
+                    android:singleLine="true"
+                    android:text="王者新英雄桑启试玩"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/search_page_linearlayout_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <LinearLayout
+            android:id="@+id/search_page_linearlayout_4_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!--搜索历史文本显示框-->
+            <TextView
+                android:id="@+id/search_page_4_1_textview_search_history"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="搜索历史"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--
+    <
+        com.nex3z.flowlayout.FlowLayout
+        android:id="@+id/search_page_flowLayout_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:flChildSpacing="10dp"
+        app:flChildSpacingForLastRow="align"
+        app:flMaxRows="2"
+        app:flRowSpacing="8dp"
+        app:flRtl="false"
+        tools:ignore="MissingClass"
+        />-->
+
+    <LinearLayout
+        android:id="@+id/search_page_linearlayout_6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/search_page_linearlayout_6_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <!--清空图像显示框-->
+            <ImageView
+                android:id="@+id/search_page_6_1_imageview_clear"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/ashbin" />
+
+            <LinearLayout
+                android:id="@+id/search_page_linearlayout_6_1_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+                <!--清空搜索历史文本显示框-->
+                <TextView
+                    android:id="@+id/search_page_6_1_1_textview_clear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="清空搜索历史"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/search_page_linearlayout_7"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <LinearLayout
+            android:id="@+id/search_page_linearlayout_7_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!--搜索发现文本显示框-->
+            <TextView
+                android:id="@+id/search_page_7_1_textview_search_discover"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="搜索发现"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

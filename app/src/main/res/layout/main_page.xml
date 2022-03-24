@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?><!--主页面-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_page_relativelayout"
+    android:layout_marginTop="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:background="#fcfcfd"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/main_page_linearlayout_1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        <!--搜索框-->
+        <EditText
+            android:id="@+id/main_page_1_edittext_search"
+            android:layout_width="330dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/background_text"
+            android:ems="10"
+            android:text="搜索框"
+            tools:ignore="MissingConstraints" />
+        <!--搜索按钮-->
+        <ImageButton
+            android:id="@+id/main_page_1_button_search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_text"
+            app:srcCompat="@drawable/search"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="6dp"
+            tools:layout_editor_absoluteY="49dp" />
+    </LinearLayout>
+
+    <!--空白框-->
+    <View
+        android:id="@+id/history_record_page_1_view_blank"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#aa000000" />
+
+    <LinearLayout
+        android:id="@+id/main_page_linearlayout_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+        <!--热点按钮-->
+        <Button
+            android:id="@+id/main_page_2_button_HotSpot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/background_button"
+            android:text="热点"
+            tools:ignore="MissingConstraints" />
+        <!--推荐按钮-->
+        <Button
+            android:id="@+id/main_page_2_button_Recommend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/background_button"
+            android:text="推荐"
+            tools:ignore="MissingConstraints" />
+        <!--学习按钮-->
+        <Button
+            android:id="@+id/main_page_2_button_Study"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/background_button"
+            android:text="学习"
+            tools:ignore="MissingConstraints"/>
+        <!--运动按钮-->
+        <Button
+            android:id="@+id/main_page_2_button_Sport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/background_button"
+            android:text="运动"
+            tools:ignore="MissingConstraints"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/main_page_linearlayout_3"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/main_page_linearlayout_4"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+        <!--主页面-->
+        <ImageButton
+            android:id="@+id/main_page_4_button_main_page"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/background_button"
+            app:srcCompat="@drawable/home"
+            tools:ignore="MissingConstraints" />
+        <!--社团页面-->
+        <ImageButton
+            android:id="@+id/main_page_4_button_associations_page"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="27dp"
+            android:layout_weight="1"
+            android:background="@drawable/background_button"
+            app:srcCompat="@drawable/social"
+            tools:ignore="MissingConstraints" />
+        <!--编辑页面-->
+        <ImageButton
+            android:id="@+id/main_page_4_button_editor_page"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="27dp"
+            android:layout_weight="1"
+            android:background="@drawable/background_button"
+            app:srcCompat="@drawable/add"
+            tools:ignore="MissingConstraints" />
+        <!--消息页面-->
+        <ImageButton
+            android:id="@+id/main_page_4_button_message_page"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="27dp"
+            android:layout_weight="1"
+            android:background="@drawable/background_button"
+            app:srcCompat="@drawable/comment"
+            tools:ignore="MissingConstraints" />
+        <!--个人页面-->
+        <ImageButton
+            android:id="@+id/main_page_4_button_personal_page"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="27dp"
+            android:layout_weight="1"
+            android:background="@drawable/background_button"
+            app:srcCompat="@drawable/user"
+            tools:ignore="MissingConstraints" />
+    </LinearLayout>
+</LinearLayout>
