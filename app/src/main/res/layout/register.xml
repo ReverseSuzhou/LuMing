@@ -2,9 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginTop="5dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#ffFFFF"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:background="#ffffff"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -15,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20sp"
-        android:layout_marginTop="50sp"
+        android:layout_marginTop="40sp"
         android:shadowColor="@color/black"
         android:shadowDx="10.0"
         android:shadowDy="8.0"
@@ -28,12 +31,12 @@
     <!--手机号-->
     <EditText
         android:id="@+id/re_et_1"
-        android:layout_width="300sp"
-        android:layout_height="54sp"
+        android:layout_width="match_parent"
+        android:layout_height="60sp"
         android:layout_gravity="center"
         android:layout_marginTop="40sp"
         android:background="@drawable/background_text"
-        android:hint="手机号："
+        android:hint="手机号"
         android:maxLines="1"
         android:padding="15dp"
         android:textColor="@color/black"
@@ -41,51 +44,45 @@
 
     <!--验证那一行-->
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        >
+        android:layout_gravity="center">
 
         <!--这个是发送验证码按钮-->
         <Button
             android:id="@+id/btn_check"
             android:layout_width="110sp"
-            android:layout_height="54sp"
+            android:layout_height="60sp"
             android:layout_marginTop="16sp"
             android:autoLink="all"
             android:padding="15dp"
             android:text="发送验证码"
             android:background="@drawable/background_button"
-            android:textSize="16sp"
-
-            />
+            android:textSize="16sp" />
         <!--验证码-->
         <EditText
             android:id="@+id/re_et_2"
-            android:layout_width="145sp"
-            android:layout_height="54sp"
-            android:layout_marginLeft="40sp"
-            android:layout_marginTop="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="60sp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/background_text"
-            android:hint="验证码："
+            android:hint="验证码"
             android:maxLines="1"
             android:padding="15dp"
             android:textColor="@color/black"
             android:textSize="16sp" />
-
-
     </LinearLayout>
-
 
     <!--密码-->
     <EditText
         android:id="@+id/re_et_3"
-        android:layout_width="300sp"
-        android:layout_height="54sp"
+        android:layout_width="match_parent"
+        android:layout_height="60sp"
         android:layout_gravity="center"
         android:layout_marginTop="16sp"
         android:background="@drawable/background_text"
-        android:hint="密 码："
+        android:hint="密码"
         android:inputType="numberPassword"
         android:maxLines="2"
         android:padding="18dp"
@@ -95,12 +92,12 @@
     <!--确认密码-->
     <EditText
         android:id="@+id/re_et_4"
-        android:layout_width="300sp"
-        android:layout_height="54sp"
+        android:layout_width="match_parent"
+        android:layout_height="60sp"
         android:layout_gravity="center"
         android:layout_marginTop="16sp"
         android:background="@drawable/background_text"
-        android:hint="确认密码："
+        android:hint="确认密码"
         android:inputType="numberPassword"
         android:maxLines="2"
         android:padding="18dp"

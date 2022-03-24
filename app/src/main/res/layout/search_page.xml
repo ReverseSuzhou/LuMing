@@ -48,14 +48,14 @@
                 android:id="@+id/search_page_linearlayout_1_1_1"
 
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:gravity="center"
                 android:orientation="horizontal">
                 <!--搜索图像显示-->
                 <ImageButton
                     android:id="@+id/search_page_1_1_1_imagebutton_search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_margin="7dp"
                     android:src="@drawable/search" />
                 <!--搜索输入提示框-->
@@ -63,7 +63,7 @@
 
                     android:id="@+id/search_page_1_1_1_autocompletetextview_mEditSearch"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:background="@null"
                     android:dropDownVerticalOffset="10dp"
                     android:ellipsize="end"

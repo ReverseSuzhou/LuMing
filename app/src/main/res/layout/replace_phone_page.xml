@@ -19,7 +19,7 @@
         <!--更换手机号文本显示框-->
         <TextView
             android:id="@+id/replace_phone_page_1_1_textview_display"
-            android:layout_width="250dp"
+            android:layout_width="280dp"
             android:layout_height="50dp"
             android:layout_centerHorizontal="true"
             android:background="@drawable/background_text"

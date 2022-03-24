@@ -46,19 +46,18 @@
                 android:id="@+id/result_page_linearlayout_1_2_1"
 
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:gravity="center"
                 android:orientation="horizontal">
                 <!--搜素图像显示-->
                 <ImageButton
                     android:id="@+id/result_page_1_2_1_imagebutton_search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_margin="7dp"
                     android:src="@drawable/search" />
                 <!--搜素文本显示框-->
                 <EditText
-
                     android:id="@+id/result_page_1_2_1_edittext_mEditSearch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -69,12 +68,9 @@
                     android:maxLines="1"
                     android:singleLine="true"
                     android:textSize="18dp" />
-
-
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/result_page_linearlayout_2"
@@ -91,18 +87,14 @@
                 android:id="@+id/result_page_2_2_spinner1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-
-                />
+                android:layout_weight="1" />
             <!--下拉框-->
             <Spinner
 
                 android:id="@+id/result_page_2_2_spinner2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-
-                />
+                android:layout_weight="1" />
         </LinearLayout>
 
         <View

@@ -20,7 +20,7 @@
         <!--消息文本显示框-->
         <TextView
             android:id="@+id/message_page_1_textview_message"
-            android:layout_width="250dp"
+            android:layout_width="280dp"
             android:layout_height="50dp"
             android:layout_centerHorizontal="true"
             android:background="@drawable/background_text"
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="36dp"
-                android:src="@drawable/notification"/>
+                android:src="@drawable/notification" />
             <!--点赞图像显示-->
             <ImageView
                 android:id="@+id/message_page_2_1_imageview_praise"
@@ -101,9 +101,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="7dp"
+                android:background="@drawable/background_text"
                 android:text="通知"
-                android:textSize="17sp"
-                android:background="@drawable/background_text"/>
+                android:textSize="17sp" />
             <!--点赞开关-->
             <Button
                 android:id="@+id/message_page_2_2_button_praise"

@@ -20,7 +20,7 @@
         <!--头像显示框-->
         <ImageButton
             android:id="@+id/personal_page_1_button_userpicture"
-            android:layout_width="120dp"
+            android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/background_button"
@@ -30,29 +30,12 @@
             android:id="@+id/personal_page_1_textview_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="left"
             android:text="昵称"
             android:textSize="30sp"
             android:textStyle="bold" />
-        <!--编辑文本显示框-->
-        <TextView
-            android:id="@+id/personal_page_1_textview_editor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:text="编辑"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-        <!--展开图像开关-->
-        <ImageButton
-            android:id="@+id/personal_page_1_button_exinfo"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="45dp"
-            android:background="@drawable/background_text_right"
-            android:src="@drawable/ic_right" />
     </LinearLayout>
 
     <LinearLayout
@@ -64,8 +47,9 @@
         <!--历史记录图像开关-->
         <ImageButton
             android:id="@+id/personal_page_2_button_history"
-            android:layout_width="120dp"
+            android:layout_width="wrap_content"
             android:layout_height="100dp"
+            android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/background_button"
@@ -75,8 +59,9 @@
 
         <ImageButton
             android:id="@+id/personal_page_2_button_collect"
-            android:layout_width="120dp"
+            android:layout_width="wrap_content"
             android:layout_height="100dp"
+            android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/background_button"
@@ -84,8 +69,9 @@
 
         <ImageButton
             android:id="@+id/personal_page_2_button_phone"
-            android:layout_width="120dp"
+            android:layout_width="wrap_content"
             android:layout_height="100dp"
+            android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/background_button"
@@ -100,18 +86,20 @@
         <!--历史记录文本显示框-->
         <TextView
             android:id="@+id/personal_page_3_textview_historytext"
-            android:layout_width="120dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:gravity="center"
-            android:text="历史记录"
+            android:text="历史"
             android:textSize="16sp"
             android:textStyle="bold" />
         <!--收藏文本显示框-->
         <TextView
             android:id="@+id/personal_page_3_textview_collecttext"
-            android:layout_width="120dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:gravity="center"
             android:text="收藏"
@@ -120,8 +108,9 @@
         <!--绑定手机文本显示框-->
         <TextView
             android:id="@+id/personal_page_3_textview_exphonetext"
-            android:layout_width="120dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:gravity="center"
             android:text="绑定"
@@ -136,7 +125,17 @@
         android:layout_gravity="center"
         android:background="@drawable/background_button"
         android:text="申请社团"
-        android:textSize="50sp"/>
+        android:textSize="20sp"/>
+
+    <!--编辑文本按钮-->
+    <Button
+        android:id="@+id/personal_page_button_exinfo"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:text="编辑个人信息"
+        android:textSize="20sp"
+        android:background="@drawable/background_button"/>
 
     <LinearLayout
         android:id="@+id/personal_page_linearlayout_4"
