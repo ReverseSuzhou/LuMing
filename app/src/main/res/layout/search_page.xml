@@ -46,7 +46,6 @@
 
             <LinearLayout
                 android:id="@+id/search_page_linearlayout_1_1_1"
-
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center"
@@ -60,7 +59,6 @@
                     android:src="@drawable/search" />
                 <!--搜索输入提示框-->
                 <AutoCompleteTextView
-
                     android:id="@+id/search_page_1_1_1_autocompletetextview_mEditSearch"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"

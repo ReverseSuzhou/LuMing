@@ -10,6 +10,48 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
+            android:name=".ReplacePhoneActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ModifyPersonalActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AssociationApplyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HistoryRecordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CollectActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MessageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PersonalActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AssociationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomePage"
+            android:exported="false" />
+        <activity
+            android:name=".ForgetPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
