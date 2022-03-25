@@ -35,4 +35,19 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    //流式布局
+    implementation 'com.nex3z:flow-layout:1.3.3'
+    //刷新布局
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    //循环布局
+    implementation 'androidx.recyclerview:recyclerview:1.2.0'
+    implementation 'com.yanzhenjie:recyclerview-swipe:1.1.4'
+    //底部导航
+    implementation 'com.ashokvarma.android:bottom-navigation-bar:2.2.0'
+
+    //圆形头像
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    //tab
+    implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
+    implementation 'com.ogaclejapan.smarttablayout:utils-v4:2.0.0@aar'
 }

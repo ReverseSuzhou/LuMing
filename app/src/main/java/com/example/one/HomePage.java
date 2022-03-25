@@ -3,6 +3,8 @@ package com.example.one;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -15,6 +17,9 @@ public class HomePage extends AppCompatActivity {
     private ImageButton mBtn_message;
     private ImageButton mBtn_personal;
     private ImageButton mBtn_search;
+    private SwipeRefreshLayout swipe_home;
+    private RecyclerView rv_home;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +45,8 @@ public class HomePage extends AppCompatActivity {
         mBtn_editor = findViewById(R.id.main_page_4_button_editor_page);
         mBtn_message = findViewById(R.id.main_page_4_button_message_page);
         mBtn_personal = findViewById(R.id.main_page_4_button_personal_page);
+        swipe_home = findViewById(R.id.swipe_home);
+        rv_home = findViewById(R.id.rv_home);
 
         //主页面
         mBtn_home.setOnClickListener(new View.OnClickListener() {
