@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import java.util.List;
+
 public class HomePage extends AppCompatActivity {
     //声明控件
     private ImageButton mBtn_home;
@@ -19,7 +21,7 @@ public class HomePage extends AppCompatActivity {
     private ImageButton mBtn_search;
     private SwipeRefreshLayout swipe_home;
     private RecyclerView rv_home;
-
+    private List<String> data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +35,14 @@ public class HomePage extends AppCompatActivity {
                 Intent intent = null;
                 intent = new Intent(HomePage.this,ResultActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        swipe_home.setColorSchemeResources(android.R.color.holo_green_light,android.R.color.holo_red_light,android.R.color.holo_blue_light);
+        swipe_home.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //Refresh();
             }
         });
 
@@ -98,4 +108,29 @@ public class HomePage extends AppCompatActivity {
 
 
     }
+
+//    private void Refresh() {
+//
+//                swipe_home.setRefreshing(false);
+//                    data = list;
+//                    if(data.size()>0){
+//                        swipe_hometab.setVisibility(View.VISIBLE);
+//                        homeTabAdapter = new HomeTabAdapter(getActivity(),data);
+//                        rv_hometab.setLayoutManager(new LinearLayoutManager(getActivity()));
+//                        rv_hometab.setAdapter(homeTabAdapter);
+//                        Toast.makeText(getActivity(), "刷新成功", Toast.LENGTH_SHORT).show();
+//                    }
+//                    else {
+//                        error_hometab.setVisibility(View.VISIBLE);
+//                    }
+//
+//                }else {
+//                    swipe_hometab.setRefreshing(false);
+//                    Toast.makeText(getActivity(), "获取数据失败"+e, Toast.LENGTH_SHORT).show();
+//                }
+//
+//            }
+//        });
+//    }
+//
 }
