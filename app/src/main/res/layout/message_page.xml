@@ -148,10 +148,35 @@
             android:text="相关问答列表"
             android:textSize="18sp" />
         <!--消息列表-->
-        <ListView
-            android:id="@+id/message_page_linearlayout_2_listview_message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:id="@+id/main_page_linearlayout_3"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:visibility="gone"
+                android:layout_marginTop="70dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:textSize="25sp"
+                android:id="@+id/error_message"
+                android:text="空空如也"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:visibility="gone"
+                android:id="@+id/swipe_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
