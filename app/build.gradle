@@ -42,12 +42,8 @@ dependencies {
     //循环布局
     implementation 'androidx.recyclerview:recyclerview:1.2.0'
     implementation 'com.yanzhenjie:recyclerview-swipe:1.1.4'
-    //底部导航
-    implementation 'com.ashokvarma.android:bottom-navigation-bar:2.2.0'
+    
 
-    //圆形头像
-    implementation 'de.hdodenhof:circleimageview:3.1.0'
-    //tab
-    implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
-    implementation 'com.ogaclejapan.smarttablayout:utils-v4:2.0.0@aar'
+
+
 }

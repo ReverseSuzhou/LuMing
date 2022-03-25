@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = null;
 
-        if (username.equals("admin") && password.equals("123456")){
+        if (username.equals("") && password.equals("")){
             //toast
             Toast.makeText(getApplicationContext(), ok, Toast.LENGTH_LONG).show();
 
