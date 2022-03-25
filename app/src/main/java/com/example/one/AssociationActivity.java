@@ -16,29 +16,18 @@ public class AssociationActivity extends AppCompatActivity {
     private ImageButton mBtn_message;
     private ImageButton mBtn_personal;
     private ImageButton mBtn_search;
-    private Button mBtn_text;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.association_page);
 
         //搜索
-        mBtn_search = findViewById(R.id.association_page_1_button_search);
+        mBtn_search = findViewById(R.id.association_page_1_1_button_search);
         mBtn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = null;
-                intent = new Intent(AssociationActivity.this,SearchActivity.class);
-                startActivity(intent);
-            }
-        });
-        //搜索框
-        mBtn_text = findViewById(R.id.main_page_1_edittext_search);
-        mBtn_text.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = null;
-                intent = new Intent(AssociationActivity.this,SearchActivity.class);
+                intent = new Intent(AssociationActivity.this,ResultActivity.class);
                 startActivity(intent);
             }
         });

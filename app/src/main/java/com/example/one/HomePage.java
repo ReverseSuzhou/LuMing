@@ -15,34 +15,21 @@ public class HomePage extends AppCompatActivity {
     private ImageButton mBtn_message;
     private ImageButton mBtn_personal;
     private ImageButton mBtn_search;
-    private Button mBtn_text;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_page);
 
         //搜索
-        mBtn_search = findViewById(R.id.main_page_1_button_search);
+        mBtn_search = findViewById(R.id.main_page_1_1_button_search);
         mBtn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = null;
-                intent = new Intent(HomePage.this,SearchActivity.class);
+                intent = new Intent(HomePage.this,ResultActivity.class);
                 startActivity(intent);
             }
         });
-        //搜索框
-        mBtn_text = findViewById(R.id.main_page_1_edittext_search);
-        mBtn_text.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = null;
-                intent = new Intent(HomePage.this,SearchActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
 
 //↓↓↓↓↓↓↓↓底下五个按钮的跳转功能↓↓↓↓↓↓↓↓
 //使用的时候要修改 ：1.别忘了上面的声明控件部分；2.控件部分中id后面修改成对应的id；3.OnClick中的.this前面的改成当前文件名

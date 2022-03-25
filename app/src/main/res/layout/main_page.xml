@@ -12,33 +12,44 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+
     <LinearLayout
         android:id="@+id/main_page_linearlayout_1"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
-        <!--搜索框-->
-        <Button
-            android:id="@+id/main_page_1_edittext_search"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/shape_search"
-            android:ems="10"
-            android:text="搜索"
 
-            tools:ignore="MissingConstraints" />
-        <!--搜索按钮-->
-        <ImageButton
-            android:id="@+id/main_page_1_button_search"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/background_button_right"
-            app:srcCompat="@drawable/search"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="6dp"
-            tools:layout_editor_absoluteY="49dp" />
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/shape_search"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/main_page_linearlayout_1_1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <!--搜索按钮-->
+            <ImageButton
+                android:id="@+id/main_page_1_1_button_search"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="7dp"
+                android:src="@drawable/search" />
+            <!--搜索输入提示框-->
+            <AutoCompleteTextView
+                android:id="@+id/main_page_1_1_autocompletetextview_mEditSearch"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@null"
+                android:dropDownVerticalOffset="10dp"
+                android:ellipsize="end"
+                android:hint="荒野求生贝爷"
+                android:imeOptions="actionSearch"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColorHighlight="#B4DF87"
+                android:textSize="18dp" />
+        </LinearLayout>
     </LinearLayout>
 
     <!--空白框-->
