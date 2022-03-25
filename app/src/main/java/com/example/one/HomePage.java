@@ -44,7 +44,7 @@ public class HomePage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = null;
-                intent = new Intent(HomePage.this,ResultActivity.class);
+                intent = new Intent(HomePage.this,SearchActivity.class);
                 startActivity(intent);
             }
         });

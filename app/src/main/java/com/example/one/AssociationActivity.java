@@ -41,7 +41,7 @@ public class AssociationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = null;
-                intent = new Intent(AssociationActivity.this,ResultActivity.class);
+                intent = new Intent(AssociationActivity.this,SearchActivity.class);
                 startActivity(intent);
             }
         });
