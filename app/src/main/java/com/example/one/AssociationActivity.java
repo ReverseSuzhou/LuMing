@@ -1,12 +1,21 @@
 package com.example.one;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
+
+import com.example.one.Adapter.HomeAdapter;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class AssociationActivity extends AppCompatActivity {
     //声明控件
@@ -16,6 +25,11 @@ public class AssociationActivity extends AppCompatActivity {
     private ImageButton mBtn_message;
     private ImageButton mBtn_personal;
     private ImageButton mBtn_search;
+    private SwipeRefreshLayout swipe_association;
+    private RecyclerView rv_association;
+    private TextView error_association;
+    private List<String> data = Arrays.asList(new String[]{"哈哈哈哈哈哈", "呵呵呵呵呵呵", "哦哦哦哦哦哦哦哦哦"});
+    private HomeAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +41,7 @@ public class AssociationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = null;
-                intent = new Intent(AssociationActivity.this,ResultActivity.class);
+                intent = new Intent(AssociationActivity.this,SearchActivity.class);
                 startActivity(intent);
             }
         });
@@ -41,6 +55,17 @@ public class AssociationActivity extends AppCompatActivity {
         mBtn_editor = findViewById(R.id.association_page_linearlayout_3_button_editor_page);
         mBtn_message = findViewById(R.id.association_page_linearlayout_3_button_message_page);
         mBtn_personal = findViewById(R.id.association_page_linearlayout_3_button_personal_page);
+        swipe_association = findViewById(R.id.swipe_association);
+        rv_association = findViewById(R.id.rv_association);
+        error_association = findViewById(R.id.error_association);
+        Refresh();
+        swipe_association.setColorSchemeResources(android.R.color.holo_green_light,android.R.color.holo_red_light,android.R.color.holo_blue_light);
+        swipe_association.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Refresh();
+            }
+        });
 
         //主页面
         mBtn_home.setOnClickListener(new View.OnClickListener() {
@@ -89,5 +114,21 @@ public class AssociationActivity extends AppCompatActivity {
         });
 
 //↑↑↑↑↑↑↑↑底下五个按钮的跳转功能↑↑↑↑↑↑↑↑
+    }
+
+    private void Refresh() {
+
+        swipe_association.setRefreshing(false);
+        if(data.size()>0){
+            swipe_association.setRefreshing(false);
+            swipe_association.setVisibility(View.VISIBLE);
+            adapter = new HomeAdapter(AssociationActivity.this,data);
+            rv_association.setLayoutManager(new LinearLayoutManager(AssociationActivity.this));
+            rv_association.setAdapter(adapter);
+        }
+        else {
+            error_association.setVisibility(View.VISIBLE);
+        }
+
     }
 }

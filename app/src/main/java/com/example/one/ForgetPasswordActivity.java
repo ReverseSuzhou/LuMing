@@ -16,6 +16,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.forgetpassword);
         //控件部分
         mBtnAckForget = findViewById(R.id.btn_ackForget);
+
         //确认修改
         mBtnAckForget.setOnClickListener(new View.OnClickListener() {
             @Override

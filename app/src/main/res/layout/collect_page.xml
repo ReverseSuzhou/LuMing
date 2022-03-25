@@ -52,5 +52,33 @@
         android:layout_height="1dp"
         android:layout_marginTop="10dp"
         android:background="#aa000000" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:visibility="gone"
+            android:layout_marginTop="70dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:textSize="25sp"
+            android:id="@+id/error_collect"
+            android:text="空空如也"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:visibility="gone"
+            android:id="@+id/swipe_collect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_collect"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </LinearLayout>
+
 
 </LinearLayout>
