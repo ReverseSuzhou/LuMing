@@ -118,4 +118,14 @@
         android:scaleType="fitXY"
         android:src="@drawable/add" />
 
+    <!---->
+    <Button
+        android:id="@+id/association_apply_page_button_ensure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/background_button"
+        android:text="确定"
+        android:textSize="30sp"/>
+
 </LinearLayout>

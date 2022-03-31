@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.one.Adapter.HomeAdapter;
@@ -19,11 +20,11 @@ import java.util.List;
 
 public class AssociationActivity extends AppCompatActivity {
     //声明控件
-    private ImageButton mBtn_home;
-    private ImageButton mBtn_association;
-    private ImageButton mBtn_editor;
-    private ImageButton mBtn_message;
-    private ImageButton mBtn_personal;
+    private RadioButton mBtn_home;
+    private RadioButton mBtn_association;
+    private RadioButton mBtn_editor;
+    private RadioButton mBtn_message;
+    private RadioButton mBtn_personal;
     private ImageButton mBtn_search;
     private SwipeRefreshLayout swipe_association;
     private RecyclerView rv_association;
@@ -50,11 +51,11 @@ public class AssociationActivity extends AppCompatActivity {
 //使用的时候要修改 ：1.别忘了上面的声明控件部分；2.控件部分中id后面修改成对应的id；3.OnClick中的.this前面的改成当前文件名
 
         //控件部分
-        mBtn_home = findViewById(R.id.association_page_linearlayout_3_button_main_page);
-        mBtn_association = findViewById(R.id.association_page_linearlayout_3_button_associations_page);
-        mBtn_editor = findViewById(R.id.association_page_linearlayout_3_button_editor_page);
-        mBtn_message = findViewById(R.id.association_page_linearlayout_3_button_message_page);
-        mBtn_personal = findViewById(R.id.association_page_linearlayout_3_button_personal_page);
+        mBtn_home = findViewById(R.id.rb_mp);
+        mBtn_association = findViewById(R.id.rb_association);
+        mBtn_editor = findViewById(R.id.rb_add);
+        mBtn_message = findViewById(R.id.rb_message);
+        mBtn_personal = findViewById(R.id.rb_user);
         swipe_association = findViewById(R.id.swipe_association);
         rv_association = findViewById(R.id.rv_association);
         error_association = findViewById(R.id.error_association);
