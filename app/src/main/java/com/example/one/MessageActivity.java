@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.one.Adapter.HomeAdapter;
+import com.example.one.Bean.Push;
 
 import java.sql.ResultSet;
 import java.util.Arrays;
@@ -23,7 +24,7 @@ public class MessageActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipe_message;
     private RecyclerView rv_message;
     private TextView error_message;
-    private List<String> data = Arrays.asList(new String[]{"哈哈哈哈哈哈", "呵呵呵呵呵呵", "哦哦哦哦哦哦哦哦哦"});
+    private List<Push> data;
     private HomeAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -14,6 +14,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.one.Adapter.HomeAdapter;
+import com.example.one.Bean.Push;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +30,7 @@ public class AssociationActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipe_association;
     private RecyclerView rv_association;
     private TextView error_association;
-    private List<String> data = Arrays.asList(new String[]{"哈哈哈哈哈哈", "呵呵呵呵呵呵", "哦哦哦哦哦哦哦哦哦"});
+    private List<Push> data;
     private HomeAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
