@@ -11,6 +11,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.wenqu.util.ToastUtil;
 
+import java.sql.ResultSet;
+
 public class MainActivity extends AppCompatActivity {
 
     //声明控件
@@ -41,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         mBtnLogin = findViewById(R.id.btn_login);
         mBtnRegister = findViewById(R.id.btn_register);
         mBtnForget = findViewById(R.id.btn_forget);
-
 
         //注册
         mBtnRegister.setOnClickListener(new View.OnClickListener() {
@@ -77,23 +78,22 @@ public class MainActivity extends AppCompatActivity {
 
 
     //点击登录
-    public void onClick (View v){
+    public void onClick (View v) {
         //需要获取获得的用户名和密码
         String username = mEtUser.getText().toString();
         String password = mEtPassword.getText().toString();
+
         String ok = "登录成功！";
         String fail = "登录失败！";
 
         Intent intent = null;
 
-        if (username.equals("") && password.equals("")){
+        if (username.equals("") && password.equals("")) {
             //toast
             Toast.makeText(getApplicationContext(), ok, Toast.LENGTH_LONG).show();
-
             //如果正确，跳转
             intent = new Intent(MainActivity.this, HomePage.class);
             startActivity(intent);
-
         }
         else{
             //不正确
