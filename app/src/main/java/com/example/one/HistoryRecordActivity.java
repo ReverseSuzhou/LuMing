@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.one.Adapter.HomeAdapter;
+import com.example.one.Bean.Push;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,7 +23,7 @@ public class HistoryRecordActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipe_his_rec;
     private RecyclerView rv_his_rec;
     private TextView error_his_rec;
-    private List<String> data = Arrays.asList(new String[]{"哈哈哈哈哈哈", "呵呵呵呵呵呵", "哦哦哦哦哦哦哦哦哦"});
+    private List<Push> data;
     private HomeAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

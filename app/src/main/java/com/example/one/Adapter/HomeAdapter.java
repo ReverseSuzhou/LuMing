@@ -1,8 +1,4 @@
 package com.example.one.Adapter;
-
-
-
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -18,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-
+import com.example.one.Bean.Push;
 import com.example.one.R;
 
 import java.util.List;
@@ -28,7 +24,7 @@ import java.util.List;
 public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
-    private List<String> data;
+    private List<Push> data;
 
     private final int N_TYPE = 0;
     private final int F_TYPE = 1;
@@ -38,7 +34,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Boolean isfootview = true;  //是否有footview
     String ffid;
 
-    public HomeAdapter(Context context, List<String> data){
+    public HomeAdapter(Context context, List<Push> data){
         this.context = context;
         this.data = data;
     }
@@ -72,11 +68,12 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }else {
 
             //这是ord_item的内容
-            final String post = data.get(i);
+            final Push post = data.get(i);
 
-            recyclerViewHolder.title.setText(post);
-
-
+            recyclerViewHolder.title.setText(post.getForumt_title());
+            recyclerViewHolder.info.setText(post.getForumt_content());
+            recyclerViewHolder.username.setText(post.getUsername());
+            recyclerViewHolder.time.setText(post.getForumt_date());
 
             recyclerViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
