@@ -43,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
                 else if (mEtPassword.getText().toString().equals(mEtSurePassword.getText().toString())){
                     //toast
                     Toast.makeText(getApplicationContext(), ok, Toast.LENGTH_LONG).show();
-                    String sql = "insert into user(User_name, U_password, U_phone) values ('无名之辈', '" + mEtPassword.getText().toString() + "', '" + mEtPhoneNumber.getText().toString() + "');";
+                    String sql = "insert into user(User_name, U_password, User_phone) values ('无名之辈', '" + mEtPassword.getText().toString() + "', '" + mEtPhoneNumber.getText().toString() + "');";
                     DBUtils dbUtils = new DBUtils();
                     try {
                         new Thread(new Runnable() {
