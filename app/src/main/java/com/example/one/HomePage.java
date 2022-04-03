@@ -22,6 +22,7 @@ import com.example.one.Bean.Push;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class HomePage extends AppCompatActivity {
@@ -35,7 +36,7 @@ public class HomePage extends AppCompatActivity {
     private SwipeRefreshLayout swipe_home;
     private RecyclerView rv_home;
     private TextView error_home;
-    private List<Push> data;
+    List<Push> data = new LinkedList<>();
     private HomeAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,18 +69,38 @@ public class HomePage extends AppCompatActivity {
         rv_home = findViewById(R.id.rv_home);
         error_home = findViewById(R.id.error_home);
         try {
-            Refresh();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Refresh();
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                }
+            }).start();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         swipe_home.setColorSchemeResources(android.R.color.holo_green_light,android.R.color.holo_red_light,android.R.color.holo_blue_light);
         swipe_home.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 try {
-                    Refresh();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Refresh();
+                            } catch (SQLException throwables) {
+                                throwables.printStackTrace();
+                            }
+                        }
+                    }).start();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -139,22 +160,22 @@ public class HomePage extends AppCompatActivity {
 
             swipe_home.setRefreshing(false);
             DBUtils db = new DBUtils();
-            ResultSet rs = db.query("select * from Forum");
+            ResultSet rs = db.query("select * from forumt;");
             while(rs.next()) {
                 Push po = new Push();
                 po.setForumt_id(rs.getString("Forumt_id"));
                 po.setForumt_date(rs.getString("Forumt_date"));
-                po.setUser_id(rs.getString("User_id"));
-                po.setForumt_title(rs.getString("Forumt_title"));
+                po.setForumt_title(rs.getString("F_title"));
                 po.setForumt_content(rs.getString("Forumt_content"));
                 po.setF_likenum(rs.getInt("F_likenum"));
                 po.setF_collectnum(rs.getInt("F_collectnum"));
                 po.setF_commentnum(rs.getInt("F_commentnum"));
                 po.setF_label(rs.getString("F_label"));
-                ResultSet rs_user = db.query("select U_name from User");
-                po.setUsername(rs_user.getString("U_name"));
+//                ResultSet rs_user = db.query("select U_name from user;");
+//                po.setUsername(rs_user.getString("User_name"));
                 data.add(po);
             }
+            rs.close();
             if(data.size()>0){
                 swipe_home.setRefreshing(false);
                 swipe_home.setVisibility(View.VISIBLE);
