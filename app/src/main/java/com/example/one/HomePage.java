@@ -38,6 +38,9 @@ public class HomePage extends AppCompatActivity {
     private TextView error_home;
     List<Push> data = new LinkedList<>();
     private HomeAdapter adapter;
+    DBUtils db;
+    ResultSet rs;
+    Thread t;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,39 +71,23 @@ public class HomePage extends AppCompatActivity {
         swipe_home = findViewById(R.id.swipe_home);
         rv_home = findViewById(R.id.rv_home);
         error_home = findViewById(R.id.error_home);
-        try {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Refresh();
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                    }
-                }
-            }).start();
 
-        } catch (Exception e) {
-            e.printStackTrace();
+
+        try {
+            Refresh();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
+
+
         swipe_home.setColorSchemeResources(android.R.color.holo_green_light,android.R.color.holo_red_light,android.R.color.holo_blue_light);
         swipe_home.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 try {
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                Refresh();
-                            } catch (SQLException throwables) {
-                                throwables.printStackTrace();
-                            }
-                        }
-                    }).start();
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    Refresh();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
                 }
             }
         });
@@ -158,33 +145,58 @@ public class HomePage extends AppCompatActivity {
 
     private void Refresh() throws SQLException {
 
-            swipe_home.setRefreshing(false);
-            DBUtils db = new DBUtils();
-            ResultSet rs = db.query("select * from forumt;");
-            while(rs.next()) {
+        swipe_home.setRefreshing(false);
+        data.clear();
+
+        try {
+            t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    db = new DBUtils();
+                    rs = db.query("select * from forumt;");
+                    try {
+                        while(rs.next()){
+                            Push po = new Push();
+                            po.setForumt_id(rs.getString("Forumt_id"));
+                            po.setForumt_date(rs.getString("Forumt_date"));
+                            po.setForumt_title(rs.getString("F_title"));
+                            po.setForumt_content(rs.getString("Forumt_content"));
+                            data.add(po);
+                        };
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                    try {
+                        db.connection.close();
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+
+                }
+            });
+            t.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+                while(t.isAlive() == true);
                 Push po = new Push();
-                po.setForumt_id(rs.getString("Forumt_id"));
-                po.setForumt_date(rs.getString("Forumt_date"));
-                po.setForumt_title(rs.getString("F_title"));
-                po.setForumt_content(rs.getString("Forumt_content"));
-                po.setF_likenum(rs.getInt("F_likenum"));
-                po.setF_collectnum(rs.getInt("F_collectnum"));
-                po.setF_commentnum(rs.getInt("F_commentnum"));
-                po.setF_label(rs.getString("F_label"));
-//                ResultSet rs_user = db.query("select U_name from user;");
-//                po.setUsername(rs_user.getString("User_name"));
+                po.setForumt_id("Forumt_id");
+                po.setForumt_date("Forumt_date");
+
+                po.setForumt_title("F_title");
+                po.setForumt_content("Forumt_content");
                 data.add(po);
-            }
-            rs.close();
-            if(data.size()>0){
-                swipe_home.setRefreshing(false);
-                swipe_home.setVisibility(View.VISIBLE);
-                adapter = new HomeAdapter(HomePage.this,data);
-                rv_home.setLayoutManager(new LinearLayoutManager(HomePage.this));
-                rv_home.setAdapter(adapter);
-            }
-            else {
-                error_home.setVisibility(View.VISIBLE);
-            }
+
+        if(data.size()>0){
+            swipe_home.setRefreshing(false);
+            swipe_home.setVisibility(View.VISIBLE);
+            adapter = new HomeAdapter(HomePage.this,data);
+            rv_home.setLayoutManager(new LinearLayoutManager(HomePage.this));
+            rv_home.setAdapter(adapter);
+        }
+        else {
+            error_home.setVisibility(View.VISIBLE);
+        }
+
         }
 }

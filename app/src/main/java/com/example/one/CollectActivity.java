@@ -15,6 +15,7 @@ import com.example.one.Adapter.HomeAdapter;
 import com.example.one.Bean.Push;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class CollectActivity extends AppCompatActivity {
@@ -23,7 +24,7 @@ public class CollectActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipe_collect;
     private RecyclerView rv_collect;
     private TextView error_collect;
-    private List<Push> data;
+    private List<Push> data = new LinkedList<>();
     private HomeAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

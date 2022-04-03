@@ -72,8 +72,8 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
             recyclerViewHolder.title.setText(post.getForumt_title());
             recyclerViewHolder.info.setText(post.getForumt_content());
-            recyclerViewHolder.username.setText(post.getUsername());
-            recyclerViewHolder.time.setText(post.getForumt_date());
+//            recyclerViewHolder.username.setText(post.getUsername());
+//            recyclerViewHolder.time.setText(post.getForumt_date());
 
             recyclerViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

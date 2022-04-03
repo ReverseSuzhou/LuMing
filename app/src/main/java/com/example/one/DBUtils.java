@@ -39,7 +39,7 @@ public class DBUtils {
         finally {
             if(connection!=null){
                 try {
-                    connection.close();
+
                 }catch (Exception e){
                     e.printStackTrace();
                 }

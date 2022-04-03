@@ -16,6 +16,7 @@ import com.example.one.Bean.Push;
 
 import java.sql.ResultSet;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class MessageActivity extends AppCompatActivity {
@@ -24,7 +25,7 @@ public class MessageActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipe_message;
     private RecyclerView rv_message;
     private TextView error_message;
-    private List<Push> data;
+    private List<Push> data = new LinkedList<>();
     private HomeAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

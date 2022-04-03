@@ -17,6 +17,7 @@ import com.example.one.Adapter.HomeAdapter;
 import com.example.one.Bean.Push;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class AssociationActivity extends AppCompatActivity {
@@ -30,7 +31,7 @@ public class AssociationActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipe_association;
     private RecyclerView rv_association;
     private TextView error_association;
-    private List<Push> data;
+    private List<Push> data = new LinkedList<>();
     private HomeAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

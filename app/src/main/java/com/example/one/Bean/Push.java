@@ -1,6 +1,6 @@
 package com.example.one.Bean;
 
-public class Push extends Object{
+public class Push{
     private String Forumt_id;
     private String Forumt_date;
     private String User_id;
