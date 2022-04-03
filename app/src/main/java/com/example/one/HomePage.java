@@ -147,7 +147,6 @@ public class HomePage extends AppCompatActivity {
 
         swipe_home.setRefreshing(false);
         data.clear();
-
         try {
             t = new Thread(new Runnable() {
                 @Override
@@ -182,7 +181,7 @@ public class HomePage extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-                while(t.isAlive() == true);
+        while(t.isAlive() == true);
 
 
         if(data.size()>0){
