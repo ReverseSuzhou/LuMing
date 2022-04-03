@@ -161,6 +161,10 @@ public class HomePage extends AppCompatActivity {
                             po.setForumt_date(rs.getString("Forumt_date"));
                             po.setForumt_title(rs.getString("F_title"));
                             po.setForumt_content(rs.getString("Forumt_content"));
+                            po.setF_likenum(rs.getInt("F_likenum"));
+                            po.setF_collectnum(rs.getInt("F_collectnum"));
+                            po.setF_commentnum(rs.getInt("F_commentnum"));
+                            po.setUsername(rs.getString("User_name"));
                             data.add(po);
                         };
                     } catch (SQLException throwables) {
@@ -179,13 +183,7 @@ public class HomePage extends AppCompatActivity {
             e.printStackTrace();
         }
                 while(t.isAlive() == true);
-                Push po = new Push();
-                po.setForumt_id("Forumt_id");
-                po.setForumt_date("Forumt_date");
 
-                po.setForumt_title("F_title");
-                po.setForumt_content("Forumt_content");
-                data.add(po);
 
         if(data.size()>0){
             swipe_home.setRefreshing(false);

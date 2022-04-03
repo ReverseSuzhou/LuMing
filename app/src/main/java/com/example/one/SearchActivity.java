@@ -35,13 +35,15 @@ public class SearchActivity extends AppCompatActivity {
     TextView cleanHis;//清除历史信息组件
     Button cancel;//取消按钮
 
-    List<String> hotspots = Arrays.asList(new String[]{"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"});
+    List<String> hotspots = Arrays.asList(new String[]{"安-225残骸曝光", "居家隔离蹲个女友", "奇异博士2新反派", "元神角色谱千女友", "中国冥币文化出海", "妹说就是0卡"});
     List<String> hisRecords;
 
     TextView his_unfold;
     TextView dis_visible;
     boolean unfold = false;
     boolean invisible = false;
+
+    private String temp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,12 +99,12 @@ public class SearchActivity extends AppCompatActivity {
     void initHotspots(){
 
                     for(int i = 0; i < 6; i++) {
-
                         news[i].setText(hotspots.get(i));
+                        temp = hotspots.get(i);
                         news[i].setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                //mEditSearch.setText(hotspots.get(i));//更新搜索文本框内容
+                                mEditSearch.setText(temp);//更新搜索文本框内容
                                 search();
                             }
                         });

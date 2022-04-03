@@ -70,11 +70,13 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             //这是ord_item的内容
             final Push post = data.get(i);
 
+            recyclerViewHolder.username.setText(post.getUsername());
             recyclerViewHolder.title.setText(post.getForumt_title());
             recyclerViewHolder.info.setText(post.getForumt_content());
-//            recyclerViewHolder.username.setText(post.getUsername());
-//            recyclerViewHolder.time.setText(post.getForumt_date());
-
+            recyclerViewHolder.time.setText(post.getForumt_date());
+            recyclerViewHolder.likenum.setText(Integer.toString(post.getF_likenum()));
+            recyclerViewHolder.collectnum.setText(Integer.toString(post.getF_collectnum()));
+            recyclerViewHolder.commentnum.setText(Integer.toString(post.getF_commentnum()));
             recyclerViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -120,7 +122,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView username,info,time,title; //ord_item的TextView
+        public TextView username,info,time,title,likenum,collectnum,commentnum; //ord_item的TextView
         public TextView Loading;
         public ImageView gender;
 
@@ -132,6 +134,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 time = itemview.findViewById(R.id.time);
                 gender = itemview.findViewById(R.id.gender);
                 title = itemview.findViewById(R.id.title);
+                likenum = itemview.findViewById(R.id.likenum);
+                collectnum = itemview.findViewById(R.id.collectnum);
+                commentnum = itemview.findViewById(R.id.commentnum);
             }else if(view_type == F_TYPE){
                 Loading = itemview.findViewById(R.id.footText);
             }
