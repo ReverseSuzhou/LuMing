@@ -38,7 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 Intent intent = null;
                 if (mEtPhoneNumber.getText().toString().equals("") || mEtPassword.getText().toString().equals("") || mEtSurePassword.getText().toString().equals("")) {
-                    com.example.wenqu.util.ToastUtil.showMsg(RegisterActivity.this, "信息不全");
+                    com.example.one.util.ToastUtil.showMsg(RegisterActivity.this, "信息不全");
                 }
                 else if (mEtPassword.getText().toString().equals(mEtSurePassword.getText().toString())){
                     //toast
@@ -62,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 else{
                     //不正确
-                    com.example.wenqu.util.ToastUtil.showMsg(RegisterActivity.this, fail);
+                    com.example.one.util.ToastUtil.showMsg(RegisterActivity.this, fail);
                 }
 
             }

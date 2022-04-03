@@ -1,5 +1,6 @@
 package com.example.one;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,11 +10,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.wenqu.util.ToastUtil;
+import com.example.one.util.ToastUtil;
+import androidx.annotation.NonNull;
 
 import java.sql.ResultSet;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PermissionInterface {
 
     //声明控件
     private Button mBtnRegister;
@@ -21,17 +23,16 @@ public class MainActivity extends AppCompatActivity {
     private Button mBtnLogin;
     private EditText mEtUser;
     private EditText mEtPassword;
+    private PermissionHelper mPermissionHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.login);
 
-//        init();
-//        initEvent();
-//        MobSDK.init(this);
-
+        //初始化并发起权限申请
+        mPermissionHelper = new PermissionHelper(this, this);
+        mPermissionHelper.requestPermissions();
 
         //这是最底下的那个跑马灯的特效
         TextView huizhi = findViewById(R.id.under);
@@ -64,18 +65,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
         //点击登录
         mBtnLogin.setOnClickListener(this::onClick);
+
     }
-
-
-//    //请求验证码，county表示国家，如86；phone表示手机号
-//    SMMSSDK.re
-
-
-
 
     //点击登录
     public void onClick (View v) {
@@ -103,6 +96,53 @@ public class MainActivity extends AppCompatActivity {
 //            toastcenter.setGravity(Gravity.CENTER, 0, 0);
 //            toastcenter.show();
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(mPermissionHelper.requestPermissionsResult(requestCode, permissions, grantResults)){
+            //权限请求结果，并已经处理了该回调
+            return;
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    public int getPermissionsRequestCode() {
+        //设置权限请求requestCode，只有不跟onRequestPermissionsResult方法中的其他请求码冲突即可。
+        return 10000;
+    }
+
+    @Override
+    public String[] getPermissions() {
+        //设置该界面所需的全部权限
+        return new String[]{
+                Manifest.permission.READ_EXTERNAL_STORAGE, //读取存储权限
+                Manifest.permission.WRITE_EXTERNAL_STORAGE, //写入存储权限
+                Manifest.permission.READ_PHONE_STATE, //读取电话权限
+                Manifest.permission.CAMERA, //相机权限
+                Manifest.permission.SEND_SMS, //发送信息
+                Manifest.permission.ACCESS_FINE_LOCATION,
+
+        };
+    }
+
+    @Override
+    public void requestPermissionsSuccess() {
+        //权限请求用户已经全部允许
+        initViews();
+    }
+
+    @Override
+    public void requestPermissionsFail() {
+        //权限请求不被用户允许。可以提示并退出或者提示权限的用途并重新发起权限申请。
+        //finish(); //这里就直接闪退了
+        ToastUtil.showMsg(MainActivity.this, "建议打开相应的权限");
+
+    }
+
+    private void initViews(){
+        //已经拥有所需权限，可以放心操作任何东西了
     }
 
 }
