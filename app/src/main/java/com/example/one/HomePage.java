@@ -73,11 +73,7 @@ public class HomePage extends AppCompatActivity {
         error_home = findViewById(R.id.error_home);
 
 
-        try {
-            Refresh();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+
 
 
         swipe_home.setColorSchemeResources(android.R.color.holo_green_light,android.R.color.holo_red_light,android.R.color.holo_blue_light);
@@ -137,6 +133,11 @@ public class HomePage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        try {
+            Refresh();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
 //↑↑↑↑↑↑↑↑底下五个按钮的跳转功能↑↑↑↑↑↑↑↑
 
