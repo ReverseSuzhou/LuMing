@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.one.Bean.Push;
 import com.example.one.R;
+import com.example.one.Recive;
 
 import java.util.List;
 
@@ -82,20 +83,15 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 public void onClick(View v) {
 
                     int position = recyclerViewHolder.getBindingAdapterPosition();
-//                    if (BmobUser.getCurrentUser(BmobUser.class) != null){
-//                        Intent in = new Intent(context, Recive.class);
-//                        in.putExtra("username",post.getUsername());
-//                        in.putExtra("content",post.getInfo());
-//                        in.putExtra("time",post.getCreatedAt());
-//                        in.putExtra("title", post.getTitle());
-//                        in.putExtra("user_onlyid",post.getUserOnlyId());
-//                        in.putExtra("id",data.get(position).getObjectId());
-//
-//                        context.startActivity(in);
-//                    }else {
-//                        Toast.makeText(context, "请登录", Toast.LENGTH_SHORT).show();
-//                        context.startActivity(new Intent(context, Login.class));
-//                    }
+
+                        Intent in = new Intent(context, Recive.class);
+                        in.putExtra("username",post.getUsername());
+                        in.putExtra("content",post.getForumt_content());
+                        in.putExtra("time",post.getForumt_date());
+                        in.putExtra("title", post.getForumt_title());
+                        in.putExtra("user_onlyid",post.getUser_id());
+                        in.putExtra("id",data.get(position).getForumt_id());
+                        context.startActivity(in);
                 }
             });
         }
