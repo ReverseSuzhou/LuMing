@@ -16,6 +16,17 @@ public class DBUtils {
     PreparedStatement ps=null;
     ResultSet rs=null;
 
+//    public DBUtils() {
+//        try {
+//            //1、加载驱动
+//            Class.forName("com.mysql.jdbc.Driver").newInstance();
+//            System.out.println("驱动加载成功！！！");
+//        }
+//        catch (Exception e){
+//            e.printStackTrace();
+//        }
+//    }
+
     public ResultSet query(String sql){
         try {
             //1、加载驱动
@@ -60,7 +71,7 @@ public class DBUtils {
         try {
             //2、获取与数据库的连接
             connection = DriverManager.getConnection(url, userName, password);
-            System.out.println("连接数据库成功！！！");
+            System.out.println("连接数据库成功！！");
             //3.sql语句
             //4.获取用于向数据库发送sql语句的ps
             ps=connection.prepareStatement(sql);

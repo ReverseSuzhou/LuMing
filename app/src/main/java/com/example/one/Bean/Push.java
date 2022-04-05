@@ -3,7 +3,7 @@ package com.example.one.Bean;
 public class Push{
     private String Forumt_id;
     private String Forumt_date;
-    private String User_id;
+    private String User_phone;
     private String Forumt_title;
     private String Forumt_content;
     private int F_likenum;
@@ -12,6 +12,14 @@ public class Push{
     private String F_label;
 
     private String username;
+
+    public String getUser_phone() {
+        return User_phone;
+    }
+
+    public void setUser_phone(String user_phone) {
+        User_phone = user_phone;
+    }
 
     public String getUsername() {
         return username;
@@ -45,13 +53,7 @@ public class Push{
         Forumt_date = forumt_date;
     }
 
-    public String getUser_id() {
-        return User_id;
-    }
 
-    public void setUser_id(String user_id) {
-        User_id = user_id;
-    }
 
     public String getForumt_content() {
         return Forumt_content;

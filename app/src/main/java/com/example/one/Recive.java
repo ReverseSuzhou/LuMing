@@ -20,7 +20,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
+import com.example.one.Adapter.HomeAdapter;
+import com.example.one.Bean.Comment;
+import com.example.one.Bean.Push;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -33,14 +38,14 @@ public class Recive extends AppCompatActivity {
     private ImageView rec_collect;
     private ImageView review;
 
-    private String user_onlyid;
+    private String user_phone;
 
     private CircleImageView recive_headpic;
 
-    //private List<Review> data;
+    private List<Comment> data;
     //关注按钮
     private Button focus_or_not;
-
+    private boolean iscollect = false;
     private boolean related = false;
     private boolean focused = false;
     //User current_user = BmobUser.getCurrentUser(User.class);
@@ -55,14 +60,17 @@ public class Recive extends AppCompatActivity {
     //private ReviewAdapter reviewAdapter;
 
     private String id_push;
-
+    String id_collect;
+    DBUtils db,d;
+    ResultSet rs;
+    Thread t;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recive);
         final Intent in = getIntent();
-        user_onlyid = in.getStringExtra("user_onlyid");
+        user_phone = in.getStringExtra("user_phone");
 
         initView();
 
@@ -71,7 +79,7 @@ public class Recive extends AppCompatActivity {
         //getisrelated();
 
         //getisfocused();
-
+        getiscollect();
 
         //Refresh();
 
@@ -84,7 +92,11 @@ public class Recive extends AppCompatActivity {
 //                //Refresh();
 //            }
 //        });
-
+//        try {
+//            Refresh();
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//        }
 
         //监听返回
         back.setOnClickListener(new View.OnClickListener() {
@@ -206,8 +218,64 @@ public class Recive extends AppCompatActivity {
 //                showCustomizeDialog();
 //            }
 //        }));
-//
-//
+
+            rec_collect.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(iscollect) {
+                        try {
+                            t = new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    db = new DBUtils();
+                                    rs = db.query("select * from collect where User_phone = "+ user_phone + " and Forumt_id = "+ id_push + ";");
+                                    try {
+                                        if(rs.isBeforeFirst()) {
+                                            rs.next();
+                                            id_collect = rs.getString("collect_id");
+                                        }
+                                        else{
+                                        }
+                                    } catch (SQLException throwables) {
+                                        throwables.printStackTrace();
+                                    }
+                                }
+                            });
+                            t.start();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        while(t.isAlive() == true);
+                        db = new DBUtils();
+                        db.update("delete from collect where collect_id = " + id_collect + ";");
+                        iscollect = false;
+                        rec_collect.setImageResource(R.drawable.collect_pic);
+                        try {
+                            db.connection.close();
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        }
+                    }
+                    else {
+                        //db = new DBUtils();
+                        t = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                db.update("insert collect set User_phone = " + user_phone + ",Forumt_id = " + id_push + ";");
+                            }
+                        });
+                        while(t.isAlive());
+                        //db.update("insert collect set User_phone = " + user_phone + ",Forumt_id = " + id_push + ";");
+                        iscollect = true;
+                        rec_collect.setImageResource(R.drawable.shoucang_black);
+                        try {
+                            db.connection.close();
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        }
+                    }
+                }
+            });
 //        //收藏监听
 //        rec_collect.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -300,7 +368,8 @@ public class Recive extends AppCompatActivity {
 //            }
 //        });
 //
-//    }
+    }
+
 //
 //    private void getisfocused() {
 //        BmobQuery<focused_followed> qff = new BmobQuery<focused_followed>();
@@ -345,6 +414,52 @@ public class Recive extends AppCompatActivity {
 //
 //    }
 //
+        private void getiscollect(){
+
+                try {
+                    t = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            db = new DBUtils();
+                            rs = db.query("select * from collect where User_phone = "+ user_phone + " and Forumt_id = "+ id_push + ";");
+                            try {
+                                if(rs.isBeforeFirst()) {
+                                    rec_collect.setImageResource(R.drawable.shoucang_black);
+                                    iscollect = true;
+                                }
+                                else{
+                                    rec_collect.setImageResource(R.drawable.collect_pic);
+                                    iscollect = false;
+                                }
+                            } catch (SQLException throwables) {
+                                throwables.printStackTrace();
+                            }
+
+
+                        }
+                    });
+                    t.start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                while(t.isAlive() == true);
+            try {
+                db.connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            db = new DBUtils();
+            db.update("insert collect set User_phone = " + "123456" + ",Forumt_id = " + "2" + ";");
+
+//            Thread tt = new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//
+//                }
+//            });
+//            while(tt.isAlive());
+        }
+
 //    private void getisrelated() {
 //        Intent in = getIntent();
 //        String Id = in.getStringExtra("id");
@@ -375,8 +490,7 @@ public class Recive extends AppCompatActivity {
 //        });
 //
 //
-//
-    }
+
 
 
     private void initData() {
@@ -403,7 +517,7 @@ public class Recive extends AppCompatActivity {
         time = findViewById(R.id.time);
         title = findViewById(R.id.title);
         back = findViewById(R.id.back);
-//        rec_collect = findViewById(R.id.rec_collect);
+        rec_collect = findViewById(R.id.rec_collect);
 //        focus_or_not = findViewById(R.id.focus_or_not);
 //        recive_headpic = findViewById(R.id.recive_headpic);
 //        swipe_review = findViewById(R.id.swipe_review);
@@ -411,7 +525,58 @@ public class Recive extends AppCompatActivity {
 //        error_review = findViewById(R.id.error_review);
 //        review = findViewById(R.id.review);
     }
-
+//    void Refresh() throws SQLException{
+//        swipe_review.setRefreshing(false);
+//        data.clear();
+//        try {
+//            t = new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    db = new DBUtils();
+//                    rs = db.query("select * from comment where User_phone = "+ user_id + ",";");
+//                    try {
+//                        while(rs.next()){
+//                            Push po = new Push();
+//                            po.setForumt_id(rs.getString("Forumt_id"));
+//                            po.setForumt_date(rs.getString("Forumt_date"));
+//                            po.setForumt_title(rs.getString("F_title"));
+//                            po.setForumt_content(rs.getString("Forumt_content"));
+//                            po.setF_likenum(rs.getInt("F_likenum"));
+//                            po.setF_collectnum(rs.getInt("F_collectnum"));
+//                            po.setF_commentnum(rs.getInt("F_commentnum"));
+//                            po.setUsername(rs.getString("User_name"));
+//                            po.setUser_id(rs.getString("User_phone"));
+//                            data.add(po);
+//                        };
+//                    } catch (SQLException throwables) {
+//                        throwables.printStackTrace();
+//                    }
+//                    try {
+//                        db.connection.close();
+//                    } catch (SQLException throwables) {
+//                        throwables.printStackTrace();
+//                    }
+//
+//                }
+//            });
+//            t.start();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        while(t.isAlive() == true);
+//
+//
+//        if(data.size()>0){
+//            swipe_home.setRefreshing(false);
+//            swipe_home.setVisibility(View.VISIBLE);
+//            adapter = new HomeAdapter(HomePage.this,data);
+//            rv_home.setLayoutManager(new LinearLayoutManager(HomePage.this));
+//            rv_home.setAdapter(adapter);
+//        }
+//        else {
+//            error_home.setVisibility(View.VISIBLE);
+//        }
+//    }
 //    void Refresh(){
 //        BmobQuery<Review> Po = new BmobQuery<Review>();
 //        Push_info p = new Push_info();

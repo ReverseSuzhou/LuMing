@@ -89,7 +89,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         in.putExtra("content",post.getForumt_content());
                         in.putExtra("time",post.getForumt_date());
                         in.putExtra("title", post.getForumt_title());
-                        in.putExtra("user_onlyid",post.getUser_id());
+                        in.putExtra("user_phone",post.getUser_phone());
                         in.putExtra("id",data.get(position).getForumt_id());
                         context.startActivity(in);
                 }
