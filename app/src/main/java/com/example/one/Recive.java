@@ -43,7 +43,7 @@ public class Recive extends AppCompatActivity {
 
     private ImageView rec_collect;
     private ImageView review;
-
+    private String my_phone;
     private String user_phone;
 
     private CircleImageView recive_headpic;
@@ -216,7 +216,7 @@ public class Recive extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     db = new DBUtils();
-                                    rs = db.query("select * from collect where User_phone = "+ user_phone + " and Forumt_id = "+ id_push + ";");
+                                    rs = db.query("select * from collect where User_phone = "+ my_phone + " and Forumt_id = "+ id_push + ";");
                                     try {
                                         if(rs.isBeforeFirst()) {
                                             rs.next();
@@ -249,7 +249,7 @@ public class Recive extends AppCompatActivity {
                             @Override
                             public void run() {
                                 db = new DBUtils();
-                                db.update("insert collect set User_phone = " + user_phone + ",Forumt_id = " + id_push + ";");
+                                db.update("insert collect set User_phone = " + my_phone + ",Forumt_id = " + id_push + ";");
                             }
                         });
                         t.start();
@@ -415,7 +415,7 @@ public class Recive extends AppCompatActivity {
                         public void run() {
                             db = new DBUtils();
 
-                            rs = db.query("select * from collect where User_phone = "+ user_phone + " and Forumt_id = "+ id_push + ";");
+                            rs = db.query("select * from collect where User_phone = "+ my_phone + " and Forumt_id = "+ id_push + ";");
                             try {
                                 if(rs.isBeforeFirst()) {
                                     rec_collect.setImageResource(R.drawable.shoucang_black);
@@ -593,7 +593,7 @@ public class Recive extends AppCompatActivity {
                                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                                 String str = format.format(date1);
                                 java.sql.Date date2 = java.sql.Date.valueOf(str);
-                                db.update("insert comment set User_phone = " + user_phone + ",Forumt_id = " + id_push + ",Comment_text = \"" + text_review.getText() + "\";");
+                                db.update("insert into comment(User_phone,Forumt_id,Comment_text,Comment_time) values("+my_phone+","+id_push+",\""+text_review.getText()+"\",\"" + date2 + "\");");
                             }
                         });
                         t.start();
