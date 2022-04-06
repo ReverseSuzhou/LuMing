@@ -21,11 +21,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
 import com.example.one.Adapter.HomeAdapter;
+import com.example.one.Adapter.ReviewAdapter;
 import com.example.one.Bean.Comment;
 import com.example.one.Bean.Push;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -42,7 +44,7 @@ public class Recive extends AppCompatActivity {
 
     private CircleImageView recive_headpic;
 
-    private List<Comment> data;
+    private List<Comment> data = new LinkedList<>();
     //关注按钮
     private Button focus_or_not;
     private boolean iscollect = false;
@@ -64,7 +66,7 @@ public class Recive extends AppCompatActivity {
     DBUtils db,d;
     ResultSet rs;
     Thread t;
-
+    ReviewAdapter adapter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,18 +87,14 @@ public class Recive extends AppCompatActivity {
 
 
 
-//        swipe_review.setColorSchemeResources(android.R.color.holo_green_light,android.R.color.holo_red_light,android.R.color.holo_blue_light);
-//        swipe_review.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                //Refresh();
-//            }
-//        });
-//        try {
-//            Refresh();
-//        } catch (SQLException throwables) {
-//            throwables.printStackTrace();
-//        }
+        swipe_review.setColorSchemeResources(android.R.color.holo_green_light,android.R.color.holo_red_light,android.R.color.holo_blue_light);
+        swipe_review.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //Refresh();
+            }
+        });
+
 
         //监听返回
         back.setOnClickListener(new View.OnClickListener() {
@@ -233,6 +231,7 @@ public class Recive extends AppCompatActivity {
                                         if(rs.isBeforeFirst()) {
                                             rs.next();
                                             id_collect = rs.getString("collect_id");
+                                            db.update("delete from collect where collect_id = " + id_collect + ";");
                                         }
                                         else{
                                         }
@@ -246,26 +245,25 @@ public class Recive extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         while(t.isAlive() == true);
-                        db = new DBUtils();
-                        db.update("delete from collect where collect_id = " + id_collect + ";");
-                        iscollect = false;
-                        rec_collect.setImageResource(R.drawable.collect_pic);
                         try {
                             db.connection.close();
                         } catch (SQLException throwables) {
                             throwables.printStackTrace();
                         }
+                        iscollect = false;
+                        rec_collect.setImageResource(R.drawable.collect_pic);
                     }
                     else {
-                        //db = new DBUtils();
+
                         t = new Thread(new Runnable() {
                             @Override
                             public void run() {
+                                db = new DBUtils();
                                 db.update("insert collect set User_phone = " + user_phone + ",Forumt_id = " + id_push + ";");
                             }
                         });
+                        t.start();
                         while(t.isAlive());
-                        //db.update("insert collect set User_phone = " + user_phone + ",Forumt_id = " + id_push + ";");
                         iscollect = true;
                         rec_collect.setImageResource(R.drawable.shoucang_black);
                         try {
@@ -368,6 +366,11 @@ public class Recive extends AppCompatActivity {
 //            }
 //        });
 //
+        try {
+            Refresh();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
 //
@@ -421,6 +424,7 @@ public class Recive extends AppCompatActivity {
                         @Override
                         public void run() {
                             db = new DBUtils();
+
                             rs = db.query("select * from collect where User_phone = "+ user_phone + " and Forumt_id = "+ id_push + ";");
                             try {
                                 if(rs.isBeforeFirst()) {
@@ -448,8 +452,7 @@ public class Recive extends AppCompatActivity {
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-            db = new DBUtils();
-            db.update("insert collect set User_phone = " + "123456" + ",Forumt_id = " + "2" + ";");
+
 
 //            Thread tt = new Thread(new Runnable() {
 //                @Override
@@ -520,63 +523,58 @@ public class Recive extends AppCompatActivity {
         rec_collect = findViewById(R.id.rec_collect);
 //        focus_or_not = findViewById(R.id.focus_or_not);
 //        recive_headpic = findViewById(R.id.recive_headpic);
-//        swipe_review = findViewById(R.id.swipe_review);
-//        rv_review = findViewById(R.id.rv_review);
-//        error_review = findViewById(R.id.error_review);
+        swipe_review = findViewById(R.id.swipe_review);
+        rv_review = findViewById(R.id.rv_review);
+        error_review = findViewById(R.id.error_review);
 //        review = findViewById(R.id.review);
     }
-//    void Refresh() throws SQLException{
-//        swipe_review.setRefreshing(false);
-//        data.clear();
-//        try {
-//            t = new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    db = new DBUtils();
-//                    rs = db.query("select * from comment where User_phone = "+ user_id + ",";");
-//                    try {
-//                        while(rs.next()){
-//                            Push po = new Push();
-//                            po.setForumt_id(rs.getString("Forumt_id"));
-//                            po.setForumt_date(rs.getString("Forumt_date"));
-//                            po.setForumt_title(rs.getString("F_title"));
-//                            po.setForumt_content(rs.getString("Forumt_content"));
-//                            po.setF_likenum(rs.getInt("F_likenum"));
-//                            po.setF_collectnum(rs.getInt("F_collectnum"));
-//                            po.setF_commentnum(rs.getInt("F_commentnum"));
-//                            po.setUsername(rs.getString("User_name"));
-//                            po.setUser_id(rs.getString("User_phone"));
-//                            data.add(po);
-//                        };
-//                    } catch (SQLException throwables) {
-//                        throwables.printStackTrace();
-//                    }
-//                    try {
-//                        db.connection.close();
-//                    } catch (SQLException throwables) {
-//                        throwables.printStackTrace();
-//                    }
-//
-//                }
-//            });
-//            t.start();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        while(t.isAlive() == true);
-//
-//
-//        if(data.size()>0){
-//            swipe_home.setRefreshing(false);
-//            swipe_home.setVisibility(View.VISIBLE);
-//            adapter = new HomeAdapter(HomePage.this,data);
-//            rv_home.setLayoutManager(new LinearLayoutManager(HomePage.this));
-//            rv_home.setAdapter(adapter);
-//        }
-//        else {
-//            error_home.setVisibility(View.VISIBLE);
-//        }
-//    }
+    void Refresh() throws SQLException{
+        swipe_review.setRefreshing(false);
+        data.clear();
+        try {
+            t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    db = new DBUtils();
+                    rs = db.query("select * from comment where User_phone = "+ user_phone + " and Forumt_id = " + id_push+";");
+                    try {
+                        while(rs.next()){
+                            Comment co = new Comment();
+                            co.setComment_id(Integer.toString(rs.getInt("Comment_id")));
+                            co.setUser_phone(rs.getString("User_phone"));
+                            co.setForumt_id(Integer.toString(rs.getInt("Forumt_id")));
+                            co.setComment_text(rs.getString("Comment_text"));
+                            co.setComment_time(rs.getString("Comment_time"));
+
+                            data.add(co);
+                        };
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                    try {
+                        db.connection.close();
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+
+                }
+            });
+            t.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        while(t.isAlive() == true);
+        if(data.size()>0){
+            swipe_review.setRefreshing(false);
+            swipe_review.setVisibility(View.VISIBLE);
+            adapter = new ReviewAdapter(Recive.this,data);
+            rv_review.setLayoutManager(new LinearLayoutManager(Recive.this));
+            rv_review.setAdapter(adapter);
+        }
+        else {
+            error_review.setVisibility(View.VISIBLE);
+        }
+    }
 //    void Refresh(){
 //        BmobQuery<Review> Po = new BmobQuery<Review>();
 //        Push_info p = new Push_info();
