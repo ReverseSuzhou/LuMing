@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import androidx.annotation.Nullable;
@@ -43,8 +42,10 @@ public class Recive extends AppCompatActivity {
 
     private ImageView rec_collect;
     private ImageView review;
+    private ImageView rec_like;
     private String my_phone;
     private String user_phone;
+
 
     private CircleImageView recive_headpic;
 
@@ -52,6 +53,7 @@ public class Recive extends AppCompatActivity {
     //关注按钮
     private Button focus_or_not;
     private boolean iscollect = false;
+    private boolean islike = false;
     private boolean related = false;
     private boolean focused = false;
     //User current_user = BmobUser.getCurrentUser(User.class);
@@ -67,6 +69,7 @@ public class Recive extends AppCompatActivity {
 
     private String id_push;
     String id_collect;
+    String id_like;
     DBUtils db,d;
     ResultSet rs;
     Thread t;
@@ -86,8 +89,11 @@ public class Recive extends AppCompatActivity {
 
         //getisfocused();
         getiscollect();
-
+        getislike();
         //Refresh();
+
+        //获取my_user;
+
 
 
 
@@ -200,12 +206,91 @@ public class Recive extends AppCompatActivity {
 //            }
 //        });
 
+
+
         review.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showCustomizeDialog();
             }
         }));
+
+            rec_like.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(islike) {
+                        try {
+                            t = new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    db = new DBUtils();
+                                    //my_user;
+                                    rs = db.query("select * from likelike where User_phone = "+ user_phone + " and Forumt_id = "+ id_push + ";");
+                                    try {
+                                        if(rs.isBeforeFirst()) {
+                                            rs.next();
+                                            id_like = rs.getString("like_id");
+                                            db.update("delete from likelike where like_id = " + id_like + ";");
+                                        }
+                                        else{
+                                        }
+                                    } catch (SQLException throwables) {
+                                        throwables.printStackTrace();
+                                    }
+                                }
+                            });
+                            t.start();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        while(t.isAlive());
+                        try {
+                            db.connection.close();
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        }
+                        islike = false;
+                        rec_like.setImageResource(R.drawable.like);
+                        t = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                db = new DBUtils();
+                                db.update("update forumt set F_likenum=F_likenum-1 where Forumt_id =" + id_push + ";" );
+                            }
+                        });
+                        t.start();
+                        while(t.isAlive());
+                    }
+                    else {
+                        t = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                db = new DBUtils();
+                                //my_user;
+                                db.update("insert likelike set User_phone = " + user_phone + ",Forumt_id = " + id_push + ";");
+                            }
+                        });
+                        t.start();
+                        while(t.isAlive());
+                        islike = true;
+                        rec_like.setImageResource(R.drawable.like_black);
+                        try {
+                            db.connection.close();
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        }
+                        t = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                db = new DBUtils();
+                                db.update("update forumt set F_likenum=F_likenum+1 where Forumt_id =" + id_push + ";" );
+                            }
+                        });
+                        t.start();
+                        while(t.isAlive());
+                    }
+                }
+            });
 
             rec_collect.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -216,7 +301,8 @@ public class Recive extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     db = new DBUtils();
-                                    rs = db.query("select * from collect where User_phone = "+ my_phone + " and Forumt_id = "+ id_push + ";");
+                                    //my_user;
+                                    rs = db.query("select * from collect where User_phone = "+ user_phone + " and Forumt_id = "+ id_push + ";");
                                     try {
                                         if(rs.isBeforeFirst()) {
                                             rs.next();
@@ -234,7 +320,7 @@ public class Recive extends AppCompatActivity {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        while(t.isAlive() == true);
+                        while(t.isAlive());
                         try {
                             db.connection.close();
                         } catch (SQLException throwables) {
@@ -242,6 +328,15 @@ public class Recive extends AppCompatActivity {
                         }
                         iscollect = false;
                         rec_collect.setImageResource(R.drawable.collect_pic);
+                        t = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                db = new DBUtils();
+                                db.update("update forumt set F_collectnum=F_collectnum-1 where Forumt_id =" + id_push + ";" );
+                            }
+                        });
+                        t.start();
+                        while(t.isAlive());
                     }
                     else {
 
@@ -249,7 +344,8 @@ public class Recive extends AppCompatActivity {
                             @Override
                             public void run() {
                                 db = new DBUtils();
-                                db.update("insert collect set User_phone = " + my_phone + ",Forumt_id = " + id_push + ";");
+                                //my_user;
+                                db.update("insert collect set User_phone = " + user_phone + ",Forumt_id = " + id_push + ";");
                             }
                         });
                         t.start();
@@ -261,6 +357,15 @@ public class Recive extends AppCompatActivity {
                         } catch (SQLException throwables) {
                             throwables.printStackTrace();
                         }
+                        t = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                db = new DBUtils();
+                                db.update("update forumt set F_collectnum=F_collectnum where Forumt_id =" + id_push + ";" );
+                            }
+                        });
+                        t.start();
+                        while(t.isAlive());
                     }
                 }
             });
@@ -407,6 +512,40 @@ public class Recive extends AppCompatActivity {
 //
 //    }
 //
+
+        private void getislike() {
+            try {
+                t = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        db = new DBUtils();
+                        //my_user;
+                        rs = db.query("select * from likelike where User_phone = "+ user_phone + " and Forumt_id = "+ id_push + ";");
+                        try {
+                            if(rs.isBeforeFirst()) {
+                                rec_like.setImageResource(R.drawable.like_black);
+                                islike = true;
+                            }
+                            else{
+                                rec_like.setImageResource(R.drawable.like);
+                                islike = false;
+                            }
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        }
+                    }
+                });
+                t.start();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            while(t.isAlive() == true);
+            try {
+                db.connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
         private void getiscollect(){
 
                 try {
@@ -414,8 +553,8 @@ public class Recive extends AppCompatActivity {
                         @Override
                         public void run() {
                             db = new DBUtils();
-
-                            rs = db.query("select * from collect where User_phone = "+ my_phone + " and Forumt_id = "+ id_push + ";");
+                            //my_user;
+                            rs = db.query("select * from collect where User_phone = "+ user_phone + " and Forumt_id = "+ id_push + ";");
                             try {
                                 if(rs.isBeforeFirst()) {
                                     rec_collect.setImageResource(R.drawable.shoucang_black);
@@ -490,8 +629,6 @@ public class Recive extends AppCompatActivity {
 
         //第二种
         Intent a = getIntent();
-        Intent b = getIntent();
-        Intent c = getIntent();
         String usernamea = a.getStringExtra("username");
         String contenta = a.getStringExtra("content");
         String timea = a.getStringExtra("time");
@@ -517,6 +654,7 @@ public class Recive extends AppCompatActivity {
         rv_review = findViewById(R.id.rv_review);
         error_review = findViewById(R.id.error_review);
         review = findViewById(R.id.review);
+        rec_like = findViewById(R.id.rec_like);
     }
     void Refresh() throws SQLException{
         swipe_review.setRefreshing(false);
@@ -593,7 +731,8 @@ public class Recive extends AppCompatActivity {
                                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                                 String str = format.format(date1);
                                 java.sql.Date date2 = java.sql.Date.valueOf(str);
-                                db.update("insert into comment(User_phone,Forumt_id,Comment_text,Comment_time) values("+my_phone+","+id_push+",\""+text_review.getText()+"\",\"" + date2 + "\");");
+                                //my_user;
+                                db.update("insert into comment(User_phone,Forumt_id,Comment_text,Comment_time) values("+user_phone+","+id_push+",\""+text_review.getText()+"\",\"" + date2 + "\");");
                             }
                         });
                         t.start();
@@ -603,6 +742,15 @@ public class Recive extends AppCompatActivity {
                         } catch (SQLException throwables) {
                             throwables.printStackTrace();
                         }
+                        t = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                db = new DBUtils();
+                                db.update("update forumt set F_commentnum=F_commentnum where Forumt_id =" + id_push + ";" );
+                            }
+                        });
+                        t.start();
+                        while(t.isAlive());
                     }
                 });
         customizeDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
