@@ -20,13 +20,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
-import com.example.one.Adapter.HomeAdapter;
+
 import com.example.one.Adapter.ReviewAdapter;
 import com.example.one.Bean.Comment;
-import com.example.one.Bean.Push;
+
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -91,7 +95,11 @@ public class Recive extends AppCompatActivity {
         swipe_review.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //Refresh();
+                try {
+                    Refresh();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
             }
         });
 
@@ -104,24 +112,6 @@ public class Recive extends AppCompatActivity {
             }
         });
 
-//        recive_headpic.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                Intent it = new Intent(Recive.this, MyInfo.class);
-////                it.putExtra("user_onlyid", user_onlyid);
-////                startActivity(it);
-//            }
-//        });
-
-
-//        username.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                Intent it = new Intent(Recive.this, MyInfo.class);
-////                it.putExtra("user_onlyid", user_onlyid);
-////                startActivity(it);
-//            }
-//        });
 
         //关注按钮的监听
 //        focus_or_not.setOnClickListener(new View.OnClickListener() {
@@ -210,12 +200,12 @@ public class Recive extends AppCompatActivity {
 //            }
 //        });
 
-//        review.setOnClickListener((new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                showCustomizeDialog();
-//            }
-//        }));
+        review.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showCustomizeDialog();
+            }
+        }));
 
             rec_collect.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -526,7 +516,7 @@ public class Recive extends AppCompatActivity {
         swipe_review = findViewById(R.id.swipe_review);
         rv_review = findViewById(R.id.rv_review);
         error_review = findViewById(R.id.error_review);
-//        review = findViewById(R.id.review);
+        review = findViewById(R.id.review);
     }
     void Refresh() throws SQLException{
         swipe_review.setRefreshing(false);
@@ -575,86 +565,54 @@ public class Recive extends AppCompatActivity {
             error_review.setVisibility(View.VISIBLE);
         }
     }
-//    void Refresh(){
-//        BmobQuery<Review> Po = new BmobQuery<Review>();
-//        Push_info p = new Push_info();
-//        p.setObjectId(id_push);
-//        Po.addWhereEqualTo("Push", p);
-//        Po.order("-createdAt");
-//        Po.setLimit(1000);
-//        Po.findObjects(new FindListener<Review>() {
-//            @Override
-//            public void done(List<Review> list, BmobException e) {
-//                swipe_review.setRefreshing(false);
-//                if (e == null){
-//                    data = list;
-//                    if(data.size()>0){
-//                        swipe_review.setVisibility(View.VISIBLE);
-//                        reviewAdapter = new ReviewAdapter(Recive.this,data);
-//                        rv_review.setLayoutManager(new LinearLayoutManager(Recive.this));
-//                        rv_review.setAdapter(reviewAdapter);
-//                        Toast.makeText(Recive.this, "刷新成功", Toast.LENGTH_SHORT).show();
-//                    }
-//                    else {
-//                        error_review.setVisibility(View.VISIBLE);
-//                    }
-//
-//                }else {
-//                    swipe_review.setRefreshing(false);
-//                    Toast.makeText(Recive.this, "获取数据失败"+e, Toast.LENGTH_SHORT).show();
-//                }
-//
-//            }
-//        });
-//    }
-//    private void showCustomizeDialog() {
-//        /* @setView 装入自定义View ==> R.layout.dialog_customize
-//         * 由于dialog_customize.xml只放置了一个EditView，因此和图8一样
-//         * dialog_customize.xml可自定义更复杂的View
-//         */
-//        AlertDialog.Builder customizeDialog =
-//                new AlertDialog.Builder(Recive.this);
-//        final View dialogView = LayoutInflater.from(Recive.this)
-//                .inflate(R.layout.dialog_review,null);
-//        customizeDialog.setTitle("评论");
-//        customizeDialog.setView(dialogView);
-//        customizeDialog.setPositiveButton("确定",
-//                new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        // 获取EditView中的输入内容
-//                        EditText text_review =
-//                                (EditText) dialogView.findViewById(R.id.text_review);
-//                        User u = BmobUser.getCurrentUser(User.class);
-//                        Review r = new Review();
-//                        r.setAuthor(u);
-//                        r.setUsername(u.getUsername());
-//                        r.setObjectId(u.getObjectId());
-//                        Push_info p = new Push_info();
-//                        p.setObjectId(id_push);
-//                        r.setPush(p);
-//                        r.setInfo(text_review.getText().toString().trim());
-//                        r.save(new SaveListener<String>() {
-//                            @Override
-//                            public void done(String s, BmobException e) {
-//                                if (e==null){
-//                                    Toast.makeText(Recive.this, "发布成功", Toast.LENGTH_SHORT).show();
-//                                }else {
-//                                    Toast.makeText(Recive.this, "发布失败", Toast.LENGTH_SHORT).show();
-//                                }
-//                            }
-//                        });
-//                        Refresh();
-//                    }
-//                });
-//        customizeDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//
-//            }
-//        });
-//        customizeDialog.show();
-//
-//    }
+
+    private void showCustomizeDialog() {
+        /* @setView 装入自定义View ==> R.layout.dialog_customize
+         * 由于dialog_customize.xml只放置了一个EditView，因此和图8一样
+         * dialog_customize.xml可自定义更复杂的View
+         */
+        AlertDialog.Builder customizeDialog =
+                new AlertDialog.Builder(Recive.this);
+        final View dialogView = LayoutInflater.from(Recive.this)
+                .inflate(R.layout.dialog_review,null);
+        customizeDialog.setTitle("评论");
+        customizeDialog.setView(dialogView);
+        customizeDialog.setPositiveButton("确定",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // 获取EditView中的输入内容
+                        EditText text_review =
+                                (EditText) dialogView.findViewById(R.id.text_review);
+                        t = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                db = new DBUtils();
+                                java.util.Date date1 = new Date(System.currentTimeMillis());
+                                //String str = date.toString();
+                                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                                String str = format.format(date1);
+                                java.sql.Date date2 = java.sql.Date.valueOf(str);
+                                db.update("insert comment set User_phone = " + user_phone + ",Forumt_id = " + id_push + ",Comment_text = \"" + text_review.getText() + "\";");
+                            }
+                        });
+                        t.start();
+                        while(t.isAlive());
+                        try {
+                            Refresh();
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        }
+                    }
+                });
+        customizeDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        customizeDialog.show();
+
+    }
 
 }
