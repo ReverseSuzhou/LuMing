@@ -1,7 +1,11 @@
-plugins {
-    id 'com.android.application'
+apply plugin: 'com.android.application'
+//    apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+apply plugin: 'com.mob.sdk'
+MobSDK {
+    appKey "3598b2e09a55a"
+    appSecret "48beefd31be58bc75a9cdedda26e67cc"
+    SMSSDK {}
 }
-
 android {
     compileSdk 32
 

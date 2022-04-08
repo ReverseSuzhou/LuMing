@@ -67,7 +67,7 @@
         android:background="#aa000000" />
     <!--旧手机号文本编辑框-->
     <EditText
-        android:id="@+id/replace_phone_page_relativelayout_1_edittext_old_phone"
+        android:id="@+id/OldPhoneNumber"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="50dp"
@@ -78,7 +78,7 @@
         android:textSize="20sp" />
     <!--新手机号文本编辑框-->
     <EditText
-        android:id="@+id/replace_phone_page_relativelayout_1_edittext_new_phone"
+        android:id="@+id/NewPhoneNumber"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="50dp"
@@ -102,7 +102,7 @@
             android:inputType="numberPassword" />
         <!--获取新手机验证码按钮-->
         <Button
-            android:id="@+id/replace_phone_page_1_2_button_verification_code"
+            android:id="@+id/btn_check"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_toRightOf="@+id/replace_phone_page_1_2_edittext_verification_code"
@@ -113,7 +113,7 @@
     </RelativeLayout>
     <!--确定按钮-->
     <Button
-        android:id="@+id/replace_phone_page_relativelayout_1_button_determine"
+        android:id="@+id/submit"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
