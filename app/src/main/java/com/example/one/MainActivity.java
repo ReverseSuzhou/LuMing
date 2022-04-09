@@ -97,7 +97,12 @@ public class MainActivity extends AppCompatActivity implements PermissionInterfa
                             if (rs.isBeforeFirst()) {
                                 rs.next();
                                 if (rs.getString("U_password").equals(mEtPassword.getText().toString())) isOK = true;
-                                System.out.println(isOK);
+                                if (isOK) {
+                                    SaveSharedPreference saveSharedPreference = new SaveSharedPreference();
+                                    saveSharedPreference.setUsername(rs.getString("User_name"));
+                                    saveSharedPreference.setPassword(rs.getString("U_password"));
+                                    saveSharedPreference.setPhone(rs.getString("User_phone"));
+                                }
                             }
                         } catch (SQLException e) {
                             e.printStackTrace();
@@ -114,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements PermissionInterfa
                 Toast.makeText(getApplicationContext(), ok, Toast.LENGTH_LONG).show();
                 intent = new Intent(MainActivity.this, HomePage.class);
                 startActivity(intent);
+                finish();
             } else {
                 //不正确
                 ToastUtil.showMsg(MainActivity.this, fail);

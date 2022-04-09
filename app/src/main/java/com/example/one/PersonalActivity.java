@@ -47,6 +47,7 @@ public class PersonalActivity extends AppCompatActivity {
     private ImageButton mBtn_replace_phone;
     private Button mBtn_modify;
     private Button mBtn_apply;
+    private Button mBtn_myrelease;
     private ImageButton mBtn_userpicture;
 
     //更改头像的辅助声明
@@ -77,6 +78,7 @@ public class PersonalActivity extends AppCompatActivity {
         mBtn_modify = findViewById(R.id.personal_page_button_exinfo);
         mBtn_apply = findViewById(R.id.personal_page_button_association_apply);
         mBtn_userpicture = findViewById(R.id.personal_page_1_button_userpicture);
+        mBtn_myrelease = findViewById(R.id.personal_page_button_myrelease);
 
         //历史记录
         mBtn_history.setOnClickListener(new View.OnClickListener() {
@@ -120,6 +122,15 @@ public class PersonalActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = null;
                 intent = new Intent(PersonalActivity.this,AssociationApplyActivity.class);
+                startActivity(intent);
+            }
+        });
+        //我的帖子
+        mBtn_myrelease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = null;
+                intent = new Intent(PersonalActivity.this, MyReleaseAcitivity.class);
                 startActivity(intent);
             }
         });
