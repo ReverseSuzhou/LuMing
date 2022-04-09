@@ -23,12 +23,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -49,6 +53,7 @@ public class PersonalActivity extends AppCompatActivity {
     private Button mBtn_apply;
     private Button mBtn_myrelease;
     private ImageButton mBtn_userpicture;
+    private TextView UserName;
 
     //更改头像的辅助声明
     int CAMERA_REQUEST_CODE=1;
@@ -72,6 +77,24 @@ public class PersonalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.personal_page);
 
+        InitUpButtonAndTheirListeners();
+        InitBelowButtonAndTheirListeners();
+
+        UserName.setText(new SaveSharedPreference().getUsername());
+
+
+
+    }
+
+
+    protected void onResume(Bundle savedInstance) {
+        super.onResume();
+        UserName = findViewById(R.id.personal_page_1_textview_username);
+        UserName.setText(new SaveSharedPreference().getUsername());
+    }
+
+    private void InitUpButtonAndTheirListeners() {
+
         mBtn_history = findViewById(R.id.personal_page_2_button_history);
         mBtn_collect = findViewById(R.id.personal_page_2_button_collect);
         mBtn_replace_phone = findViewById(R.id.personal_page_2_button_phone);
@@ -79,6 +102,7 @@ public class PersonalActivity extends AppCompatActivity {
         mBtn_apply = findViewById(R.id.personal_page_button_association_apply);
         mBtn_userpicture = findViewById(R.id.personal_page_1_button_userpicture);
         mBtn_myrelease = findViewById(R.id.personal_page_button_myrelease);
+        UserName = findViewById(R.id.personal_page_1_textview_username);
 
         //历史记录
         mBtn_history.setOnClickListener(new View.OnClickListener() {
@@ -136,7 +160,6 @@ public class PersonalActivity extends AppCompatActivity {
         });
 
 
-
         //更改头像
         mBtn_userpicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,10 +167,10 @@ public class PersonalActivity extends AppCompatActivity {
                 display();
             }
         });
+    }
 
-
-
-//↓↓↓↓↓↓↓↓底下五个按钮的跳转功能↓↓↓↓↓↓↓↓
+    private void InitBelowButtonAndTheirListeners() {
+        //↓↓↓↓↓↓↓↓底下五个按钮的跳转功能↓↓↓↓↓↓↓↓
 //使用的时候要修改 ：1.别忘了上面的声明控件部分；2.控件部分中id后面修改成对应的id；3.OnClick中的.this前面的改成当前文件名
 
         //控件部分
@@ -202,7 +225,6 @@ public class PersonalActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
 //↑↑↑↑↑↑↑↑底下五个按钮的跳转功能↑↑↑↑↑↑↑↑
     }
 
@@ -224,8 +246,6 @@ public class PersonalActivity extends AppCompatActivity {
                 checkPermissionAndAlbum();
             }
         });
-
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
         AlertDialog dialog = builder.create();
@@ -249,6 +269,7 @@ public class PersonalActivity extends AppCompatActivity {
                     PERMISSION_CAMERA_REQUEST_CODE);
         }
     }
+
     private void checkPermissionAndAlbum() {
         int hasCameraPermission = ContextCompat.checkSelfPermission(getApplication(),
                 Manifest.permission.CAMERA);
@@ -337,6 +358,7 @@ public class PersonalActivity extends AppCompatActivity {
         pickIntent.setType("image/*");
         startActivityForResult(pickIntent,ALBUM_REQUES_CODE);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -360,8 +382,6 @@ public class PersonalActivity extends AppCompatActivity {
             }
         }
     }
-
-
 
 
     /**

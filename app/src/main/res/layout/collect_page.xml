@@ -52,31 +52,34 @@
         android:layout_height="1dp"
         android:layout_marginTop="10dp"
         android:background="#aa000000" />
+
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
         <TextView
-            android:visibility="gone"
+            android:id="@+id/error_collect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="70dp"
             android:gravity="center"
-            android:textStyle="bold"
+            android:text="空空如也"
             android:textColor="#000"
             android:textSize="25sp"
-            android:id="@+id/error_collect"
-            android:text="空空如也"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:visibility="gone"
             android:id="@+id/swipe_collect"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_collect"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
 
