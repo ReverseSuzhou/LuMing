@@ -80,23 +80,12 @@ public class Recive extends AppCompatActivity {
         setContentView(R.layout.recive);
         final Intent in = getIntent();
         user_phone = in.getStringExtra("user_phone");
-
+        SaveSharedPreference person = new SaveSharedPreference();
+        my_phone = person.getPhone();
         initView();
-
         initData();
-
-        //getisrelated();
-
-        //getisfocused();
         getiscollect();
         getislike();
-        //Refresh();
-
-        //获取my_user;
-
-
-
-
         swipe_review.setColorSchemeResources(android.R.color.holo_green_light,android.R.color.holo_red_light,android.R.color.holo_blue_light);
         swipe_review.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -108,8 +97,6 @@ public class Recive extends AppCompatActivity {
                 }
             }
         });
-
-
         //监听返回
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,97 +104,6 @@ public class Recive extends AppCompatActivity {
                 finish();
             }
         });
-
-
-        //关注按钮的监听
-//        focus_or_not.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (!focused) {
-//
-//                    User info_user = new User();
-//                    info_user.setObjectId(user_onlyid);
-//                    BmobRelation relation = new BmobRelation();
-//                    relation.add(info_user);
-//
-//                    focused_followed f = new focused_followed();
-//                    f.setObjectId(ffid);
-//                    f.setFocused(relation);
-//                    f.increment("focused_sum");
-//
-//                    f.update(new UpdateListener() {
-//                        @Override
-//                        public void done(BmobException e) {
-//                            if (e==null){
-//                                focus_or_not.setText("已关");
-//                                focused = true;
-//                                Toast.makeText(Recive.this, "关注成功", Toast.LENGTH_SHORT).show();
-//                            }else {
-//                                Toast.makeText(Recive.this, "关注失败"+e, Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    });
-//                    User user = new User();
-//                    user.setObjectId(current_user.getObjectId());
-//                    BmobRelation re = new BmobRelation();
-//                    re.add(user);
-//
-//                    focused_followed ff = new focused_followed();
-//                    ff.setObjectId(fffid);
-//                    ff.setFollowed(re);
-//                    ff.increment("followed_sum");
-//                    ff.update(new UpdateListener() {
-//                        @Override
-//                        public void done(BmobException e) {
-//
-//                        }
-//                    });
-//                } else {
-//                    User info_user = new User();
-//                    info_user.setObjectId(user_onlyid);
-//                    BmobRelation relation = new BmobRelation();
-//                    relation.remove(info_user);
-//                    focused_followed f = new focused_followed();
-//                    f.setObjectId(ffid);
-//                    f.setFocused(relation);
-//                    f.increment("focused_sum", -1);
-//                    f.update(new UpdateListener() {
-//                        @Override
-//                        public void done(BmobException e) {
-//                            if (e==null){
-//                                focus_or_not.setText("关注");
-//                                focused = false;
-//                                Toast.makeText(Recive.this, "取消关注成功", Toast.LENGTH_SHORT).show();
-//
-//                            }else {
-//                                Toast.makeText(Recive.this, "取消关注失败"+e, Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    });
-//                    User user = new User();
-//                    user.setObjectId(current_user.getObjectId());
-//                    BmobRelation re = new BmobRelation();
-//                    re.remove(user);
-//
-//                    focused_followed ff = new focused_followed();
-//                    ff.setObjectId(fffid);
-//                    ff.setFollowed(re);
-//                    ff.increment("followed_sum",-1);
-//                    ff.update(new UpdateListener() {
-//                        @Override
-//                        public void done(BmobException e) {
-//
-//                        }
-//                    });
-//
-//                }
-//
-//
-//            }
-//        });
-
-
-
         review.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -225,7 +121,7 @@ public class Recive extends AppCompatActivity {
                                 public void run() {
                                     db = new DBUtils();
                                     //my_user;
-                                    rs = db.query("select * from likelike where User_phone = "+ user_phone + " and Forumt_id = "+ id_push + ";");
+                                    rs = db.query("select * from likelike where User_phone = "+ my_phone + " and Forumt_id = "+ id_push + ";");
                                     try {
                                         if(rs.isBeforeFirst()) {
                                             rs.next();
@@ -267,7 +163,7 @@ public class Recive extends AppCompatActivity {
                             public void run() {
                                 db = new DBUtils();
                                 //my_user;
-                                db.update("insert likelike set User_phone = " + user_phone + ",Forumt_id = " + id_push + ";");
+                                db.update("insert likelike set User_phone = " + my_phone + ",Forumt_id = " + id_push + ";");
                             }
                         });
                         t.start();
@@ -291,7 +187,6 @@ public class Recive extends AppCompatActivity {
                     }
                 }
             });
-
             rec_collect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -302,7 +197,7 @@ public class Recive extends AppCompatActivity {
                                 public void run() {
                                     db = new DBUtils();
                                     //my_user;
-                                    rs = db.query("select * from collect where User_phone = "+ user_phone + " and Forumt_id = "+ id_push + ";");
+                                    rs = db.query("select * from collect where User_phone = "+ my_phone + " and Forumt_id = "+ id_push + ";");
                                     try {
                                         if(rs.isBeforeFirst()) {
                                             rs.next();
@@ -345,7 +240,7 @@ public class Recive extends AppCompatActivity {
                             public void run() {
                                 db = new DBUtils();
                                 //my_user;
-                                db.update("insert collect set User_phone = " + user_phone + ",Forumt_id = " + id_push + ";");
+                                db.update("insert collect set User_phone = " + my_phone + ",Forumt_id = " + id_push + ";");
                             }
                         });
                         t.start();
@@ -369,150 +264,12 @@ public class Recive extends AppCompatActivity {
                     }
                 }
             });
-//        //收藏监听
-//        rec_collect.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent in = getIntent();
-//                String Id = in.getStringExtra("id");
-//                BmobQuery<Push_info> bmobQuery = new BmobQuery<>();
-//                bmobQuery.getObject(Id, new QueryListener<Push_info>() {
-//                    @Override
-//                    public void done(Push_info pos, BmobException e) {
-//                        if (!related) {
-//                            Intent in = getIntent();
-//                            String Id = in.getStringExtra("id");
-//                            User user = BmobUser.getCurrentUser(User.class);
-//                            Push_info po = new Push_info();
-//                            po.setObjectId(Id);
-//
-//                            BmobRelation relation = new BmobRelation();
-//                            relation.add(user);
-//                            po.setRelation(relation);
-//                            po.update(new UpdateListener() {
-//                                @Override
-//                                public void done(BmobException e) {
-//                                    if (e == null) {
-//                                        rec_collect.setImageResource(R.drawable.shoucang_black);
-//                                        related = true;
-//                                        Toast.makeText(Recive.this, "收藏成功", Toast.LENGTH_SHORT).show();
-//                                    } else {
-//                                        Toast.makeText(Recive.this, "收藏失败", Toast.LENGTH_SHORT).show();
-//                                    }
-//                                }
-//                            });
-//                            BmobQuery<User> b = new BmobQuery<>();
-//                            b.getObject(BmobUser.getCurrentUser().getObjectId(), new QueryListener<User>() {
-//                                @Override
-//                                public void done(User user, BmobException e) {
-//                                    BmobRelation r = new BmobRelation();
-//                                    Push_info p = new Push_info();
-//                                    p.setObjectId(id_push);
-//                                    r.add(p);
-//                                    user.setRelation_Push(r);
-//                                    user.update(new UpdateListener() {
-//                                        @Override
-//                                        public void done(BmobException e) {
-//                                        }
-//                                    });
-//                                }
-//                            });
-//                        } else {
-//                            Intent in = getIntent();
-//                            String Id = in.getStringExtra("id");
-//                            User user = BmobUser.getCurrentUser(User.class);
-//                            Push_info po = new Push_info();
-//                            po.setObjectId(Id);
-//
-//                            BmobRelation relation = new BmobRelation();
-//                            relation.remove(user);
-//                            po.setRelation(relation);
-//                            po.update(new UpdateListener() {
-//                                @Override
-//                                public void done(BmobException e) {
-//                                    if (e == null) {
-//                                        rec_collect.setImageResource(R.drawable.sc_normal);
-//                                        related = false;
-//                                        Toast.makeText(Recive.this, "已取消收藏", Toast.LENGTH_SHORT).show();
-//                                    } else {
-//                                        Toast.makeText(Recive.this, "取消收藏失败", Toast.LENGTH_SHORT).show();
-//                                    }
-//                                }
-//                            });
-//                            BmobQuery<User> b = new BmobQuery<>();
-//                            b.getObject(BmobUser.getCurrentUser().getObjectId(), new QueryListener<User>() {
-//                                @Override
-//                                public void done(User user, BmobException e) {
-//                                    BmobRelation r = new BmobRelation();
-//                                    Push_info p = new Push_info();
-//                                    p.setObjectId(id_push);
-//                                    r.remove(p);
-//                                    user.setRelation_Push(r);
-//                                    user.update(new UpdateListener() {
-//                                        @Override
-//                                        public void done(BmobException e) {
-//                                        }
-//                                    });
-//                                }
-//                            });
-//                        }
-//                    }
-//                });
-//            }
-//        });
-//
         try {
             Refresh();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
-
-//
-//    private void getisfocused() {
-//        BmobQuery<focused_followed> qff = new BmobQuery<focused_followed>();
-//        qff.addWhereEqualTo("author", BmobUser.getCurrentUser(User.class).getObjectId());
-//        qff.findObjects(new FindListener<focused_followed>() {
-//            @Override
-//            public void done(List<focused_followed> list, BmobException e) {
-//                for(int i = 0; i < list.size(); i++) {
-//                    ffid =list.get(i).getObjectId();
-//                    BmobQuery<User> query = new BmobQuery<User>();
-//                    focused_followed f = new focused_followed();
-//                    f.setObjectId(ffid);
-//                    query.addWhereRelatedTo("focused", new BmobPointer(f));
-//                    query.findObjects(new FindListener<User>() {
-//                        @Override
-//                        public void done(List<User> list, BmobException e) {
-//                            for(int i = 0; i < list.size(); i++) {
-//                                if(list.get(i).getObjectId().equals(user_onlyid)){
-//                                    focus_or_not.setText("已关注");
-//                                    focused = true;
-//                                }
-//                            }
-//                            if(!focused){
-//                                focus_or_not.setText("关注");
-//                            }
-//                        }
-//                    });
-//
-//                }
-//            }
-//        });
-//        BmobQuery<focused_followed> qfff = new BmobQuery<focused_followed>();
-//        qfff.addWhereEqualTo("author", user_onlyid);
-//        qfff.findObjects(new FindListener<focused_followed>() {
-//            @Override
-//            public void done(List<focused_followed> list, BmobException e) {
-//                for(int i = 0; i < list.size(); i++) {
-//                    fffid = list.get(i).getObjectId();
-//                }
-//            }
-//        });
-//
-//    }
-//
-
         private void getislike() {
             try {
                 t = new Thread(new Runnable() {
@@ -520,7 +277,7 @@ public class Recive extends AppCompatActivity {
                     public void run() {
                         db = new DBUtils();
                         //my_user;
-                        rs = db.query("select * from likelike where User_phone = "+ user_phone + " and Forumt_id = "+ id_push + ";");
+                        rs = db.query("select * from likelike where User_phone = "+ my_phone + " and Forumt_id = "+ id_push + ";");
                         try {
                             if(rs.isBeforeFirst()) {
                                 rec_like.setImageResource(R.drawable.like_black);
@@ -554,7 +311,7 @@ public class Recive extends AppCompatActivity {
                         public void run() {
                             db = new DBUtils();
                             //my_user;
-                            rs = db.query("select * from collect where User_phone = "+ user_phone + " and Forumt_id = "+ id_push + ";");
+                            rs = db.query("select * from collect where User_phone = "+ my_phone + " and Forumt_id = "+ id_push + ";");
                             try {
                                 if(rs.isBeforeFirst()) {
                                     rec_collect.setImageResource(R.drawable.shoucang_black);
@@ -581,50 +338,7 @@ public class Recive extends AppCompatActivity {
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-
-
-//            Thread tt = new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//
-//                }
-//            });
-//            while(tt.isAlive());
         }
-
-//    private void getisrelated() {
-//        Intent in = getIntent();
-//        String Id = in.getStringExtra("id");
-//        // 查询喜欢这个帖子的所有用户，因此查询的是用户表
-//        BmobQuery<User> query = new BmobQuery<User>();
-//        Push_info post = new Push_info();
-//        post.setObjectId(Id);
-////likes是Post表中的字段，用来存储所有喜欢该帖子的用户
-//        query.addWhereRelatedTo("relation", new BmobPointer(post));
-//        query.findObjects(new FindListener<User>() {
-//
-//            @Override
-//            public void done(List<User> object, BmobException e) {
-//                if (e == null) {
-//
-//                    for (int i = 0; i < object.size(); i++) {
-//                        if (object.get(i).getObjectId().equals(BmobUser.getCurrentUser(User.class).getObjectId())) {
-//                            related = true;
-//                            rec_collect.setImageResource(R.drawable.shoucang_black);
-//                            break;
-//                        }
-//                    }
-//                } else {
-//
-//                }
-//            }
-//
-//        });
-//
-//
-
-
-
     private void initData() {
 
         //第二种
@@ -640,7 +354,6 @@ public class Recive extends AppCompatActivity {
         id_push = a.getStringExtra("id");
 
     }
-
     private void initView() {
         username = findViewById(R.id.username);
         content = findViewById(R.id.content);
@@ -760,7 +473,5 @@ public class Recive extends AppCompatActivity {
             }
         });
         customizeDialog.show();
-
     }
-
 }
