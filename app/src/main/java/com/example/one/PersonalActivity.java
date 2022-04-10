@@ -77,7 +77,6 @@ public class PersonalActivity extends AppCompatActivity {
         InitUpButtonAndTheirListeners();
         InitBelowButtonAndTheirListeners();
         UserName.setText(new SaveSharedPreference().getUsername());
-
     }
 
     protected void onResume(Bundle savedInstance) {

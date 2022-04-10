@@ -46,45 +46,45 @@ public class MainActivity extends AppCompatActivity implements PermissionInterfa
         }
         else {
             setContentView(R.layout.login);
+
+            //初始化并发起权限申请
+            mPermissionHelper = new PermissionHelper(this, this);
+            mPermissionHelper.requestPermissions();
+
+            //这是最底下的那个跑马灯的特效
+            TextView huizhi = findViewById(R.id.under);
+            huizhi.setSelected(true);
+
+            //控件部分
+            mEtUser = findViewById(R.id.etUser);
+            mEtPassword = findViewById(R.id.etPassword);
+            mBtnLogin = findViewById(R.id.btn_login);
+            mBtnRegister = findViewById(R.id.btn_register);
+            mBtnForget = findViewById(R.id.btn_forget);
+            rBtAutomaticLogin = findViewById(R.id.rbt_automatic_login);
+
+            //注册
+            mBtnRegister.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = null;
+                    intent = new Intent(MainActivity.this, RegisterActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+            //忘记密码
+            mBtnForget.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = null;
+                    intent = new Intent(MainActivity.this, ForgetPasswordActivity.class);
+                    startActivity(intent);
+                }
+            });
+            //点击登录
+            mBtnLogin.setOnClickListener(this::onClick);
         }
-
-        //初始化并发起权限申请
-        mPermissionHelper = new PermissionHelper(this, this);
-        mPermissionHelper.requestPermissions();
-
-        //这是最底下的那个跑马灯的特效
-        TextView huizhi = findViewById(R.id.under);
-        huizhi.setSelected(true);
-
-        //控件部分
-        mEtUser = findViewById(R.id.etUser);
-        mEtPassword = findViewById(R.id.etPassword);
-        mBtnLogin = findViewById(R.id.btn_login);
-        mBtnRegister = findViewById(R.id.btn_register);
-        mBtnForget = findViewById(R.id.btn_forget);
-        rBtAutomaticLogin = findViewById(R.id.rbt_automatic_login);
-
-        //注册
-        mBtnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = null;
-                intent = new Intent(MainActivity.this, RegisterActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        //忘记密码
-        mBtnForget.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = null;
-                intent = new Intent(MainActivity.this, ForgetPasswordActivity.class);
-                startActivity(intent);
-            }
-        });
-        //点击登录
-        mBtnLogin.setOnClickListener(this::onClick);
     }
 
     //点击登录

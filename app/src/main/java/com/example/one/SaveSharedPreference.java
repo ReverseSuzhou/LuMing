@@ -42,9 +42,9 @@ public class SaveSharedPreference {
             try {
                 FileWriter fileWriter = new FileWriter(user);
                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                bufferedWriter.write(username);
-                bufferedWriter.write(password);
-                bufferedWriter.write(phone);
+                bufferedWriter.write(username + "\n");
+                bufferedWriter.write(password + "\n");
+                bufferedWriter.write(phone + "\n");
                 bufferedWriter.close();
                 fileWriter.close();
             } catch (IOException e) {
@@ -72,7 +72,9 @@ public class SaveSharedPreference {
 
     public void close () {
         if (user.exists()) {
+            System.out.println(user.exists());
             user.delete();
+            System.out.println(user.exists());
         }
     }
 }

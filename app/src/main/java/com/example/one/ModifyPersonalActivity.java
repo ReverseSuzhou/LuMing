@@ -94,10 +94,8 @@ public class ModifyPersonalActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
 
-
-
                             if(exit == 1) {
-                                ToastUtil.showMsg(getApplication(),"用户名称已存在");
+                                //ToastUtil.showMsg(getApplication(),"用户名称已存在");
                             }
                             else {
                                 String age = ageEDT.getText().toString();
@@ -114,7 +112,9 @@ public class ModifyPersonalActivity extends AppCompatActivity {
                                 String update = "update user set User_name = '" + newusername +"' , User_sex = '"+ sex + "' where User_phone = '"+nowuserphone+"' and User_name = '"+ oldusername +"' ;";
                                 db.update(update);
                                 cat.setUsername(newusername);
-                                ToastUtil.showMsg(getApplicationContext(),"成功");
+                                cat.close();
+                                cat.open();
+                                //ToastUtil.showMsg(getApplicationContext(),"成功");
 
                             }
 
