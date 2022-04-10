@@ -45,9 +45,7 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity
-            android:name=".MyReleaseAcitivity"
-            android:exported="false" />
+
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -60,7 +58,7 @@
         </provider>
 
         <activity
-            android:name=".MyReleaseAcitivity"
+            android:name=".MyReleaseActivity"
             android:exported="false" />
         <activity
             android:name=".ReplacePhoneActivity"

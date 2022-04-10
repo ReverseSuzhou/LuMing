@@ -19,7 +19,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MyReleaseAcitivity extends AppCompatActivity {
+public class MyReleaseActivity extends AppCompatActivity {
     //声明控件
     private ImageButton mBtn_back;
     private ImageButton mBtn_refresh;
@@ -61,7 +61,7 @@ public class MyReleaseAcitivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = null;
-                intent = new Intent(MyReleaseAcitivity.this,PersonalActivity.class);
+                intent = new Intent(MyReleaseActivity.this,PersonalActivity.class);
                 startActivity(intent);
             }
         });
@@ -127,8 +127,8 @@ public class MyReleaseAcitivity extends AppCompatActivity {
         if(data.size()>0){
             swipe_myrelease.setRefreshing(false);
             swipe_myrelease.setVisibility(View.VISIBLE);
-            adapter = new HomeAdapter(MyReleaseAcitivity.this,data);
-            rv_myrelease.setLayoutManager(new LinearLayoutManager(MyReleaseAcitivity.this));
+            adapter = new HomeAdapter(MyReleaseActivity.this,data);
+            rv_myrelease.setLayoutManager(new LinearLayoutManager(MyReleaseActivity.this));
             rv_myrelease.setAdapter(adapter);
         }
         else {

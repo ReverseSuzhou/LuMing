@@ -146,7 +146,7 @@ public class PersonalActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = null;
-                intent = new Intent(PersonalActivity.this, MyReleaseAcitivity.class);
+                intent = new Intent(PersonalActivity.this, MyReleaseActivity.class);
                 startActivity(intent);
             }
         });

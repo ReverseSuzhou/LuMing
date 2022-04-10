@@ -171,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements PermissionInterfa
                 Manifest.permission.READ_PHONE_STATE, //读取电话权限
                 Manifest.permission.CAMERA, //相机权限
                 Manifest.permission.SEND_SMS, //发送信息
+                //Manifest.permission.
                 Manifest.permission.ACCESS_FINE_LOCATION,
 
         };
