@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements PermissionInterfa
     private DBUtils dbUtils;
     private ResultSet rs;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

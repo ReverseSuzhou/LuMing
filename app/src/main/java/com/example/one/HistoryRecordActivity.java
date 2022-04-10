@@ -77,7 +77,8 @@ public class HistoryRecordActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     db = new DBUtils();
-                    rs = db.query("select * from forumt;");
+                    rs = db.query("select * from forumt, historyrecord where historyrecord.User_phone = '"+
+                            new SaveSharedPreference().getPhone() + "' and historyrecord.Forumt_id = forumt.Forumt_id ;");
                     try {
                         while(rs.next()){
                             Push po = new Push();

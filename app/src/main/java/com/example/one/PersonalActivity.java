@@ -49,7 +49,6 @@ public class PersonalActivity extends AppCompatActivity {
     private Button mBtn_apply;
     private Button mBtn_myrelease;
     private ImageButton mBtn_userpicture;
-    private Button rBt_cancellation;
 
     //更改头像的辅助声明
     int CAMERA_REQUEST_CODE=1;
@@ -80,7 +79,6 @@ public class PersonalActivity extends AppCompatActivity {
         mBtn_apply = findViewById(R.id.personal_page_button_association_apply);
         mBtn_userpicture = findViewById(R.id.personal_page_1_button_userpicture);
         mBtn_myrelease = findViewById(R.id.personal_page_button_myrelease);
-        rBt_cancellation = findViewById(R.id.personal_page_button_cancellation);
 
         //历史记录
         mBtn_history.setOnClickListener(new View.OnClickListener() {
@@ -136,18 +134,8 @@ public class PersonalActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        //注销账号
-        rBt_cancellation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SaveSharedPreference saveSharedPreference = new SaveSharedPreference();
-                saveSharedPreference.close();
-                Intent intent = null;
-                intent = new Intent(PersonalActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+
+
 
         //更改头像
         mBtn_userpicture.setOnClickListener(new View.OnClickListener() {

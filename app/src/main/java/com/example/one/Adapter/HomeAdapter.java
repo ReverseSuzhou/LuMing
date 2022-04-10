@@ -15,9 +15,17 @@ import android.widget.Toast;
 
 
 import com.example.one.Bean.Push;
+import com.example.one.DBUtils;
 import com.example.one.R;
 import com.example.one.Recive;
+import com.example.one.SaveSharedPreference;
 
+import java.sql.ResultSet;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -91,6 +99,21 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         in.putExtra("title", post.getForumt_title());
                         in.putExtra("user_phone",post.getUser_phone());
                         in.putExtra("id",data.get(position).getForumt_id());
+
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                String phone = new SaveSharedPreference().getPhone();
+                                String idnum = data.get(position).getForumt_id();
+                                DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                Timestamp time = new Timestamp(System.currentTimeMillis());
+
+                                String sql = "insert into historyrecord values( '"+ phone+"', "+idnum+", \""+time+"\");";
+                                DBUtils db = new DBUtils();
+                                db.update(sql);
+                            }
+                        }).start();
+
                         context.startActivity(in);
                 }
             });

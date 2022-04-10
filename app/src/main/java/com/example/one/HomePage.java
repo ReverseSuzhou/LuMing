@@ -19,6 +19,8 @@ import android.widget.Toast;
 import com.example.one.Adapter.HomeAdapter;
 import com.example.one.Bean.Push;
 
+import org.xml.sax.SAXException;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -130,6 +132,7 @@ public class HomePage extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = null;
                 intent = new Intent(HomePage.this,PersonalActivity.class);
+                intent.putExtra("username", new SaveSharedPreference().getUsername());
                 startActivity(intent);
             }
         });
