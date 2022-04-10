@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.one.Bean.Comment;
 import com.example.one.R;
+import com.example.one.SaveSharedPreference;
 
 import java.util.List;
 
@@ -71,7 +72,8 @@ public class ReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             //这是ord_item的内容
             final Comment post = data.get(i);
-            recyclerViewHolder.username.setText(post.getUser_phone());
+            SaveSharedPreference ssP = new SaveSharedPreference();
+            recyclerViewHolder.username.setText(ssP.getUsername());
             recyclerViewHolder.info.setText(post.getComment_text());
             recyclerViewHolder.time.setText(post.getComment_time());
 

@@ -378,10 +378,11 @@ public class Recive extends AppCompatActivity {
                 @Override
                 public void run() {
                     db = new DBUtils();
-                    rs = db.query("select * from comment where User_phone = "+ user_phone + " and Forumt_id = " + id_push+";");
+                    rs = db.query("select * from comment where User_phone = "+ user_phone + " and Forumt_id = " + id_push+" order by Comment_time desc;");
                     try {
                         while(rs.next()){
                             Comment co = new Comment();
+
                             co.setComment_id(Integer.toString(rs.getInt("Comment_id")));
                             co.setUser_phone(rs.getString("User_phone"));
                             co.setForumt_id(Integer.toString(rs.getInt("Forumt_id")));
@@ -442,11 +443,11 @@ public class Recive extends AppCompatActivity {
                                 db = new DBUtils();
                                 java.util.Date date1 = new Date(System.currentTimeMillis());
                                 //String str = date.toString();
-                                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                 String str = format.format(date1);
-                                java.sql.Date date2 = java.sql.Date.valueOf(str);
+
                                 //my_user;
-                                db.update("insert into comment(User_phone,Forumt_id,Comment_text,Comment_time) values("+user_phone+","+id_push+",\""+text_review.getText()+"\",\"" + date2 + "\");");
+                                db.update("insert into comment(User_phone,Forumt_id,Comment_text,Comment_time) values("+user_phone+","+id_push+",\""+text_review.getText()+"\",\"" + str + "\");");
                             }
                         });
                         t.start();
