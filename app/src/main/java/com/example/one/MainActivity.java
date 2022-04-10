@@ -3,10 +3,10 @@ package com.example.one;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements PermissionInterfa
     private Button mBtnRegister;
     private Button mBtnForget;
     private Button mBtnLogin;
+    private RadioButton rBtAutomaticLogin;
     private EditText mEtUser;
     private EditText mEtPassword;
     private PermissionHelper mPermissionHelper;
@@ -34,7 +35,16 @@ public class MainActivity extends AppCompatActivity implements PermissionInterfa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
+        SaveSharedPreference saveSharedPreference = new SaveSharedPreference();
+        if (SaveSharedPreference.getUser().exists()) {
+            saveSharedPreference.open();
+            Intent intent = null;
+            intent = new Intent(MainActivity.this, HomePage.class);
+            startActivity(intent);
+        }
+        else {
+            setContentView(R.layout.login);
+        }
 
         //初始化并发起权限申请
         mPermissionHelper = new PermissionHelper(this, this);
@@ -50,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements PermissionInterfa
         mBtnLogin = findViewById(R.id.btn_login);
         mBtnRegister = findViewById(R.id.btn_register);
         mBtnForget = findViewById(R.id.btn_forget);
+        rBtAutomaticLogin = findViewById(R.id.rbt_automatic_login);
 
         //注册
         mBtnRegister.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +113,9 @@ public class MainActivity extends AppCompatActivity implements PermissionInterfa
                                     saveSharedPreference.setUsername(rs.getString("User_name"));
                                     saveSharedPreference.setPassword(rs.getString("U_password"));
                                     saveSharedPreference.setPhone(rs.getString("User_phone"));
+                                    if (rBtAutomaticLogin.isChecked()) {
+                                        saveSharedPreference.open();
+                                    }
                                 }
                             }
                         } catch (SQLException e) {

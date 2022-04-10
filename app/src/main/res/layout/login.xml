@@ -33,6 +33,7 @@
         android:layout_marginTop="55sp"
         android:background="@drawable/background_text"
         android:hint="用户名："
+        android:maxLength="10"
         android:singleLine="true"
         android:padding="15dp"
         android:textColor="@color/black"
@@ -49,6 +50,7 @@
         android:textColor="@color/black"
         android:background="@drawable/background_text"
         android:hint="密 码："
+        android:maxLength="10"
         android:singleLine="true"
         android:padding="18dp"
         android:inputType="numberPassword"/>
@@ -100,11 +102,15 @@
         android:padding="16dp"
         android:text="登录"
         android:gravity="center"
-        android:textSize="20sp"
+        android:textSize="20sp"/>
 
-
-        />
-
+    <RadioButton
+        android:id="@+id/rbt_automatic_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:text="自动登陆"/>
 
     <!--最底下那个东西-->
     <TextView
