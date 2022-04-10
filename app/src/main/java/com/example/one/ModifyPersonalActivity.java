@@ -69,6 +69,7 @@ public class ModifyPersonalActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 newusername = user_nameEDT.getText().toString();
+                final boolean[] successful = new boolean[1];
 
                 if(newusername.isEmpty()) {
                     ToastUtil.showMsg(getApplicationContext(), "用户名不能为空");
@@ -95,7 +96,7 @@ public class ModifyPersonalActivity extends AppCompatActivity {
                             }
 
                             if(exit == 1) {
-                                //ToastUtil.showMsg(getApplication(),"用户名称已存在");
+                                successful[0] = false;//ToastUtil.showMsg(getApplication(),"用户名称已存在");
                             }
                             else {
                                 String age = ageEDT.getText().toString();
@@ -114,6 +115,7 @@ public class ModifyPersonalActivity extends AppCompatActivity {
                                 cat.setUsername(newusername);
                                 cat.close();
                                 cat.open();
+                                successful[0] = true;
                                 //ToastUtil.showMsg(getApplicationContext(),"成功");
 
                             }
@@ -122,6 +124,14 @@ public class ModifyPersonalActivity extends AppCompatActivity {
                         });
                         t.start();
                         ToastUtil.showMsg(getApplicationContext(),"修改成功");
+                        while(t.isAlive()) {
+                            if(!successful[0]) {
+                                ToastUtil.showMsg(getApplication(),"用户名称已存在");
+                            }
+                            else {
+                                ToastUtil.showMsg(getApplicationContext(),"成功");
+                            }
+                        }
 
                     } catch (Exception e) {
                         e.printStackTrace();
