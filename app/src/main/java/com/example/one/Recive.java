@@ -378,7 +378,8 @@ public class Recive extends AppCompatActivity {
                 @Override
                 public void run() {
                     db = new DBUtils();
-                    rs = db.query("select * from comment where User_phone = "+ user_phone + " and Forumt_id = " + id_push+" order by Comment_time desc;");
+                    SaveSharedPreference ssp = new SaveSharedPreference();
+                    rs = db.query("select * from comment where Forumt_id = " + id_push+" order by Comment_time desc;");
                     try {
                         while(rs.next()){
                             Comment co = new Comment();
@@ -445,9 +446,9 @@ public class Recive extends AppCompatActivity {
                                 //String str = date.toString();
                                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                 String str = format.format(PDate);
-
+                                SaveSharedPreference ssp = new SaveSharedPreference();
                                 //my_user;
-                                db.update("insert into comment(User_phone,Forumt_id,Comment_text,Comment_time) values("+user_phone+","+id_push+",\""+text_review.getText()+"\",\"" + str + "\");");
+                                db.update("insert into comment(User_phone,Forumt_id,Comment_text,Comment_time) values("+ssp.getPhone()+","+id_push+",\""+text_review.getText()+"\",\"" + str + "\");");
                             }
                         });
                         t.start();
