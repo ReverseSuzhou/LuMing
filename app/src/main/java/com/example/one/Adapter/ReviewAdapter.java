@@ -19,9 +19,12 @@ import android.widget.Toast;
 
 
 import com.example.one.Bean.Comment;
+import com.example.one.DBUtils;
 import com.example.one.R;
 import com.example.one.SaveSharedPreference;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class ReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -36,6 +39,10 @@ public class ReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private Boolean isfootview = true;  //是否有footview
     String ffid;
+    DBUtils db;
+    ResultSet rs;
+    Thread t;
+    String name;
 
     public ReviewAdapter(Context context, List<Comment> data){
         this.context = context;
@@ -72,8 +79,24 @@ public class ReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             //这是ord_item的内容
             final Comment post = data.get(i);
-            SaveSharedPreference ssP = new SaveSharedPreference();
-            recyclerViewHolder.username.setText(ssP.getUsername());
+            String phone = post.getUser_phone();
+            t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    db = new DBUtils();
+                    rs = db.query("select * from user where User_phone = "+ phone + ";");
+                    try {
+                        rs.next();
+                        name = rs.getString("User_name");
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+
+                }
+            });
+            t.start();
+            while(t.isAlive());
+            recyclerViewHolder.username.setText(name);
             recyclerViewHolder.info.setText(post.getComment_text());
             recyclerViewHolder.time.setText(post.getComment_time());
 
