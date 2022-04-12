@@ -25,7 +25,6 @@
             android:background="@drawable/background_text"
             android:gravity="center"
             android:text="社团申请"
-            android:textColor="#E91E63"
             android:textSize="30sp" />
         <!--返回按钮-->
         <ImageButton

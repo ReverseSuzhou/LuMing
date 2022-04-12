@@ -99,7 +99,7 @@
         android:id="@+id/editor_page_edittext_title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="请输入你的标题"
+        android:hint="请输入你的标题（不超过40字）"
         android:padding="10dp"
         android:textColor="@color/black"
         android:textSize="14sp" />
@@ -110,7 +110,7 @@
         android:layout_height="420dp"
         android:layout_marginTop="15dp"
         android:gravity="top"
-        android:hint="说点什么吧..."
+        android:hint="说点什么吧...（不超过500字）"
         android:padding="10dp"
         android:textColor="@color/black"
         android:textSize="18sp" />

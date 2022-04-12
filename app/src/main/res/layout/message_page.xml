@@ -26,7 +26,6 @@
             android:background="@drawable/background_text"
             android:gravity="center"
             android:text="消息"
-            android:textColor="#9C27B0"
             android:textSize="30sp" />
         <!--返回按钮-->
         <ImageButton
