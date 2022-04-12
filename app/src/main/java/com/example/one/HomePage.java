@@ -87,10 +87,6 @@ public class HomePage extends AppCompatActivity {
         sport = findViewById(R.id.main_page_2_button_Sport);
 
 
-
-
-
-
         swipe_home.setColorSchemeResources(android.R.color.holo_green_light,android.R.color.holo_red_light,android.R.color.holo_blue_light);
         swipe_home.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

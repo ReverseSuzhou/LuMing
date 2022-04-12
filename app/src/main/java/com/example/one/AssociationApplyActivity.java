@@ -25,12 +25,11 @@ import cn.smssdk.SMSSDK;
 public class AssociationApplyActivity extends AppCompatActivity {
     //声明控件
     private ImageButton mBtn_back;
-    private EditText mEt_email;
     private EditText mEt_student_name;
     private EditText mEt_community_name;
     private EditText mEt_phone_number;
     private Button mBtn_get_verification_code;
-    private EditText mEt_upload_verification_code;
+    private EditText mEt_upload_photo_evidence;
     private ImageButton mBtn_upload_photo;
     private Button mBtn_button_ensure;
 
@@ -53,12 +52,11 @@ public class AssociationApplyActivity extends AppCompatActivity {
 
         //控件部分
         mBtn_back = findViewById(R.id.association_apply_page_1_button_back);
-        mEt_email = findViewById(R.id.association_apply_page_edittext_email);
         mEt_student_name = findViewById(R.id.association_apply_page_edittext_student_name);
         mEt_community_name = findViewById(R.id.association_apply_page_edittext_community_name);
         mEt_phone_number = findViewById(R.id.association_apply_page_edittext_phone_number);
         mBtn_get_verification_code = findViewById(R.id.association_apply_page_button_get_verification_code);
-        mEt_upload_verification_code = findViewById(R.id.association_apply_page_edittext_upload_verification_code);
+        mEt_upload_photo_evidence = findViewById(R.id.association_apply_page_edittext_upload_photo_evidence);
         mBtn_upload_photo = findViewById(R.id.association_apply_page_button_upload_photo);
         mBtn_button_ensure = findViewById(R.id.association_apply_page_button_ensure);
 
@@ -155,7 +153,7 @@ public class AssociationApplyActivity extends AppCompatActivity {
         mBtn_button_ensure.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
 
-                if (mEt_email.getText().toString().equals("") || mEt_student_name.getText().toString().equals("") || mEt_community_name.getText().toString().equals("") || mEt_phone_number.getText().toString().equals("") || mEt_upload_verification_code.getText().toString().equals("")) {
+                if (mEt_student_name.getText().toString().equals("") || mEt_community_name.getText().toString().equals("") || mEt_phone_number.getText().toString().equals("") || mEt_upload_photo_evidence.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "信息不全", Toast.LENGTH_LONG).show();
                 } else if (mEt_community_name.getText().toString().length() > 20 || mEt_phone_number.getText().toString().length() > 20) {
                     Toast.makeText(getApplicationContext(), "社团名或手机号不符合规范", Toast.LENGTH_LONG).show();
@@ -197,7 +195,7 @@ public class AssociationApplyActivity extends AppCompatActivity {
                     while(t.isAlive());
                     if (tmp1 && tmp2) {
                         String phone = mEt_phone_number.getText().toString();
-                        String number = mEt_upload_verification_code.getText().toString();
+                        String number = mEt_upload_photo_evidence.getText().toString();
                         SMSSDK.submitVerificationCode("86", phone, number);
                     } else {
                         Toast.makeText(getApplicationContext(), "社团名不存在或个人信息错误", Toast.LENGTH_LONG).show();

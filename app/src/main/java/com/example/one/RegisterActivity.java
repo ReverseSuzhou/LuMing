@@ -15,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
@@ -127,6 +128,16 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "手机号格式不对", Toast.LENGTH_LONG).show();
                 }
                 else {
+                    DBUtils dbUtils = new DBUtils();
+                    ResultSet rs = dbUtils.query("select * from user where User_phone = '" + mEtPhoneNumber.getText().toString() + "';");
+                    try {
+                        if (rs.isBeforeFirst()) {
+                            Toast.makeText(getApplicationContext(), "手机号已注册", Toast.LENGTH_LONG).show();
+                            return ;
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                     //如果没问题则发送验证码
                     //Toast.makeText(getApplicationContext(), "验证码已发送", Toast.LENGTH_LONG).show();
                     String phone=mEtPhoneNumber.getText().toString();

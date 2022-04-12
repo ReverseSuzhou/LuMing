@@ -1,8 +1,5 @@
 package com.example.one.Adapter;
 
-
-
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;

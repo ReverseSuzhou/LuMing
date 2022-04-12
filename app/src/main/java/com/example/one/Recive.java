@@ -469,13 +469,11 @@ public class Recive extends AppCompatActivity {
                     try {
                         while(rs.next()){
                             Comment co = new Comment();
-
                             co.setComment_id(Integer.toString(rs.getInt("Comment_id")));
                             co.setUser_phone(rs.getString("User_phone"));
                             co.setForumt_id(Integer.toString(rs.getInt("Forumt_id")));
                             co.setComment_text(rs.getString("Comment_text"));
                             co.setComment_time(rs.getString("Comment_time"));
-
                             data.add(co);
                         };
                     } catch (SQLException throwables) {
