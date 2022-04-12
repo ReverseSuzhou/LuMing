@@ -513,7 +513,7 @@ public class Recive extends AppCompatActivity {
                 new AlertDialog.Builder(Recive.this);
         final View dialogView = LayoutInflater.from(Recive.this)
                 .inflate(R.layout.dialog_review,null);
-        customizeDialog.setTitle("评论");
+        customizeDialog.setTitle("评论(50字)");
         customizeDialog.setView(dialogView);
         customizeDialog.setPositiveButton("确定",
                 new DialogInterface.OnClickListener() {
