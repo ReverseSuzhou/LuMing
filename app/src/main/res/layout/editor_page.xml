@@ -17,14 +17,14 @@
         <!--发帖子文本显示框-->
         <TextView
             android:id="@+id/editor_page_1_textview_post"
-            android:layout_width="280dp"
+            android:layout_width="200dp"
             android:layout_height="50dp"
             android:layout_centerHorizontal="true"
             android:background="@drawable/background_text"
             android:gravity="center"
             android:text="发帖子"
             android:textColor="@color/black"
-            android:textSize="30sp"/>
+            android:textSize="30sp" />
         <!--返回按钮-->
         <ImageButton
             android:id="@+id/editor_page_1_button_back"
@@ -44,12 +44,61 @@
             android:textColor="@color/black"
             android:textSize="20sp" />
     </RelativeLayout>
+    <!--提示文本框-->
+    <TextView
+        android:id="@+id/editor_page_textview_tip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="请选择帖子标签"
+        android:padding="10dp"
+        android:textSize="14sp"/>
+    <!--按钮组-->
+    <RadioGroup
+        android:id="@+id/editor_page_radiogroup_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <!--学习按钮-->
+        <RadioButton
+            android:id="@+id/editor_page_3_radiobutton_study"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="学习"
+            android:checked="true"
+            android:layout_marginLeft="10dp"/>
+        <!--运动按钮-->
+        <RadioButton
+            android:id="@+id/editor_page_3_radiobutton_sport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="运动"
+            android:layout_marginLeft="15dp"/>
+        <!--社团活动按钮-->
+        <RadioButton
+            android:id="@+id/editor_page_3_radiobutton_association_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="社团活动"
+            android:layout_marginLeft="15dp"/>
+        <!--其他按钮-->
+        <RadioButton
+            android:id="@+id/editor_page_3_radiobutton_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="其他"
+            android:layout_marginLeft="15dp"/>
+    </RadioGroup>
+    <TextView
+        android:id="@+id/editor_page_textview_label_tip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="您选择的标签：学习"
+        android:padding="10dp"/>
     <!--输入标题框-->
     <EditText
         android:id="@+id/editor_page_edittext_title"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="15dp"
+        android:layout_height="50dp"
         android:hint="请输入你的标题"
         android:padding="10dp"
         android:textColor="@color/black"
@@ -58,14 +107,13 @@
     <EditText
         android:id="@+id/editor_page_edittext_text"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="420dp"
         android:layout_marginTop="15dp"
         android:gravity="top"
         android:hint="说点什么吧..."
         android:padding="10dp"
         android:textColor="@color/black"
         android:textSize="18sp" />
-
     <LinearLayout
         android:id="@+id/editor_page_linearlayout_2"
         android:layout_width="match_parent"

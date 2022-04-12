@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.one.util.ToastUtil;
@@ -27,6 +30,10 @@ public class EditorActivity extends AppCompatActivity implements PermissionInter
     private EditText mEt_title;
     private EditText mEt_text;
     private ImageButton mBtn_insert_picture;
+    private RadioGroup rg;
+    private RadioButton rb_study,rb_sport,rb_association_event,rb_other;
+    private TextView tv_label_tip;
+    private int id;
 
     DBUtils db;
     ResultSet rs;
@@ -46,6 +53,14 @@ public class EditorActivity extends AppCompatActivity implements PermissionInter
         mEt_title = findViewById(R.id.editor_page_edittext_title);
         mEt_text = findViewById(R.id.editor_page_edittext_text);
         mBtn_insert_picture = findViewById(R.id.editor_page_2_button_insert_picture);
+        rb_study = findViewById(R.id.editor_page_3_radiobutton_study);
+        rb_sport = findViewById(R.id.editor_page_3_radiobutton_sport);
+        rb_association_event = findViewById(R.id.editor_page_3_radiobutton_association_event);
+        rb_other = findViewById(R.id.editor_page_3_radiobutton_other);
+        rg = findViewById(R.id.editor_page_radiogroup_3);
+        tv_label_tip = findViewById(R.id.editor_page_textview_label_tip);
+
+        rg.setOnCheckedChangeListener(cBoxListener);
 
         //返回
         mBtn_back.setOnClickListener(new View.OnClickListener() {
@@ -77,9 +92,27 @@ public class EditorActivity extends AppCompatActivity implements PermissionInter
                                 Date PDate=new Date();
                                 DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                 String strDate=dateFormat.format(PDate);
-                                String sql = "insert into Forumt(F_title, Forumt_content,Forumt_date,User_phone,User_name,F_likenum,F_collectnum,F_commentnum) " +
+                                id=rg.getCheckedRadioButtonId();
+                                String sql,str_label;
+                                if(R.id.editor_page_3_radiobutton_study==id)
+                                {
+                                    str_label="study";
+                                }
+                                else if (R.id.editor_page_3_radiobutton_sport==id)
+                                {
+                                    str_label="sport";
+                                }
+                                else if (R.id.editor_page_3_radiobutton_association_event==id)
+                                {
+                                    str_label="association_event";
+                                }
+                                else
+                                {
+                                    str_label="other";
+                                }
+                                sql = "insert into Forumt(F_title, Forumt_content,Forumt_date,User_phone,User_name,F_likenum,F_collectnum,F_commentnum,F_lable) " +
                                         "values ('" + mEt_title.getText().toString() + "', '" + mEt_text.getText().toString()+ "','"+strDate+"','"+new SaveSharedPreference().getPhone()+"'" +
-                                        ",'"+new SaveSharedPreference().getUsername()+"','"+0+"','"+0+"','"+0+"');";
+                                        ",'"+new SaveSharedPreference().getUsername()+"','"+0+"','"+0+"','"+0+"','"+str_label+"');";
                                 DBUtils dbUtils = new DBUtils();
                                 try {
                                     new Thread(new Runnable() {
@@ -103,6 +136,32 @@ public class EditorActivity extends AppCompatActivity implements PermissionInter
             }
         });
     }
+
+    private RadioGroup.OnCheckedChangeListener cBoxListener =new RadioGroup.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(RadioGroup radioGroup, int i) {
+            if(R.id.editor_page_3_radiobutton_study==i)
+            {
+                tv_label_tip.setText("您选择的标签："+rb_study.getText().toString());
+                setTitle(String.valueOf(rb_study.getText()));
+            }
+            else if (R.id.editor_page_3_radiobutton_sport==i)
+            {
+                tv_label_tip.setText("您选择的标签："+rb_sport.getText().toString());
+                setTitle(String.valueOf(rb_sport.getText()));
+            }
+            else if (R.id.editor_page_3_radiobutton_association_event==i)
+            {
+                tv_label_tip.setText("您选择的标签："+rb_association_event.getText().toString());
+                setTitle(String.valueOf(rb_association_event.getText()));
+            }
+            else
+            {
+                tv_label_tip.setText("您选择的标签："+rb_other.getText().toString());
+                setTitle(String.valueOf(rb_other.getText()));
+            }
+        }
+    };
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

@@ -152,6 +152,7 @@
             android:drawableTop="@drawable/home"
             android:gravity="center"
             android:paddingLeft="0dp" />
+
         <RadioButton
             android:id="@+id/rb_association"
             android:layout_width="24dp"
@@ -160,7 +161,8 @@
             android:button="@null"
             android:drawableTop="@drawable/social"
             android:gravity="center"
-            android:paddingLeft="0dp"/>
+            android:paddingLeft="0dp" />
+
         <RadioButton
             android:id="@+id/rb_add"
             android:layout_width="24dp"
