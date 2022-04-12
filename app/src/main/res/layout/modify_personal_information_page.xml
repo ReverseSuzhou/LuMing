@@ -112,6 +112,35 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/modify_personal_information_page_linearlayout_6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="50dp">
+        <!--用户名文本显示框-->
+        <TextView
+            android:id="@+id/modify_personal_information_page_1_textview_email"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10sp"
+            android:text="邮箱:"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+        <!--输入昵称框-->
+        <EditText
+            android:id="@+id/modify_personal_information_page_1_edittext_exchange_email"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/background_text"
+            android:hint="新的邮箱"
+            android:textSize="25sp"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/modify_personal_information_page_linearlayout_3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

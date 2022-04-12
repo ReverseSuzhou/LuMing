@@ -10,7 +10,6 @@ import androidx.core.os.EnvironmentCompat;
 
 import android.Manifest;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
@@ -19,7 +18,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +25,7 @@ import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -52,6 +51,8 @@ public class PersonalActivity extends AppCompatActivity {
     private ImageButton mBtn_userpicture;
     TextView UserName;
     Button rBt_cancellation;
+
+    private PermissionHelper mPermissionHelper;
 
     //更改头像的辅助声明
     int CAMERA_REQUEST_CODE=1;
@@ -231,7 +232,6 @@ public class PersonalActivity extends AppCompatActivity {
         });
 //↑↑↑↑↑↑↑↑底下五个按钮的跳转功能↑↑↑↑↑↑↑↑
     }
-
 
     private void display() {
         View dialogView = LayoutInflater.from(this).inflate(R.layout.custom_alertdiag_layout,null);
@@ -419,6 +419,5 @@ public class PersonalActivity extends AppCompatActivity {
         }
         return tempFile;
     }
-
 
 }

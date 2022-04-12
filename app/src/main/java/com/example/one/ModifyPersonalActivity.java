@@ -20,6 +20,7 @@ public class ModifyPersonalActivity extends AppCompatActivity {
     EditText user_nameEDT;
     EditText signatureEDT;
     EditText ageEDT;
+    EditText emailEDT;
     Button okBTN;
     RadioGroup radiogroup;
 
@@ -64,6 +65,7 @@ public class ModifyPersonalActivity extends AppCompatActivity {
         ageEDT = findViewById(R.id.modify_personal_information_page_4_edittext_date);
         okBTN = findViewById(R.id.modify_personal_information_page_linearlayout_5_button_ensure);
         radiogroup = findViewById(R.id.modify_personal_information_page_3_radiogroup_sex);
+        emailEDT = findViewById(R.id.modify_personal_information_page_1_edittext_exchange_email);
 
         okBTN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +112,9 @@ public class ModifyPersonalActivity extends AppCompatActivity {
                                 else {
                                     sex ="";
                                 }
-                                String update = "update user set User_name = '" + newusername +"' , User_sex = '"+ sex + "' where User_phone = '"+nowuserphone+"' and User_name = '"+ oldusername +"' ;";
+                                String email = emailEDT.getText().toString();
+                                String signature = signatureEDT.getText().toString();
+                                String update = "update user set User_name = '" + newusername +"' , User_sex = '"+ sex + "' , U_signature = '" +signature+"' , User_email = '"+email+"' , User_age = "+age+" where User_phone = '"+nowuserphone+"' and User_name = '"+ oldusername +"' ;";
                                 db.update(update);
                                 cat.setUsername(newusername);
                                 cat.close();
