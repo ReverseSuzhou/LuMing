@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -43,6 +44,13 @@ public class HomePage extends AppCompatActivity {
     DBUtils db;
     ResultSet rs;
     Thread t;
+
+    private Button hotspot;
+    private Button reco;
+    private Button study;
+    private Button sport;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +81,11 @@ public class HomePage extends AppCompatActivity {
         swipe_home = findViewById(R.id.swipe_home);
         rv_home = findViewById(R.id.rv_home);
         error_home = findViewById(R.id.error_home);
+        hotspot = findViewById(R.id.main_page_2_button_HotSpot);
+        reco = findViewById(R.id.main_page_2_button_Recommend);
+        study = findViewById(R.id.main_page_2_button_Study);
+        sport = findViewById(R.id.main_page_2_button_Sport);
+
 
 
 
@@ -89,7 +102,6 @@ public class HomePage extends AppCompatActivity {
                 }
             }
         });
-
         //主页面
         mBtn_home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,6 +148,218 @@ public class HomePage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        hotspot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                swipe_home.setRefreshing(false);
+                data.clear();
+                try {
+                    t = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            db = new DBUtils();
+                            rs = db.query("select * from forumt order by Forumt_date desc;");
+                            try {
+                                while(rs.next()){
+                                    Push po = new Push();
+                                    po.setForumt_id(rs.getString("Forumt_id"));
+                                    po.setForumt_date(rs.getString("Forumt_date"));
+                                    po.setForumt_title(rs.getString("F_title"));
+                                    po.setForumt_content(rs.getString("Forumt_content"));
+                                    po.setF_likenum(rs.getInt("F_likenum"));
+                                    po.setF_collectnum(rs.getInt("F_collectnum"));
+                                    po.setF_commentnum(rs.getInt("F_commentnum"));
+                                    po.setUsername(rs.getString("User_name"));
+                                    po.setUser_phone(rs.getString("User_phone"));
+                                    data.add(po);
+                                };
+                            } catch (SQLException throwables) {
+                                throwables.printStackTrace();
+                            }
+                            try {
+                                db.connection.close();
+                            } catch (SQLException throwables) {
+                                throwables.printStackTrace();
+                            }
+
+                        }
+                    });
+                    t.start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                while(t.isAlive() == true);
+                if(data.size()>0){
+                    swipe_home.setRefreshing(false);
+                    swipe_home.setVisibility(View.VISIBLE);
+                    adapter = new HomeAdapter(HomePage.this,data);
+                    rv_home.setLayoutManager(new LinearLayoutManager(HomePage.this));
+                    rv_home.setAdapter(adapter);
+                }
+                else {
+                    error_home.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        reco.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                swipe_home.setRefreshing(false);
+                data.clear();
+                try {
+                    t = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            db = new DBUtils();
+                            rs = db.query("select * from forumt order by Forumt_date desc;");
+                            try {
+                                while(rs.next()){
+                                    Push po = new Push();
+                                    po.setForumt_id(rs.getString("Forumt_id"));
+                                    po.setForumt_date(rs.getString("Forumt_date"));
+                                    po.setForumt_title(rs.getString("F_title"));
+                                    po.setForumt_content(rs.getString("Forumt_content"));
+                                    po.setF_likenum(rs.getInt("F_likenum"));
+                                    po.setF_collectnum(rs.getInt("F_collectnum"));
+                                    po.setF_commentnum(rs.getInt("F_commentnum"));
+                                    po.setUsername(rs.getString("User_name"));
+                                    po.setUser_phone(rs.getString("User_phone"));
+                                    data.add(po);
+                                };
+                            } catch (SQLException throwables) {
+                                throwables.printStackTrace();
+                            }
+                            try {
+                                db.connection.close();
+                            } catch (SQLException throwables) {
+                                throwables.printStackTrace();
+                            }
+
+                        }
+                    });
+                    t.start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                while(t.isAlive() == true);
+                if(data.size()>0){
+                    swipe_home.setRefreshing(false);
+                    swipe_home.setVisibility(View.VISIBLE);
+                    adapter = new HomeAdapter(HomePage.this,data);
+                    rv_home.setLayoutManager(new LinearLayoutManager(HomePage.this));
+                    rv_home.setAdapter(adapter);
+                }
+                else {
+                    error_home.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        study.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                swipe_home.setRefreshing(false);
+                data.clear();
+                try {
+                    t = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            db = new DBUtils();
+                            rs = db.query("select * from forumt order by Forumt_date desc;");
+                            try {
+                                while(rs.next()){
+                                    Push po = new Push();
+                                    po.setForumt_id(rs.getString("Forumt_id"));
+                                    po.setForumt_date(rs.getString("Forumt_date"));
+                                    po.setForumt_title(rs.getString("F_title"));
+                                    po.setForumt_content(rs.getString("Forumt_content"));
+                                    po.setF_likenum(rs.getInt("F_likenum"));
+                                    po.setF_collectnum(rs.getInt("F_collectnum"));
+                                    po.setF_commentnum(rs.getInt("F_commentnum"));
+                                    po.setUsername(rs.getString("User_name"));
+                                    po.setUser_phone(rs.getString("User_phone"));
+                                    data.add(po);
+                                };
+                            } catch (SQLException throwables) {
+                                throwables.printStackTrace();
+                            }
+                            try {
+                                db.connection.close();
+                            } catch (SQLException throwables) {
+                                throwables.printStackTrace();
+                            }
+
+                        }
+                    });
+                    t.start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                while(t.isAlive() == true);
+                if(data.size()>0){
+                    swipe_home.setRefreshing(false);
+                    swipe_home.setVisibility(View.VISIBLE);
+                    adapter = new HomeAdapter(HomePage.this,data);
+                    rv_home.setLayoutManager(new LinearLayoutManager(HomePage.this));
+                    rv_home.setAdapter(adapter);
+                }
+                else {
+                    error_home.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        sport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                swipe_home.setRefreshing(false);
+                data.clear();
+                try {
+                    t = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            db = new DBUtils();
+                            rs = db.query("select * from forumt order by Forumt_date desc;");
+                            try {
+                                while(rs.next()){
+                                    Push po = new Push();
+                                    po.setForumt_id(rs.getString("Forumt_id"));
+                                    po.setForumt_date(rs.getString("Forumt_date"));
+                                    po.setForumt_title(rs.getString("F_title"));
+                                    po.setForumt_content(rs.getString("Forumt_content"));
+                                    po.setF_likenum(rs.getInt("F_likenum"));
+                                    po.setF_collectnum(rs.getInt("F_collectnum"));
+                                    po.setF_commentnum(rs.getInt("F_commentnum"));
+                                    po.setUsername(rs.getString("User_name"));
+                                    po.setUser_phone(rs.getString("User_phone"));
+                                    data.add(po);
+                                };
+                            } catch (SQLException throwables) {
+                                throwables.printStackTrace();
+                            }
+                            try {
+                                db.connection.close();
+                            } catch (SQLException throwables) {
+                                throwables.printStackTrace();
+                            }
+
+                        }
+                    });
+                    t.start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                while(t.isAlive() == true);
+                if(data.size()>0){
+                    swipe_home.setRefreshing(false);
+                    swipe_home.setVisibility(View.VISIBLE);
+                    adapter = new HomeAdapter(HomePage.this,data);
+                    rv_home.setLayoutManager(new LinearLayoutManager(HomePage.this));
+                    rv_home.setAdapter(adapter);
+                }
+                else {
+                    error_home.setVisibility(View.VISIBLE);
+                }
+            }
+        });
         try {
             Refresh();
         } catch (SQLException throwables) {
@@ -148,7 +372,6 @@ public class HomePage extends AppCompatActivity {
     }
 
     private void Refresh() throws SQLException {
-
         swipe_home.setRefreshing(false);
         data.clear();
         try {
@@ -187,8 +410,6 @@ public class HomePage extends AppCompatActivity {
             e.printStackTrace();
         }
         while(t.isAlive() == true);
-
-
         if(data.size()>0){
             swipe_home.setRefreshing(false);
             swipe_home.setVisibility(View.VISIBLE);
