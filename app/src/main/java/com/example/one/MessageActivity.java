@@ -68,7 +68,7 @@ public class MessageActivity extends AppCompatActivity {
         sql[0] = "select * from notice order by Notice_time desc;";
         sql[1] = "select * from user_forumt left join forumt on user_forumt.Forumt_id = forumt.Forumt_id where user_forumt.User_phone = '" + user.getPhone() + "';";
         sql[2] = "select * from focus left join forumt on focus_phone = User_phone where follow_phone = '" + user.getPhone() + "' order by Forumt_date desc;";
-        sql[3] = "select * from user_forumt left join comment on user_forumt.User_phone = comment.User_phone where user_forumt.User_phone = '" + user.getPhone() + "' order by Comment_time desc;";
+        sql[3] = "select * from comment left join user_forumt on user_forumt.User_phone = comment.User_phone where user_forumt.User_phone = '" + user.getPhone() + "' group by comment_id order by Comment_time desc;";
 
         swipe_message = findViewById(R.id.swipe_message);
         rv_message = findViewById(R.id.rv_message);
