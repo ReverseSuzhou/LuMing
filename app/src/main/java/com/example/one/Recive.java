@@ -54,6 +54,7 @@ public class Recive extends AppCompatActivity {
     private Button focus_or_not;
     private boolean iscollect = false;
     private boolean islike = false;
+    private boolean isfocus = false;
     private boolean related = false;
     private boolean focused = false;
     //User current_user = BmobUser.getCurrentUser(User.class);
@@ -87,6 +88,7 @@ public class Recive extends AppCompatActivity {
         initData();
         getiscollect();
         getislike();
+        getisfocus();
         swipe_review.setColorSchemeResources(android.R.color.holo_green_light,android.R.color.holo_red_light,android.R.color.holo_blue_light);
         swipe_review.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -265,12 +267,60 @@ public class Recive extends AppCompatActivity {
                     }
                 }
             });
+
+        focus_or_not.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isfocus) {
+                    try {
+                        t = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                db = new DBUtils();
+                                db.update("delete from focus where focus_phone = " + my_phone + " and follow_phone = "+ user_phone +";");
+                            }
+                        });
+                        t.start();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    while(t.isAlive());
+                    try {
+                        db.connection.close();
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                    isfocus = false;
+                    focus_or_not.setText("关注");
+                }
+                else {
+                    t = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            db = new DBUtils();
+                            //my_user;
+                            db.update("insert focus set focus_phone = " + my_phone + ",follow_phone = " + user_phone + ";");
+                        }
+                    });
+                    t.start();
+                    while(t.isAlive());
+                    isfocus = true;
+                    focus_or_not.setText("已关");
+                    try {
+                        db.connection.close();
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                }
+            }
+        });
         try {
             Refresh();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
+
         private void getislike() {
             try {
                 t = new Thread(new Runnable() {
@@ -340,6 +390,41 @@ public class Recive extends AppCompatActivity {
                 throwables.printStackTrace();
             }
         }
+    private void getisfocus(){
+        try {
+            t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    db = new DBUtils();
+                    //my_user;
+                    rs = db.query("select * from focus where focus_phone = "+ my_phone + " and follow_phone = "+ user_phone + ";");
+                    try {
+                        if(rs.isBeforeFirst()) {
+                            focus_or_not.setText("已关");
+                            isfocus = true;
+                        }
+                        else{
+                            focus_or_not.setText("关注");
+                            isfocus = false;
+                        }
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+
+
+                }
+            });
+            t.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        while(t.isAlive() == true);
+        try {
+            db.connection.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
     private void initData() {
 
         //第二种
@@ -369,6 +454,7 @@ public class Recive extends AppCompatActivity {
         error_review = findViewById(R.id.error_review);
         review = findViewById(R.id.review);
         rec_like = findViewById(R.id.rec_like);
+        focus_or_not = findViewById(R.id.focus_or_not);
     }
     void Refresh() throws SQLException{
         swipe_review.setRefreshing(false);
