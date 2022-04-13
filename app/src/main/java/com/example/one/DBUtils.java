@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class DBUtils {
     //要连接的数据库url,注意：此处连接的应该是服务器上的MySQl的地址
@@ -59,6 +60,7 @@ public class DBUtils {
         return rs;
     }
 
+
     public void update(String sql){
         try {
             //1、加载驱动
@@ -90,5 +92,16 @@ public class DBUtils {
         }
     }
 
-
+    public static Connection getConnection() throws SQLException {
+        return (Connection) DriverManager.getConnection(url,userName,password);
+    }
+    public static void closeConnection(Connection connection){
+        if(connection!=null){
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

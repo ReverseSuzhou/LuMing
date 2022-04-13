@@ -141,7 +141,7 @@ public class AssociationActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     db = new DBUtils();
-                    rs = db.query("select * from forumt;");
+                    rs = db.query("select * from forumt where F_lable = 'association_event' order by Forumt_date desc;");
                     try {
                         while(rs.next()){
                             Push po = new Push();

@@ -5,20 +5,31 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.one.util.ToastUtil;
 
+import java.io.ByteArrayOutputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 
 public class EditorActivity extends AppCompatActivity implements PermissionInterface {
     //声明控件
@@ -28,6 +39,7 @@ public class EditorActivity extends AppCompatActivity implements PermissionInter
     private EditText mEt_title;
     private EditText mEt_text;
     private ImageButton mBtn_insert_picture;
+    private ImageView mImg_picture;
 
     DBUtils db;
     ResultSet rs;
@@ -47,6 +59,7 @@ public class EditorActivity extends AppCompatActivity implements PermissionInter
         mEt_title = findViewById(R.id.editor_page_edittext_title);
         mEt_text = findViewById(R.id.editor_page_edittext_text);
         mBtn_insert_picture = findViewById(R.id.editor_page_2_button_insert_picture);
+        mImg_picture = findViewById(R.id.editor_page_imageview_picture);
 
         //返回
         mBtn_back.setOnClickListener(new View.OnClickListener() {
@@ -57,56 +70,50 @@ public class EditorActivity extends AppCompatActivity implements PermissionInter
                 startActivity(intent);
             }
         });
-
         mBtn_release.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 if (mEt_title.getText().toString().equals("") || mEt_text.getText().toString().equals("") ) {
                     Toast.makeText(getApplicationContext(), "标题和内容不能为空", Toast.LENGTH_LONG).show();
                 }
-                else {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(), "发布成功！", Toast.LENGTH_LONG).show();
-                            Date PDate=new Date();
-                            DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                            String strDate=dateFormat.format(PDate);
-                            String sql = "insert into Forumt(F_title, Forumt_content,Forumt_date,User_phone,User_name,F_likenum,F_collectnum,F_commentnum) " +
-                                    "values ('" + mEt_title.getText().toString() + "', '" + mEt_text.getText().toString()+ "','"+strDate+"','"+new SaveSharedPreference().getPhone()+"'" +
-                                    ",'"+new SaveSharedPreference().getUsername()+"','"+0+"','"+0+"','"+0+"');";
-                            DBUtils dbUtils = new DBUtils();
-                            try {
-                                new Thread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        dbUtils.update(sql);
-                                    }
-                                }).start();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            //跳转页面
-                            Intent intent = null;
-                            intent = new Intent(EditorActivity.this, HomePage.class);
-                            startActivity(intent);
-                        }
-                    });
-                }
-            }
-        });
-
-        //插入图片
-        mBtn_insert_picture.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-
+                else
+                {
+                    if(mEt_title.getText().toString().length()>40 || mEt_text.getText().toString().length()>500)
+                    {
+                        Toast.makeText(getApplicationContext(), "标题或内容字数超过最大限制", Toast.LENGTH_LONG).show();
                     }
-                });
+                    else
+                    {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(), "发布成功！", Toast.LENGTH_LONG).show();
+                                Date PDate=new Date();
+                                DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                String strDate=dateFormat.format(PDate);
+                                String sql = "insert into Forumt(F_title, Forumt_content,Forumt_date,User_phone,User_name,F_likenum,F_collectnum,F_commentnum) " +
+                                        "values ('" + mEt_title.getText().toString() + "', '" + mEt_text.getText().toString()+ "','"+strDate+"','"+new SaveSharedPreference().getPhone()+"'" +
+                                        ",'"+new SaveSharedPreference().getUsername()+"','"+0+"','"+0+"','"+0+"');";
+                                DBUtils dbUtils = new DBUtils();
+                                try {
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            dbUtils.update(sql);
+                                        }
+                                    }).start();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                //跳转页面
+                                Intent intent = null;
+                                intent = new Intent(EditorActivity.this, HomePage.class);
+                                startActivity(intent);
+                            }
+                        });
+                    }
+                }
+
             }
         });
     }

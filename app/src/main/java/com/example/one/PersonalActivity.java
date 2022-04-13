@@ -9,17 +9,19 @@ import androidx.core.content.FileProvider;
 import androidx.core.os.EnvironmentCompat;
 
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +30,11 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.example.one.util.StorePicturesUtil;
+import com.example.one.util.ToastUtil;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -52,6 +59,8 @@ public class PersonalActivity extends AppCompatActivity {
     private ImageButton mBtn_userpicture;
     TextView UserName;
     Button rBt_cancellation;
+
+    private PermissionHelper mPermissionHelper;
 
     //更改头像的辅助声明
     int CAMERA_REQUEST_CODE=1;
@@ -232,7 +241,6 @@ public class PersonalActivity extends AppCompatActivity {
 //↑↑↑↑↑↑↑↑底下五个按钮的跳转功能↑↑↑↑↑↑↑↑
     }
 
-
     private void display() {
         View dialogView = LayoutInflater.from(this).inflate(R.layout.custom_alertdiag_layout,null);
         Button btncamera = (Button) dialogView.findViewById(R.id.btncamera);
@@ -364,6 +372,7 @@ public class PersonalActivity extends AppCompatActivity {
         pickIntent.setType("image/*");
         startActivityForResult(pickIntent,ALBUM_REQUES_CODE);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -384,10 +393,34 @@ public class PersonalActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Uri uri = data.getData();
                 mBtn_userpicture.setImageURI(uri);
+
+                //以下方法将获取的uri转为String类型哦！
+                String []imgs={MediaStore.Images.Media.DATA};//将图片URI转换成存储路径
+                Cursor cursor=this.managedQuery(uri, imgs, null, null, null);
+                int index=cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                cursor.moveToFirst();
+                String path=cursor.getString(index);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ToastUtil.showMsg(PersonalActivity.this, path);
+                                    StorePicturesUtil storePicturesUtil = new StorePicturesUtil();
+                                    storePicturesUtil.storeImg(path, "这里写文件的名字");
+                                }
+                            }).start();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }});
+
             }
         }
     }
-
 
 
 
@@ -419,6 +452,5 @@ public class PersonalActivity extends AppCompatActivity {
         }
         return tempFile;
     }
-
 
 }

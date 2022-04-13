@@ -25,7 +25,6 @@ import cn.smssdk.SMSSDK;
 public class AssociationApplyActivity extends AppCompatActivity {
     //声明控件
     private ImageButton mBtn_back;
-    private EditText mEt_student_id;
     private EditText mEt_student_name;
     private EditText mEt_community_name;
     private EditText mEt_phone_number;
@@ -53,7 +52,6 @@ public class AssociationApplyActivity extends AppCompatActivity {
 
         //控件部分
         mBtn_back = findViewById(R.id.association_apply_page_1_button_back);
-        mEt_student_id = findViewById(R.id.association_apply_page_edittext_student_id);
         mEt_student_name = findViewById(R.id.association_apply_page_edittext_student_name);
         mEt_community_name = findViewById(R.id.association_apply_page_edittext_community_name);
         mEt_phone_number = findViewById(R.id.association_apply_page_edittext_phone_number);
@@ -155,7 +153,7 @@ public class AssociationApplyActivity extends AppCompatActivity {
         mBtn_button_ensure.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
 
-                if (mEt_student_id.getText().toString().equals("") || mEt_student_name.getText().toString().equals("") || mEt_community_name.getText().toString().equals("") || mEt_phone_number.getText().toString().equals("") || mEt_upload_photo_evidence.getText().toString().equals("")) {
+                if (mEt_student_name.getText().toString().equals("") || mEt_community_name.getText().toString().equals("") || mEt_phone_number.getText().toString().equals("") || mEt_upload_photo_evidence.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "信息不全", Toast.LENGTH_LONG).show();
                 } else if (mEt_community_name.getText().toString().length() > 20 || mEt_phone_number.getText().toString().length() > 20) {
                     Toast.makeText(getApplicationContext(), "社团名或手机号不符合规范", Toast.LENGTH_LONG).show();
