@@ -15,6 +15,7 @@ import android.Manifest;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
@@ -95,7 +96,15 @@ public class PersonalActivity extends AppCompatActivity {
     private final ActivityResultLauncher<CropImageResult> mActLauncherCrop =
             registerForActivityResult(new CropImage(), result -> {
                 //裁剪之后的图片Uri，接下来可以进行压缩处理
-                mBtn_userpicture.setImageURI(result);
+                Bitmap bmp;
+                try {
+                    bmp = CompressImage.getBitmapFormUri(PersonalActivity.this, result);
+                    mBtn_userpicture.setImageBitmap(bmp);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
             });
 
     @Override
