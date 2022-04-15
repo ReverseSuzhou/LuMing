@@ -1,5 +1,8 @@
 package com.example.one;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,25 +54,49 @@ public class PersonalActivity extends AppCompatActivity {
     private ImageButton mBtn_userpicture;
     TextView UserName;
     Button rBt_cancellation;
+    Uri photouri;
 
-    private PermissionHelper mPermissionHelper;
+    ActivityResultLauncher<String> perssion = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(),
+            new ActivityResultCallback<Boolean>() {
+                @Override
+                public void onActivityResult(Boolean result) {
+                    if (result) {
+//                        Toast.makeText(getApplicationContext(),"wonderful", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
 
-    //更改头像的辅助声明
-    int CAMERA_REQUEST_CODE=1;
-    int ALBUM_REQUES_CODE=2;
+    ActivityResultLauncher<Uri>  req_camera = registerForActivityResult(
+            new ActivityResultContracts.TakePicture(),
+            new ActivityResultCallback<Boolean>() {
+                @Override
+                public void onActivityResult(Boolean result) {
+                    if (result) {
+                        launchImageCrop(photouri);
 
-    //用于保存拍照图片的uri
-    private Uri mCameraUri;
+                    }
+                }
+            }
+    );
 
-    // 用于保存图片的文件路径，Android 10以下使用图片路径访问图片
-    private String mCameraImagePath;
+    ActivityResultLauncher<String> req_album = registerForActivityResult(
+            new ActivityResultContracts.GetContent(),
+            new ActivityResultCallback<Uri>() {
+                @Override
+                public void onActivityResult(Uri result) {
+                    launchImageCrop(result);
 
-    // 是否是Android 10以上手机
-    private boolean isAndroidQ = Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q;
+                }
+            }
+    );
 
-    // 申请相机权限的requestCode
-    private static final int PERMISSION_CAMERA_REQUEST_CODE = 0x00000012;
-    private static final int PERMISSION_ALBUM_REQUEST_CODE = 0x00000013;
+    //裁剪图片注册
+    private final ActivityResultLauncher<CropImageResult> mActLauncherCrop =
+            registerForActivityResult(new CropImage(), result -> {
+                //裁剪之后的图片Uri，接下来可以进行压缩处理
+                mBtn_userpicture.setImageURI(result);
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -241,14 +268,17 @@ public class PersonalActivity extends AppCompatActivity {
         btncamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkPermissionAndCamera();
+            perssion.launch(Manifest.permission.CAMERA);
+            photouri = createImageUri();
+            req_camera.launch(photouri);
             }
         });
 
         btnalbum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkPermissionAndAlbum();
+                perssion.launch(Manifest.permission.CAMERA);
+                req_album.launch("image/*");
             }
         });
 
@@ -261,133 +291,13 @@ public class PersonalActivity extends AppCompatActivity {
     }
 
     /**
-     * 检查权限并拍照。
-     * 调用相机前先检查权限。
+     * 开启裁剪图片
+     *
+     * @param sourceUri 原图片uri
      */
-    private void checkPermissionAndCamera() {
-        int hasCameraPermission = ContextCompat.checkSelfPermission(getApplication(),
-                Manifest.permission.CAMERA);
-        if (hasCameraPermission == PackageManager.PERMISSION_GRANTED) {
-            //有调起相机拍照。
-            openCamera();
-        } else {
-            //没有权限，申请权限。
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},
-                    PERMISSION_CAMERA_REQUEST_CODE);
-        }
+    private void launchImageCrop(Uri sourceUri) {
+        mActLauncherCrop.launch(new CropImageResult(sourceUri, 1, 1));
     }
-    private void checkPermissionAndAlbum() {
-        int hasCameraPermission = ContextCompat.checkSelfPermission(getApplication(),
-                Manifest.permission.CAMERA);
-        if (hasCameraPermission == PackageManager.PERMISSION_GRANTED) {
-            //有调起相机拍照。
-            openalbum();
-        } else {
-            //没有权限，申请权限。
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    PERMISSION_ALBUM_REQUEST_CODE);
-        }
-    }
-
-
-    /**
-     * 处理权限申请的回调。
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSION_CAMERA_REQUEST_CODE) {
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //允许权限，有调起相机拍照。
-                openCamera();
-            } else {
-                //拒绝权限，弹出提示框。
-                Toast.makeText(this, "拍照权限被拒绝", Toast.LENGTH_LONG).show();
-            }
-        }
-        if (requestCode == PERMISSION_ALBUM_REQUEST_CODE) {
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //允许权限，有调起相机拍照。
-                openalbum();
-            } else {
-                //拒绝权限，弹出提示框。
-                Toast.makeText(this, "相册权限被拒绝", Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
-    /**
-     * 调起相机拍照
-     */
-    private void openCamera() {
-        Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // 判断是否有相机
-        if (captureIntent.resolveActivity(getPackageManager()) != null) {
-            File photoFile = null;
-            Uri photoUri = null;
-
-            if (isAndroidQ) {
-                // 适配android 10
-                photoUri = createImageUri();
-            } else {
-                try {
-                    photoFile = createImageFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                if (photoFile != null) {
-                    mCameraImagePath = photoFile.getAbsolutePath();
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        //适配Android 7.0文件权限，通过FileProvider创建一个content类型的Uri
-                        photoUri = FileProvider.getUriForFile(this, getPackageName() + ".fileprovider", photoFile);
-                    } else {
-                        photoUri = Uri.fromFile(photoFile);
-                    }
-                }
-            }
-
-            mCameraUri = photoUri;
-            if (photoUri != null) {
-                captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                captureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                startActivityForResult(captureIntent, CAMERA_REQUEST_CODE);
-            }
-        }
-    }
-
-
-    private void openalbum() {
-        Intent pickIntent = new Intent(Intent.ACTION_PICK);
-        pickIntent.setType("image/*");
-        startActivityForResult(pickIntent,ALBUM_REQUES_CODE);
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAMERA_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                if (isAndroidQ) {
-                    // Android 10 使用图片uri加载
-                    mBtn_userpicture.setImageURI(mCameraUri);
-                } else {
-                    // 使用图片路径加载
-                    mBtn_userpicture.setImageBitmap(BitmapFactory.decodeFile(mCameraImagePath));
-                }
-            } else {
-                Toast.makeText(this,"取消",Toast.LENGTH_LONG).show();
-            }
-        }
-        if (requestCode == ALBUM_REQUES_CODE) {
-            if (resultCode == RESULT_OK) {
-                Uri uri = data.getData();
-                mBtn_userpicture.setImageURI(uri);
-            }
-        }
-    }
-
 
 
 
@@ -404,20 +314,6 @@ public class PersonalActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * 创建保存图片的文件
-     */
-    private File createImageFile() throws IOException {
-        String imageName = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        if (!storageDir.exists()) {
-            storageDir.mkdir();
-        }
-        File tempFile = new File(storageDir, imageName);
-        if (!Environment.MEDIA_MOUNTED.equals(EnvironmentCompat.getStorageState(tempFile))) {
-            return null;
-        }
-        return tempFile;
-    }
+
 
 }
