@@ -57,13 +57,26 @@ public class PersonalActivity extends AppCompatActivity {
     Button rBt_cancellation;
     Uri photouri;
 
-    ActivityResultLauncher<String> perssion = registerForActivityResult(
+    ActivityResultLauncher<String> perssion_camera = registerForActivityResult(
             new ActivityResultContracts.RequestPermission(),
             new ActivityResultCallback<Boolean>() {
                 @Override
                 public void onActivityResult(Boolean result) {
                     if (result) {
 //                        Toast.makeText(getApplicationContext(),"wonderful", Toast.LENGTH_LONG).show();
+                        photouri = createImageUri();
+                        req_camera.launch(photouri);
+                    }
+                }
+            });
+    ActivityResultLauncher<String> perssion_album = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(),
+            new ActivityResultCallback<Boolean>() {
+                @Override
+                public void onActivityResult(Boolean result) {
+                    if (result) {
+//                        Toast.makeText(getApplicationContext(),"wonderful", Toast.LENGTH_LONG).show();
+                        req_album.launch("image/*");
                     }
                 }
             });
@@ -277,17 +290,16 @@ public class PersonalActivity extends AppCompatActivity {
         btncamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            perssion.launch(Manifest.permission.CAMERA);
-            photouri = createImageUri();
-            req_camera.launch(photouri);
+            perssion_camera.launch(Manifest.permission.CAMERA);
+
             }
         });
 
         btnalbum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                perssion.launch(Manifest.permission.CAMERA);
-                req_album.launch("image/*");
+                perssion_album.launch(Manifest.permission.CAMERA);
+
             }
         });
 

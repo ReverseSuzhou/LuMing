@@ -1,17 +1,24 @@
 package com.example.one;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +30,7 @@ import android.widget.Toast;
 import com.example.one.util.ToastUtil;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,6 +52,71 @@ public class EditorActivity extends AppCompatActivity implements PermissionInter
     DBUtils db;
     ResultSet rs;
     Thread t;
+
+    Uri photouri;
+
+    ActivityResultLauncher<String> perssion_camera = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(),
+            new ActivityResultCallback<Boolean>() {
+                @Override
+                public void onActivityResult(Boolean result) {
+                    if (result) {
+//                        Toast.makeText(getApplicationContext(),"wonderful", Toast.LENGTH_LONG).show();
+                        photouri = createImageUri();
+                        req_camera.launch(photouri);
+                    }
+                }
+            });
+    ActivityResultLauncher<String> perssion_album = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(),
+            new ActivityResultCallback<Boolean>() {
+                @Override
+                public void onActivityResult(Boolean result) {
+                    if (result) {
+//                        Toast.makeText(getApplicationContext(),"wonderful", Toast.LENGTH_LONG).show();
+                        req_album.launch("image/*");
+                    }
+                }
+            });
+
+    ActivityResultLauncher<Uri>  req_camera = registerForActivityResult(
+            new ActivityResultContracts.TakePicture(),
+            new ActivityResultCallback<Boolean>() {
+                @Override
+                public void onActivityResult(Boolean result) {
+                    if (result) {
+                        launchImageCrop(photouri);
+
+                    }
+                }
+            }
+    );
+
+    ActivityResultLauncher<String> req_album = registerForActivityResult(
+            new ActivityResultContracts.GetContent(),
+            new ActivityResultCallback<Uri>() {
+                @Override
+                public void onActivityResult(Uri result) {
+                    launchImageCrop(result);
+
+                }
+            }
+    );
+
+    //裁剪图片注册
+    private final ActivityResultLauncher<CropImageResult> mActLauncherCrop =
+            registerForActivityResult(new CropImage(), result -> {
+                //裁剪之后的图片Uri，接下来可以进行压缩处理
+                Bitmap bmp;
+                try {
+                    bmp = CompressImage.getBitmapFormUri(EditorActivity.this, result);
+                    mImg_picture.setImageBitmap(bmp);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +189,13 @@ public class EditorActivity extends AppCompatActivity implements PermissionInter
 
             }
         });
+        mBtn_insert_picture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                display();
+            }
+        });
+
     }
 
     @Override
@@ -161,5 +241,59 @@ public class EditorActivity extends AppCompatActivity implements PermissionInter
     private void initViews() {
         //已经拥有所需权限，可以放心操作任何东西了
     }
+
+    private void display() {
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.custom_alertdiag_layout,null);
+        Button btncamera = (Button) dialogView.findViewById(R.id.btncamera);
+        Button btnalbum = (Button) dialogView.findViewById(R.id.btnalbum);
+
+        btncamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                perssion_camera.launch(Manifest.permission.CAMERA);
+
+            }
+        });
+
+        btnalbum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                perssion_album.launch(Manifest.permission.CAMERA);
+
+            }
+        });
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        AlertDialog dialog = builder.create();
+        dialog.setView(dialogView);
+        dialog.show();
+    }
+
+    /**
+     * 开启裁剪图片
+     *
+     * @param sourceUri 原图片uri
+     */
+    private void launchImageCrop(Uri sourceUri) {
+        mActLauncherCrop.launch(new CropImageResult(sourceUri, 1, 1));
+    }
+
+
+
+    /**
+     * 创建图片地址uri,用于保存拍照后的照片 Android 10以后使用这种方法
+     */
+    private Uri createImageUri() {
+        String status = Environment.getExternalStorageState();
+        // 判断是否有SD卡,优先使用SD卡存储,当没有SD卡时使用手机存储
+        if (status.equals(Environment.MEDIA_MOUNTED)) {
+            return getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
+        } else {
+            return getContentResolver().insert(MediaStore.Images.Media.INTERNAL_CONTENT_URI, new ContentValues());
+        }
+    }
+
 
 }
