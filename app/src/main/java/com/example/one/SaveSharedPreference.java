@@ -11,6 +11,7 @@ import java.io.IOException;
 public class SaveSharedPreference {
     private static String username=null;
     private static String password=null;
+    private static int userId;
     private static String phone=null;
     private final static File user = new File("data/data/com.example.one/user.txt");
 
@@ -21,6 +22,9 @@ public class SaveSharedPreference {
     public void setPassword (String password) {
         this.password = password;
     }
+    public void setUserId (int userId) {
+        this.userId = userId;
+    }
 
     public void setPhone (String phone) {
         this.phone = phone;
@@ -29,6 +33,7 @@ public class SaveSharedPreference {
     public String getUsername () { return username; }
     public String getPassword () { return password; }
     public String getPhone () { return phone; }
+    public int getUserId() {return userId;}
 
     public void open () {
         if (!user.exists()) {
@@ -44,6 +49,7 @@ public class SaveSharedPreference {
                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
                 bufferedWriter.write(username + "\n");
                 bufferedWriter.write(password + "\n");
+                bufferedWriter.write(userId + "\n");
                 bufferedWriter.write(phone + "\n");
                 bufferedWriter.close();
                 fileWriter.close();
@@ -57,7 +63,9 @@ public class SaveSharedPreference {
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
                 username = bufferedReader.readLine();
                 password = bufferedReader.readLine();
+                userId = Integer.parseInt(bufferedReader.readLine());
                 phone = bufferedReader.readLine();
+
                 bufferedReader.close();
                 fileReader.close();
             } catch (IOException e) {

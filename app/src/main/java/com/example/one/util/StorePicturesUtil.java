@@ -9,9 +9,13 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 
+import com.example.one.DBUtils;
+import com.example.one.SaveSharedPreference;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -34,12 +38,46 @@ public class StorePicturesUtil {
     Connection connection=null;
     PreparedStatement ps=null;
     ResultSet rs=null;
+    Thread t;
 
+    public String bitmapToString(Bitmap bitmap){
+        //用户在活动中上传的图片转换成String进行存储
+        if(bitmap!=null){
+//            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+//            byte[] bytes = stream.toByteArray();// 转为byte数组
+//            String string=Base64.encodeToString(bytes,Base64.DEFAULT);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] imageBytes = baos.toByteArray();
+            String string = Base64.encodeToString(imageBytes, Base64.DEFAULT);
 
+            int n = string.length();
+            System.out.println("n = " + n);
+            return string;
+        }
+        else{
+            return "";
+        }
+    }
 
-    //这里的strFile指的是文件的路径
-    public void storeImg(String strFile, String Caption){
-        //System.out.println("文件路径" + strFile);
+    public Bitmap stringToBitmap(String string){
+        //数据库中的String类型转换成Bitmap
+        if(string!=null){
+            byte[] bytes= Base64.decode(string,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+            System.out.println("我在这里！！！");
+            return bitmap;
+        }
+        else {
+            System.out.println("压根什么都没有");
+            return null;
+        }
+    }
+
+    public int getNum(){ //帖子中的
+        int ans = 0;
+
         try {
             //1、加载驱动
             Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -54,27 +92,188 @@ public class StorePicturesUtil {
             System.out.println("连接数据库成功！！（图片2）");
             //3.sql语句
             //4.获取用于向数据库发送sql语句的ps
+            ps = connection.prepareStatement("SELECT MAX(Pic_id) FROM Pic");
+            rs = ps.executeQuery();
+            int id = 0;
+            while(rs.next()) {
+                id = rs.getInt(1)+1;
+            }
+            ans = id;
+
+        }catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("插入图片失败");
+        }
+        finally {
+            if(connection!=null){
+                try {
+                    connection.close();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+        return ans;
+    }
+
+    public void storeForumtImg (Bitmap bitmap){ //帖子中的
+        int ans = 0;
+        String picture = bitmapToString(bitmap);
+        try {
+            //1、加载驱动
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            System.out.println("驱动加载成功！！！（图片2）");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        try {
+            //2、获取与数据库的连接
+            connection = DriverManager.getConnection(url, userName, password);
+            System.out.println("连接数据库成功！！（图片2）");
+            //3.sql语句
+            //4.获取用于向数据库发送sql语句的ps
+            SaveSharedPreference saveSharedPreference = new SaveSharedPreference();
+            int userId = saveSharedPreference.getUserId(); //获取当前用户id
 
             ps = connection.prepareStatement("SELECT MAX(Pic_id) FROM Pic");
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             int id = 0;
-            File file = new File(strFile);
-            FileInputStream fis = new FileInputStream(file);
+            while(rs.next()) {
+                id = rs.getInt(1)+1;
+            }
 
+            ps = connection.prepareStatement("SELECT MAX(Pic_id) FROM Pic");
+            rs = ps.executeQuery();
+            int Forumt_id = 0;
+            while(rs.next()) {
+                Forumt_id = rs.getInt(1)+1;
+            }
+
+            ps = connection.prepareStatement("insert "
+                    + "into Pic values (?,?,?,?,?,?)"); //三个问号对应下面的三个
+            ps.setInt(1, id);  //主键，也就是编号
+            ps.setString(2, "帖子图片"); //图片描述
+            ps.setString(3, picture); //图片
+            ps.setInt(4, saveSharedPreference.getUserId()); //用户id
+            ps.setInt(5, Forumt_id); //帖子id
+            ps.setInt(6, 0); //不是头像
+
+            ps.executeUpdate();
+
+        }catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("插入图片失败");
+        }
+        finally {
+            if(connection!=null){
+                try {
+                    connection.close();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    //这里的strFile指的是文件的路径
+    public void storeHeadImg(Bitmap bitmap){ //type = 1表示是头像，type = 0表示帖子
+        String picture = bitmapToString(bitmap);
+        try {
+            //1、加载驱动
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            System.out.println("驱动加载成功！！！（图片2）");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        try {
+            //2、获取与数据库的连接
+            connection = DriverManager.getConnection(url, userName, password);
+            System.out.println("连接数据库成功！！（图片2）");
+            //3.sql语句
+            //4.获取用于向数据库发送sql语句的ps
+            SaveSharedPreference saveSharedPreference = new SaveSharedPreference();
+            int userId = saveSharedPreference.getUserId(); //获取当前用户id
+            String findBefore = "select Pic_id from Pic where User_id=" + userId + " and type=1;";
+            Boolean hasChange = false;
+            int pic_id = 0;
+
+            ps = connection.prepareStatement(findBefore);
+            rs = ps.executeQuery();
+            while(rs.next()) {
+                pic_id = rs.getInt(1);
+            }
+            if (pic_id != 0)
+                hasChange = true;
+//            try {
+//                t = new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        rs = dbUtils.query(findBefore);
+//                    }
+//                });
+//                t.start();
+//                while (t.isAlive()) ;
+//                if (rs.isBeforeFirst()){ //如果之前有
+//                    System.out.println("here");
+//                    hasChange = true;
+//                    pic_id = rs.getInt("Pic_id");
+//                    System.out.println("Pic_id = " + pic_id);
+//                }
+//                else{
+//                    System.out.println("用户未更新过头像");
+//                }
+//            } catch (Exception e) {
+//                System.out.println("删除以前的头像发生了错误");
+//                e.printStackTrace();
+//            }
+
+
+            if (hasChange){ //如果之前有头像，就删除
+                System.out.println("重复的id = " + pic_id);
+                DBUtils dbUtils = new DBUtils();
+                String sql = "delete from Pic where Pic_id=" + pic_id + ";"; //删除
+                System.out.println("sql = " + sql);
+                ps = connection.prepareStatement(sql);
+                ps.executeUpdate();
+//                try {
+//                    t = new Thread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            dbUtils.update(sql);
+//                        }
+//                    });
+//                    System.out.println("删除头像成功");
+//                } catch (Exception e) {
+//                    System.out.println("删除之前的头像发生了错误");
+//                    e.printStackTrace();
+//                }
+            }
+
+            ps = connection.prepareStatement("SELECT MAX(Pic_id) FROM Pic");
+            rs = ps.executeQuery();
+            int id = 0;
             while(rs.next()) {
                 id = rs.getInt(1)+1;
             }
             System.out.println("id = " + id);
             ps = connection.prepareStatement("insert "
-                    + "into Pic values (?,?,?)"); //三个问号对应下面的三个
+                    + "into Pic values (?,?,?,?,?,?)"); //三个问号对应下面的三个
             ps.setInt(1, id);  //主键，也就是编号
-            ps.setString(2, Caption); //图片描述
+            ps.setString(2, "头像"); //图片描述
+            ps.setString(3, picture); //图片
+            ps.setInt(4, saveSharedPreference.getUserId()); //用户id
+            ps.setInt(5, 0); //帖子id
+            ps.setInt(6, 1); //是头像
             //ps.setString(3, imageString);
-            ps.setBinaryStream(3, fis, (int) file.length());  //文件本身
+            //ps.setBinaryStream(3, fis, (int) file.length());  //文件本身
+
+
             ps.executeUpdate();
         }catch (Exception e) {
             e.printStackTrace();
-            System.out.println("fail");
+            System.out.println("插入图片失败");
         }
         finally {
             if(connection!=null){

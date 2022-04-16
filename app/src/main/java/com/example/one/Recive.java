@@ -45,7 +45,7 @@ public class Recive extends AppCompatActivity {
     private ImageView rec_like;
     private String my_phone;
     private String user_phone;
-
+    private ImageView picture;
 
     private CircleImageView recive_headpic;
 

@@ -15,6 +15,7 @@ import android.Manifest;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -31,8 +32,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.one.util.StorePicturesUtil;
+import com.example.one.util.ToastUtil;
+
 import java.io.File;
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -56,6 +61,7 @@ public class PersonalActivity extends AppCompatActivity {
     TextView UserName;
     Button rBt_cancellation;
     Uri photouri;
+    ResultSet rs;
 
     ActivityResultLauncher<String> perssion_camera = registerForActivityResult(
             new ActivityResultContracts.RequestPermission(),
@@ -69,6 +75,7 @@ public class PersonalActivity extends AppCompatActivity {
                     }
                 }
             });
+
     ActivityResultLauncher<String> perssion_album = registerForActivityResult(
             new ActivityResultContracts.RequestPermission(),
             new ActivityResultCallback<Boolean>() {
@@ -88,7 +95,6 @@ public class PersonalActivity extends AppCompatActivity {
                 public void onActivityResult(Boolean result) {
                     if (result) {
                         launchImageCrop(photouri);
-
                     }
                 }
             }
@@ -113,8 +119,27 @@ public class PersonalActivity extends AppCompatActivity {
                 try {
                     bmp = CompressImage.getBitmapFormUri(PersonalActivity.this, result);
                     mBtn_userpicture.setImageBitmap(bmp);
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        StorePicturesUtil storePicturesUtil = new StorePicturesUtil();
+                                        storePicturesUtil.storeHeadImg(bmp);
+                                        System.out.println("yesssss");
+                                    }
+                                }).start();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }});
+
                 } catch (IOException e) {
                     e.printStackTrace();
+                    System.out.println("nooooooo");
                 }
 
 
@@ -127,7 +152,46 @@ public class PersonalActivity extends AppCompatActivity {
         InitUpButtonAndTheirListeners();
         InitBelowButtonAndTheirListeners();
         UserName.setText(new SaveSharedPreference().getUsername());
+        setHeadImage();
     }
+
+
+
+    //显示头像
+    private void setHeadImage (){
+        SaveSharedPreference saveSharedPreference = new SaveSharedPreference();
+        int id = saveSharedPreference.getUserId(); //获取当前用户id
+        System.out.println("id = " + id);
+        String sql = "select img from Pic where User_id=" + id + " and type=1;";
+
+        DBUtils dbUtils = new DBUtils();
+        try {
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    rs = dbUtils.query(sql);
+                }
+            });
+            t.start();
+            while (t.isAlive()) ;
+            if (rs.isBeforeFirst()){
+                rs.next();
+                String string = rs.getString("img");
+                StorePicturesUtil storePicturesUtil = new StorePicturesUtil();
+                Bitmap bitmap = storePicturesUtil.stringToBitmap(string);
+                mBtn_userpicture.setImageBitmap(bitmap);
+            }
+            else{
+                System.out.println("用户未更新过头像");
+            }
+        } catch (Exception e) {
+            System.out.println("发生了错误");
+            e.printStackTrace();
+        }
+
+
+    }
+
 
     protected void onResume(Bundle savedInstance) {
         super.onResume();

@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements PermissionInterfa
                                 if (isOK) {
                                     SaveSharedPreference saveSharedPreference = new SaveSharedPreference();
                                     saveSharedPreference.setUsername(rs.getString("User_name"));
+                                    saveSharedPreference.setUserId(rs.getInt("User_id"));
                                     saveSharedPreference.setPassword(rs.getString("U_password"));
                                     saveSharedPreference.setPhone(rs.getString("User_phone"));
                                     if (rBtAutomaticLogin.isChecked()) {

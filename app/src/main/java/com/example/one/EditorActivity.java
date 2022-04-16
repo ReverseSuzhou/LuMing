@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.one.util.StorePicturesUtil;
 import com.example.one.util.ToastUtil;
 
 import java.io.ByteArrayOutputStream;
@@ -52,6 +53,7 @@ public class EditorActivity extends AppCompatActivity implements PermissionInter
     DBUtils db;
     ResultSet rs;
     Thread t;
+    Bitmap bitmap;
 
     Uri photouri;
 
@@ -110,7 +112,9 @@ public class EditorActivity extends AppCompatActivity implements PermissionInter
                 Bitmap bmp;
                 try {
                     bmp = CompressImage.getBitmapFormUri(EditorActivity.this, result);
+                    bitmap = bmp;
                     mImg_picture.setImageBitmap(bmp);
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -160,13 +164,18 @@ public class EditorActivity extends AppCompatActivity implements PermissionInter
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                //将图片放到数据库上
+                                StorePicturesUtil storePicturesUtil = new StorePicturesUtil();
+                                storePicturesUtil.storeForumtImg(bitmap);
+                                int Pic_id = storePicturesUtil.getNum();
+
                                 Toast.makeText(getApplicationContext(), "发布成功！", Toast.LENGTH_LONG).show();
                                 Date PDate=new Date();
                                 DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                 String strDate=dateFormat.format(PDate);
-                                String sql = "insert into Forumt(F_title, Forumt_content,Forumt_date,User_phone,User_name,F_likenum,F_collectnum,F_commentnum) " +
+                                String sql = "insert into Forumt(F_title, Forumt_content,Forumt_date,User_phone,User_name,F_likenum,F_collectnum,F_commentnum,Pic_num) " +
                                         "values ('" + mEt_title.getText().toString() + "', '" + mEt_text.getText().toString()+ "','"+strDate+"','"+new SaveSharedPreference().getPhone()+"'" +
-                                        ",'"+new SaveSharedPreference().getUsername()+"','"+0+"','"+0+"','"+0+"');";
+                                        ",'"+new SaveSharedPreference().getUsername()+"','"+0+"','"+0+"','"+0+"','"+Pic_id+"');";
                                 DBUtils dbUtils = new DBUtils();
                                 try {
                                     new Thread(new Runnable() {
