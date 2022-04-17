@@ -158,7 +158,7 @@ public class HomePage extends AppCompatActivity {
                         @Override
                         public void run() {
                             db = new DBUtils();
-                            rs = db.query("select * from forumt order by Forumt_date desc;");
+                            rs = db.query("select * from forumt order by F_likenum desc;");
                             try {
                                 while(rs.next()){
                                     Push po = new Push();
