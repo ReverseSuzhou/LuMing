@@ -151,7 +151,7 @@ public class MyReleaseActivity extends AppCompatActivity {
         public void onCreateMenu(SwipeMenu swipeLeftMenu, SwipeMenu swipeRightMenu, int viewType) {
             int width = getResources().getDimensionPixelSize(R.dimen.dp_70);
             int height = ViewGroup.LayoutParams.MATCH_PARENT;
-            SwipeMenuItem deleteItem = new SwipeMenuItem(MyReleaseAcitivity.this)
+            SwipeMenuItem deleteItem = new SwipeMenuItem(MyReleaseActivity.this)
                     .setTextColor(Color.WHITE)
                     .setBackgroundColor(Color.RED)
                     .setText("删除")
