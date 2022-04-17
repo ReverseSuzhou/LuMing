@@ -4,6 +4,7 @@ package com.example.one;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import com.example.one.Bean.Push;
 import com.nex3z.flowlayout.FlowLayout;
 
 import android.content.Intent;
@@ -20,6 +21,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,7 +47,9 @@ public class SearchActivity extends AppCompatActivity {
     boolean invisible = false;
 
     private String temp;
-
+    DBUtils db;
+    ResultSet rs;
+    Thread t;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,18 +102,54 @@ public class SearchActivity extends AppCompatActivity {
 
 
     void initHotspots(){
-
-                    for(int i = 0; i < 6; i++) {
-                        news[i].setText(hotspots.get(i));
-                        temp = hotspots.get(i);
-                        news[i].setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                mEditSearch.setText(temp);//更新搜索文本框内容
-                                search();
-                            }
-                        });
+        try {
+            t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    db = new DBUtils();
+                    SaveSharedPreference saveSharedPreference = new SaveSharedPreference();
+                    rs = db.query("select * from hotspot;");
+                    try {
+                        int i = 0;
+                        while(rs.next() && i < 6){
+                            news[i].setText(rs.getString("news"));
+                            temp = rs.getString("news");
+                            news[i].setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    mEditSearch.setText(temp);//更新搜索文本框内容
+                                    search();
+                                }
+                            });
+                            i++;
+                        }
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
                     }
+                    try {
+                        db.connection.close();
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+
+                }
+            });
+            t.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        while(t.isAlive() == true);
+//                    for(int i = 0; i < 6; i++) {
+//                        news[i].setText(hotspots.get(i));
+//                        temp = hotspots.get(i);
+//                        news[i].setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View view) {
+//                                mEditSearch.setText(temp);//更新搜索文本框内容
+//                                search();
+//                            }
+//                        });
+//                    }
 
 
     }
