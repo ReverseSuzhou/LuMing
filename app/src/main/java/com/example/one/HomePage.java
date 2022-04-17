@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,7 +36,7 @@ public class HomePage extends AppCompatActivity {
     private RadioButton mBtn_editor;
     private RadioButton mBtn_message;
     private RadioButton mBtn_personal;
-    private ImageButton mBtn_search;
+    private TextView tv_search;
     private SwipeRefreshLayout swipe_home;
     private RecyclerView rv_home;
     private TextView error_home;
@@ -57,8 +58,8 @@ public class HomePage extends AppCompatActivity {
         setContentView(R.layout.main_page);
 
         //搜索
-        mBtn_search = findViewById(R.id.main_page_1_1_button_search);
-        mBtn_search.setOnClickListener(new View.OnClickListener() {
+        tv_search = findViewById(R.id.main_page_1_1_autocompletetextview_mEditSearch);
+        tv_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = null;

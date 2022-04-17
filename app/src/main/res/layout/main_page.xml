@@ -36,15 +36,13 @@
                 android:layout_margin="7dp"
                 android:src="@drawable/search" />
             <!--搜索输入提示框-->
-            <AutoCompleteTextView
+            <TextView
                 android:id="@+id/main_page_1_1_autocompletetextview_mEditSearch"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@null"
                 android:dropDownVerticalOffset="10dp"
                 android:ellipsize="end"
-                android:hint="荒野求生贝爷"
-                android:imeOptions="actionSearch"
                 android:maxLines="1"
                 android:singleLine="true"
                 android:textColorHighlight="#B4DF87"
