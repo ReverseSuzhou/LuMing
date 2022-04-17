@@ -30,6 +30,7 @@ import java.util.List;
 public class MessageActivity extends AppCompatActivity {
     //声明控件
     private ImageButton mBtn_back;
+    private ImageButton mBtn_refresh;
     private RadioGroup radioGroup;
     private RadioButton rBtn_notice;
     private RadioButton rBtn_kudos;
@@ -59,6 +60,7 @@ public class MessageActivity extends AppCompatActivity {
         //控件部分
         radioGroup = findViewById(R.id.message_page_relativelayout_2_2);
         mBtn_back = findViewById(R.id.message_page_1_button_back);
+        mBtn_refresh = findViewById(R.id.message_page_1_button_refresh);
         rBtn_notice = findViewById(R.id.message_page_2_2_button_notification);
         rBtn_kudos = findViewById(R.id.message_page_2_2_button_praise);
         rBtn_focus = findViewById(R.id.message_page_2_2_button_concern);
@@ -92,6 +94,13 @@ public class MessageActivity extends AppCompatActivity {
                 Intent intent = null;
                 intent = new Intent(MessageActivity.this,HomePage.class);
                 startActivity(intent);
+            }
+        });
+
+        mBtn_refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Refresh();
             }
         });
 
