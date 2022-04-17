@@ -29,6 +29,9 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mEtPassword;
     private EditText mEtSurePassword;
     private EditText mEtUserName;
+    Thread t;
+    DBUtils d;
+    ResultSet r;
 
     EventHandler handler;
     @Override
@@ -128,10 +131,22 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "手机号格式不对", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    DBUtils dbUtils = new DBUtils();
-                    ResultSet rs = dbUtils.query("select * from user where User_phone = '" + mEtPhoneNumber.getText().toString() + "';");
                     try {
-                        if (rs.isBeforeFirst()) {
+                        t = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                d = new DBUtils();
+                                r = d.query("select * from user where User_phone = '" + mEtPhoneNumber.getText().toString() + "';");
+                            }
+                        });
+                        t.start();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    while (t.isAlive());
+                    try {
+                        if (r.isBeforeFirst()) {
+                            r.next();
                             Toast.makeText(getApplicationContext(), "手机号已注册", Toast.LENGTH_LONG).show();
                             return ;
                         }
