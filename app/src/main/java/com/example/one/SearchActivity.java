@@ -29,17 +29,13 @@ import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
 
-    String array_dis[] = {"SUN","MON","TUE","WED","THU","FRI","SAT"};//发现信息
-    List<String> array_his = Arrays.asList(new String[]{"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"});
+    List<String> array_his;
     FlowLayout flowLayout_his;//历史流式布局
     FlowLayout flowLayout_dis;//发现流式布局
     AutoCompleteTextView mEditSearch;//搜索输入文本框
     TextView news[] = new TextView[6];//流式布局组件
     TextView cleanHis;//清除历史信息组件
     Button cancel;//取消按钮
-
-    List<String> hotspots = Arrays.asList(new String[]{"安-225残骸曝光", "居家隔离蹲个女友", "奇异博士2新反派", "元神角色谱千女友", "中国冥币文化出海", "妹说就是0卡"});
-    List<String> hisRecords;
 
     TextView his_unfold;
     TextView dis_visible;
@@ -60,7 +56,6 @@ public class SearchActivity extends AppCompatActivity {
         initHotspots();
         initDropDown();
         addListener();
-        add_his_dis();
 
     }
     void initView(){
@@ -80,26 +75,45 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     void initHis(){
-                        for (int j = 0; j < array_his.size(); j++) {//为历史记录添加小组件
-                            TextView tv = new TextView(SearchActivity.this);
-                            tv.setText(array_his.get(j));
-                            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
-                            tv.setPadding(30,10,30,10);
-                            tv.setBackgroundResource(R.drawable.shape_flow);
-                            tv.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    mEditSearch.setText(tv.getText().toString().trim());
-                                    search();
-                                }
-                            });
-                            flowLayout_his.addView(tv);//普通添加
-                        }
+        String sql = "select * from searchhistories where User_phone = '" + new SaveSharedPreference().getPhone() + "' order by Search_time desc;";
+        t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                db = new DBUtils();
+                rs = db.query(sql);
+            }
+        });
+        t.start();
+        while (t.isAlive()) ;
+        String[] strings = new String[10];
+        int count = 0;
+        try {
+            while (rs.next()) {
+                if (count == 10) break;
+                strings[count] = rs.getString("Search_text");
+                count++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        array_his = Arrays.asList(strings);
+        for (int j = 0; j < count; j++) {//为历史记录添加小组件
+            TextView tv = new TextView(SearchActivity.this);
+            tv.setText(array_his.get(j));
+            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
+            tv.setPadding(30,10,30,10);
+            tv.setBackgroundResource(R.drawable.shape_flow);
+            tv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mEditSearch.setText(tv.getText().toString().trim());
+                    search();
+                }
+            });
+            flowLayout_his.addView(tv);//普通添加
+        }
 
-                    }
-
-
-
+    }
 
     void initHotspots(){
         try {
@@ -194,7 +208,18 @@ public class SearchActivity extends AppCompatActivity {
         cleanHis.setOnClickListener(new View.OnClickListener() {//取消按钮添加监听器，清空历史搜索记录
             @Override
             public void onClick(View view) {
-
+                String sql = "delete from searchhistories where User_phone = '" + new SaveSharedPreference().getPhone() + "';";
+                t = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        db = new DBUtils();
+                        db.update(sql);
+                    }
+                });
+                t.start();
+                while (t.isAlive()) ;
+                flowLayout_his.removeAllViews();
+                initHis();
             }
         });
 
@@ -231,31 +256,22 @@ public class SearchActivity extends AppCompatActivity {
         });
 
     }
-    void add_his_dis() {
-
-        for (int i = 0; i < array_dis.length; i++) {//为搜索发现添加小组件
-            TextView tv = new TextView(this);
-            tv.setText(array_dis[i]);
-            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
-            tv.setPadding(30,10,30,10);
-            tv.setBackgroundResource(R.drawable.shape_flow);
-            tv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    mEditSearch.setText(tv.getText().toString().trim());
-                    search();
-                }
-            });
-            flowLayout_dis.addView(tv);//普通添加
-        }
-    }
 
     void search(){//执行页面跳转进行搜索
 
         Intent intent = new Intent(SearchActivity.this, ResultActivity.class);
         intent.putExtra("info", mEditSearch.getText().toString().trim());//传递搜索内容
         startActivity(intent);
+        String sql = "insert into searchhistories(User_phone, Search_text) values ('" + new SaveSharedPreference().getPhone() + "', '" + mEditSearch.getText().toString() + "');";
+        t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                db = new DBUtils();
+                db.update(sql);
+            }
+        });
+        t.start();
+        while (t.isAlive());
         mEditSearch.setSelection(mEditSearch.getText().length());
 
         TextView tv = new TextView(this);
