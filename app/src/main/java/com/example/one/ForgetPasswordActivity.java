@@ -15,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
@@ -27,6 +28,9 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     private EditText mEtPhoneNumber;
     private EditText mEtPassword;
     private EditText mEtSurePassword;
+    DBUtils d;
+    Thread t;
+    ResultSet r;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +121,27 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "手机号格式不对", Toast.LENGTH_LONG).show();
                 }
                 else {
+                    try {
+                        t = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                d = new DBUtils();
+                                r = d.query("select * from user where User_phone = '" + mEtPhoneNumber.getText().toString() + "';");
+                            }
+                        });
+                        t.start();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    while (t.isAlive());
+                    try {
+                        if (!r.isBeforeFirst()) {
+                            Toast.makeText(getApplicationContext(), "手机号未注册", Toast.LENGTH_LONG).show();
+                            return ;
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                     //如果没问题则发送验证码
                     //Toast.makeText(getApplicationContext(), "验证码已发送", Toast.LENGTH_LONG).show();
                     String phone=mEtPhoneNumber.getText().toString();

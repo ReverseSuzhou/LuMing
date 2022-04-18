@@ -51,6 +51,7 @@ dependencies {
     implementation 'com.yanzhenjie:recyclerview-swipe:1.1.4'
     //圆头
    implementation 'de.hdodenhof:circleimageview:3.1.0'
-
+    implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
+    implementation 'com.ogaclejapan.smarttablayout:utils-v4:2.0.0@aar'
 
 }

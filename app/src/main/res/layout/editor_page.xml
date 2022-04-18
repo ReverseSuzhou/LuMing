@@ -44,7 +44,6 @@
             android:layout_toRightOf="@id/editor_page_1_textview_post"
             android:background="@drawable/background_button"
             android:text="发布"
-            android:textColor="@color/black"
             android:textSize="20dp" />
     </RelativeLayout>
     <!--提示文本框-->

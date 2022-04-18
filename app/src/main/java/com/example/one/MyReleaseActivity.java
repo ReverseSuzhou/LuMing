@@ -6,13 +6,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.one.Adapter.HomeAdapter;
 import com.example.one.Bean.Push;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,7 +32,7 @@ public class MyReleaseActivity extends AppCompatActivity {
     private ImageButton mBtn_back;
     private ImageButton mBtn_refresh;
     private SwipeRefreshLayout swipe_myrelease;
-    private RecyclerView rv_myrelease;
+    private SwipeMenuRecyclerView rv_myrelease;
     private TextView error_myrelease;
     private List<Push> data = new LinkedList<>();
     private HomeAdapter adapter;
@@ -43,7 +51,8 @@ public class MyReleaseActivity extends AppCompatActivity {
         swipe_myrelease = findViewById(R.id.swipe_myrelease);
         rv_myrelease = findViewById(R.id.rv_myrelease);
         error_myrelease = findViewById(R.id.error_myrelease);
-
+        rv_myrelease.setSwipeMenuCreator(swipeMenuCreator);
+        rv_myrelease.setSwipeMenuItemClickListener(swipeMenuItemClickListener);
         swipe_myrelease.setColorSchemeResources(android.R.color.holo_green_light,android.R.color.holo_red_light,android.R.color.holo_blue_light);
         swipe_myrelease.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -136,4 +145,37 @@ public class MyReleaseActivity extends AppCompatActivity {
         }
 
     }
+    SwipeMenuCreator swipeMenuCreator = new SwipeMenuCreator() {
+        // 创建菜单：
+        @Override
+        public void onCreateMenu(SwipeMenu swipeLeftMenu, SwipeMenu swipeRightMenu, int viewType) {
+            int width = getResources().getDimensionPixelSize(R.dimen.dp_70);
+            int height = ViewGroup.LayoutParams.MATCH_PARENT;
+            SwipeMenuItem deleteItem = new SwipeMenuItem(MyReleaseActivity.this)
+                    .setTextColor(Color.WHITE)
+                    .setBackgroundColor(Color.RED)
+                    .setText("删除")
+                    .setWidth(width)
+                    .setHeight(height);
+            swipeRightMenu.addMenuItem(deleteItem);
+        }
+    };
+    SwipeMenuItemClickListener swipeMenuItemClickListener = new SwipeMenuItemClickListener() {
+        @Override
+        public void onItemClick(SwipeMenuBridge menuBridge) {
+            // 任何操作必须先关闭菜单，否则可能出现Item菜单打开状态错乱。
+            menuBridge.closeMenu();
+
+            int direction = menuBridge.getDirection();//左边还是右边菜单
+            final int adapterPosition = menuBridge.getAdapterPosition();//    recyclerView的Item的position。
+            int position = menuBridge.getPosition();// 菜单在RecyclerView的Item中的Position。
+
+            if (direction == SwipeMenuRecyclerView.RIGHT_DIRECTION) {
+
+                //删除操作
+
+            }
+
+        }
+    };
 }

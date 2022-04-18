@@ -36,15 +36,13 @@
                 android:layout_margin="7dp"
                 android:src="@drawable/search" />
             <!--搜索输入提示框-->
-            <AutoCompleteTextView
+            <TextView
                 android:id="@+id/main_page_1_1_autocompletetextview_mEditSearch"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@null"
                 android:dropDownVerticalOffset="10dp"
                 android:ellipsize="end"
-                android:hint="荒野求生贝爷"
-                android:imeOptions="actionSearch"
                 android:maxLines="1"
                 android:singleLine="true"
                 android:textColorHighlight="#B4DF87"
@@ -117,33 +115,34 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/main_page_linearlayout_3"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
-        <TextView
-            android:visibility="gone"
-            android:layout_marginTop="70dp"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textColor="#000"
-            android:textSize="25sp"
-            android:id="@+id/error_home"
-            android:text="空空如也"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        android:layout_marginTop="5dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.ogaclejapan.smarttablayout.SmartTabLayout
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:visibility="gone"
-            android:id="@+id/swipe_home"
+            android:layout_height="48dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_home"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            android:id="@+id/hometab"
+            android:background="@drawable/shape_myinfo"
+            app:stl_underlineThickness="1px"
+            app:stl_underlineColor="@color/white"
+            app:stl_indicatorWithoutPadding="true"
+            app:stl_indicatorThickness="2dp"
+            app:stl_indicatorInterpolation="linear"
+            app:stl_indicatorColor="@color/black"
+            app:stl_dividerColor="@color/white"
+            app:stl_distributeEvenly="true"
+            app:stl_defaultTabTextSize="20sp"
+            app:stl_defaultTabTextHorizontalPadding="5dp"
+            app:stl_defaultTabTextColor="#000000"
+            android:clipToPadding="false"/>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/homevp"
+            android:layout_width="match_parent"
+            android:layout_height="580dp"/>
+
     </LinearLayout>
 
     <RadioGroup

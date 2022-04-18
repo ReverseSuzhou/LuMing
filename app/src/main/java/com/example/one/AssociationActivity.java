@@ -29,7 +29,7 @@ public class AssociationActivity extends AppCompatActivity {
     private RadioButton mBtn_editor;
     private RadioButton mBtn_message;
     private RadioButton mBtn_personal;
-    private ImageButton mBtn_search;
+    private TextView tv_search;
     private SwipeRefreshLayout swipe_association;
     private RecyclerView rv_association;
     private TextView error_association;
@@ -44,8 +44,8 @@ public class AssociationActivity extends AppCompatActivity {
         setContentView(R.layout.association_page);
 
         //搜索
-        mBtn_search = findViewById(R.id.association_page_1_1_button_search);
-        mBtn_search.setOnClickListener(new View.OnClickListener() {
+        tv_search = findViewById(R.id.association_page_1_1_autocompletetextview_mEditSearch);
+        tv_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = null;

@@ -13,7 +13,7 @@ public class DBUtils {
     private final static String userName = "root";
     //连接的数据库时使用的密码
     private final static String password = "123456";
-    Connection connection=null;
+    public Connection connection=null;
     PreparedStatement ps=null;
     ResultSet rs=null;
 
