@@ -58,67 +58,68 @@
         android:layout_marginTop="10dp"
         android:background="#aa000000" />
 
-    <LinearLayout
-        android:id="@+id/main_page_linearlayout_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-        <!--热点按钮-->
-        <Button
-            android:id="@+id/main_page_2_button_HotSpot"
-            android:layout_width="65dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/background_button"
-            android:text="热点"
-            tools:ignore="MissingConstraints"
-            android:layout_marginLeft="5dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="5dp"/>
-        <!--推荐按钮-->
-        <Button
-            android:id="@+id/main_page_2_button_Recommend"
-            android:layout_width="65dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/background_button"
-            android:text="推荐"
-            tools:ignore="MissingConstraints"
-            android:layout_marginLeft="5dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="5dp"/>
-        <!--学习按钮-->
-        <Button
-            android:id="@+id/main_page_2_button_Study"
-            android:layout_width="65dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/background_button"
-            android:text="学习"
-            tools:ignore="MissingConstraints"
-            android:layout_marginLeft="5dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="5dp"/>
-        <!--运动按钮-->
-        <Button
-            android:id="@+id/main_page_2_button_Sport"
-            android:layout_width="65dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/background_button"
-            android:text="运动"
-            tools:ignore="MissingConstraints"
-            android:layout_marginLeft="5dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="5dp"/>
-    </LinearLayout>
+<!--    <LinearLayout-->
+<!--        android:id="@+id/main_page_linearlayout_2"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:orientation="horizontal">-->
+<!--        &lt;!&ndash;热点按钮&ndash;&gt;-->
+<!--        <Button-->
+<!--            android:id="@+id/main_page_2_button_HotSpot"-->
+<!--            android:layout_width="65dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:background="@drawable/background_button"-->
+<!--            android:text="热点"-->
+<!--            tools:ignore="MissingConstraints"-->
+<!--            android:layout_marginLeft="5dp"-->
+<!--            android:layout_marginBottom="10dp"-->
+<!--            android:layout_marginTop="5dp"/>-->
+<!--        &lt;!&ndash;推荐按钮&ndash;&gt;-->
+<!--        <Button-->
+<!--            android:id="@+id/main_page_2_button_Recommend"-->
+<!--            android:layout_width="65dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:background="@drawable/background_button"-->
+<!--            android:text="推荐"-->
+<!--            tools:ignore="MissingConstraints"-->
+<!--            android:layout_marginLeft="5dp"-->
+<!--            android:layout_marginBottom="10dp"-->
+<!--            android:layout_marginTop="5dp"/>-->
+<!--        &lt;!&ndash;学习按钮&ndash;&gt;-->
+<!--        <Button-->
+<!--            android:id="@+id/main_page_2_button_Study"-->
+<!--            android:layout_width="65dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:background="@drawable/background_button"-->
+<!--            android:text="学习"-->
+<!--            tools:ignore="MissingConstraints"-->
+<!--            android:layout_marginLeft="5dp"-->
+<!--            android:layout_marginBottom="10dp"-->
+<!--            android:layout_marginTop="5dp"/>-->
+<!--        &lt;!&ndash;运动按钮&ndash;&gt;-->
+<!--        <Button-->
+<!--            android:id="@+id/main_page_2_button_Sport"-->
+<!--            android:layout_width="65dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:background="@drawable/background_button"-->
+<!--            android:text="运动"-->
+<!--            tools:ignore="MissingConstraints"-->
+<!--            android:layout_marginLeft="5dp"-->
+<!--            android:layout_marginBottom="10dp"-->
+<!--            android:layout_marginTop="5dp"/>-->
+<!--    </LinearLayout>-->
 
     <LinearLayout
         android:layout_marginTop="5dp"
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
         <com.ogaclejapan.smarttablayout.SmartTabLayout
 
             android:layout_height="48dp"
@@ -141,7 +142,7 @@
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/homevp"
             android:layout_width="match_parent"
-            android:layout_height="580dp"/>
+            android:layout_height="560dp"/>
 
     </LinearLayout>
 
