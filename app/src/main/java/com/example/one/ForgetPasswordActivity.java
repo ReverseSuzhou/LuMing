@@ -3,6 +3,7 @@ package com.example.one;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +32,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     DBUtils d;
     Thread t;
     ResultSet r;
+    private TimeCount time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         mEtPhoneNumber = findViewById(R.id.re_et_1);
         mEtPassword = findViewById(R.id.re_et_3);
         mEtSurePassword = findViewById(R.id.re_et_4);
+        time = new TimeCount(60000, 1000);
         //验证信息
         EventHandler handler = new EventHandler() {
             @Override
@@ -86,8 +89,9 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                     } else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES) {
                         //返回支持发送验证码的国家列表
                     }
-                } else {
+                } else if (result == SMSSDK.RESULT_ERROR) {
                     //失败回调
+                    System.out.printf("yanzhengmacuowu");
                     ((Throwable) data).printStackTrace();
                     Throwable throwable = (Throwable) data;
                     try {
@@ -105,6 +109,8 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                } else {
+
                 }
             }
 
@@ -116,11 +122,9 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (mEtPhoneNumber.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "未输入手机号", Toast.LENGTH_LONG).show();
-                }
-                else if (mEtPhoneNumber.getText().toString().length() > 15||mEtPhoneNumber.getText().toString().length() <10) {
+                } else if (mEtPhoneNumber.getText().toString().length() > 15 || mEtPhoneNumber.getText().toString().length() < 10) {
                     Toast.makeText(getApplicationContext(), "手机号格式不对", Toast.LENGTH_LONG).show();
-                }
-                else {
+                } else {
                     try {
                         t = new Thread(new Runnable() {
                             @Override
@@ -133,19 +137,20 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    while (t.isAlive());
+                    while (t.isAlive()) ;
                     try {
                         if (!r.isBeforeFirst()) {
                             Toast.makeText(getApplicationContext(), "手机号未注册", Toast.LENGTH_LONG).show();
-                            return ;
+                            return;
                         }
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
                     //如果没问题则发送验证码
                     //Toast.makeText(getApplicationContext(), "验证码已发送", Toast.LENGTH_LONG).show();
-                    String phone=mEtPhoneNumber.getText().toString();
-                    SMSSDK.getVerificationCode("86",phone);
+                    String phone = mEtPhoneNumber.getText().toString();
+                    SMSSDK.getVerificationCode("86", phone);
+                    time.start();
                 }
             }
         });
@@ -156,18 +161,14 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                 Intent intent = null;
                 if (mEtPhoneNumber.getText().toString().equals("") || mEtPassword.getText().toString().equals("") || mEtSurePassword.getText().toString().equals("") || mEtVcode.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "信息不全", Toast.LENGTH_LONG).show();
-                }
-
-                else if (mEtPassword.getText().toString().length() > 10 || mEtSurePassword.getText().toString().length() > 10) {
+                } else if (mEtPassword.getText().toString().length() > 10 || mEtSurePassword.getText().toString().length() > 10) {
                     Toast.makeText(getApplicationContext(), "密码不符合规范", Toast.LENGTH_LONG).show();
-                }
-                else if (mEtPassword.getText().toString().equals(mEtSurePassword.getText().toString())) {
+                } else if (mEtPassword.getText().toString().equals(mEtSurePassword.getText().toString())) {
                     //toast
-                    String phone=mEtPhoneNumber.getText().toString();
+                    String phone = mEtPhoneNumber.getText().toString();
                     String number = mEtVcode.getText().toString();
-                    SMSSDK.submitVerificationCode("86",phone,number);
-                }
-                else {
+                    SMSSDK.submitVerificationCode("86", phone, number);
+                } else {
                     //不正确
                     Toast.makeText(getApplicationContext(), "密码错误！", Toast.LENGTH_LONG).show();
                 }
@@ -175,4 +176,27 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             }
         });
     }
+    class TimeCount extends CountDownTimer {
+
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+
+            mBtnVcode.setClickable(false);
+            mBtnVcode.setText("("+millisUntilFinished / 1000 +") 秒重新发送");
+        }
+
+        @Override
+        public void onFinish() {
+            mBtnVcode.setText("获取验证码");
+            mBtnVcode.setClickable(true);
+
+
+        }
+    }
+
+
 }

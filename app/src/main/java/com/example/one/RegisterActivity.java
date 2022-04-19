@@ -3,6 +3,7 @@ package com.example.one;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -32,7 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
     Thread t;
     DBUtils d;
     ResultSet r;
-
+    private TimeCount time;
     EventHandler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
         mEtPassword = findViewById(R.id.re_et_3);
         mEtSurePassword = findViewById(R.id.re_et_4);
         mEtUserName = findViewById(R.id.re_et_5);
-
+        time=new TimeCount(60000,1000);
         //验证信息
         handler = new EventHandler() {
             @Override
@@ -96,7 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES){
                         //返回支持发送验证码的国家列表
                     }
-                }else{
+                }else if (result == SMSSDK.RESULT_ERROR){
                     //失败回调
                     ((Throwable)data).printStackTrace();
                     Throwable throwable = (Throwable) data;
@@ -115,6 +116,9 @@ public class RegisterActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                }
+                else {
+                    System.out.printf("chongfufasong");
                 }
             }
 
@@ -157,6 +161,7 @@ public class RegisterActivity extends AppCompatActivity {
                     //Toast.makeText(getApplicationContext(), "验证码已发送", Toast.LENGTH_LONG).show();
                     String phone=mEtPhoneNumber.getText().toString();
                     SMSSDK.getVerificationCode("86",phone);
+                    time.start();
                 }
             }
         });
@@ -190,5 +195,26 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
+    }
+    class TimeCount extends CountDownTimer {
+
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+
+            mBtnVcode.setClickable(false);
+            mBtnVcode.setText("("+millisUntilFinished / 1000 +") 秒重新发送");
+        }
+
+        @Override
+        public void onFinish() {
+            mBtnVcode.setText("获取验证码");
+            mBtnVcode.setClickable(true);
+
+
+        }
     }
 }
