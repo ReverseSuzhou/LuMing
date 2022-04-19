@@ -93,6 +93,7 @@ public class ModifyPersonalActivity extends AppCompatActivity {
                                 } else {
                                     exit = 0;
                                 }
+
                             } catch (SQLException e) {
                                 e.printStackTrace();
                             }
@@ -127,18 +128,18 @@ public class ModifyPersonalActivity extends AppCompatActivity {
                             }
                         });
                         t.start();
-                        ToastUtil.showMsg(getApplicationContext(),"修改成功");
-                        while(t.isAlive()) {
-                            if(!successful[0]) {
-                                ToastUtil.showMsg(getApplication(),"用户名称已存在");
-                            }
-                            else {
-                                ToastUtil.showMsg(getApplicationContext(),"成功");
-                            }
-                        }
+//                        ToastUtil.showMsg(getApplicationContext(),"修改成功");
+
 
                     } catch (Exception e) {
                         e.printStackTrace();
+                    }
+                    while(t.isAlive()) ;
+                    if(!successful[0]) {
+                        ToastUtil.showMsg(getApplication(),"用户名称已存在");
+                    }
+                    else {
+                        ToastUtil.showMsg(getApplicationContext(),"成功");
                     }
                 }
             }
