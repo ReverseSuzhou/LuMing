@@ -50,10 +50,10 @@ public class HomePage extends AppCompatActivity {
     private RadioButton mBtn_personal;
     private TextView tv_search;
 
-    private Button hotspot;
-    private Button reco;
-    private Button study;
-    private Button sport;
+//    private Button hotspot;
+//    private Button reco;
+//    private Button study;
+//    private Button sport;
 
     private SmartTabLayout smartTabLayout;
     private ViewPager viewPager;
@@ -84,10 +84,10 @@ public class HomePage extends AppCompatActivity {
         mBtn_message = findViewById(R.id.rb_message);
         mBtn_personal = findViewById(R.id.rb_user);
 
-        hotspot = findViewById(R.id.main_page_2_button_HotSpot);
-        reco = findViewById(R.id.main_page_2_button_Recommend);
-        study = findViewById(R.id.main_page_2_button_Study);
-        sport = findViewById(R.id.main_page_2_button_Sport);
+//        hotspot = findViewById(R.id.main_page_2_button_HotSpot);
+//        reco = findViewById(R.id.main_page_2_button_Recommend);
+//        study = findViewById(R.id.main_page_2_button_Study);
+//        sport = findViewById(R.id.main_page_2_button_Sport);
 
         initView();
         viewPager.setOffscreenPageLimit(5);
