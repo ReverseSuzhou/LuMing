@@ -586,7 +586,7 @@ public class Recive extends AppCompatActivity {
                             @Override
                             public void run() {
                                 db = new DBUtils();
-                                db.update("update forumt set F_commentnum=F_commentnum where Forumt_id =" + id_push + ";" );
+                                db.update("update forumt set F_commentnum=F_commentnum+1 where Forumt_id =" + id_push + ";" );
                             }
                         });
                         t.start();
