@@ -445,7 +445,7 @@ public class Recive extends AppCompatActivity {
                 public void run() {
                     db = new DBUtils();
                     //my_user;
-                    rs = db.query("select * from user where User_phone = "+ my_phone + ";");
+                    rs = db.query("select * from user where User_phone = "+ user_phone + ";");
                     try {
                         if(rs.isBeforeFirst()) {
                             while(rs.next()){
@@ -598,7 +598,7 @@ public class Recive extends AppCompatActivity {
                             @Override
                             public void run() {
                                 db = new DBUtils();
-                                db.update("update forumt set F_commentnum=F_commentnum where Forumt_id =" + id_push + ";" );
+                                db.update("update forumt set F_commentnum=F_commentnum+1 where Forumt_id =" + id_push + ";" );
                             }
                         });
                         t.start();
