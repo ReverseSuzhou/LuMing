@@ -109,6 +109,17 @@ public class Recive extends AppCompatActivity {
                 finish();
             }
         });
+
+        recive_headpic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = null;
+                intent = new Intent(Recive.this, DetailedPersonalInformationActivity.class);
+                intent.putExtra("user_phone", user_phone);
+                startActivity(intent);
+            }
+        });
+
         review.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -495,6 +506,7 @@ public class Recive extends AppCompatActivity {
         rec_like = findViewById(R.id.rec_like);
         focus_or_not = findViewById(R.id.focus_or_not);
         rec_gender = findViewById(R.id.gender);
+        recive_headpic = findViewById(R.id.recive_headpic);
     }
     void Refresh() throws SQLException{
         swipe_review.setRefreshing(false);

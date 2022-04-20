@@ -70,7 +70,7 @@ public class MessageActivity extends AppCompatActivity {
         sql[0] = "select * from notice order by Notice_time desc;";
         sql[1] = "select * from user_forumt left join forumt on user_forumt.Forumt_id = forumt.Forumt_id where user_forumt.User_phone = '" + user.getPhone() + "';";
         sql[2] = "select * from focus left join forumt on focus_phone = User_phone where follow_phone = '" + user.getPhone() + "' order by Forumt_date desc;";
-        sql[3] = "select * from comment left join user_forumt on user_forumt.User_phone = comment.User_phone where user_forumt.User_phone = '" + user.getPhone() + "' group by comment_id order by Comment_time desc;";
+        sql[3] = "select * from user_forumt left join comment on user_forumt.Forumt_id = comment.Forumt_id where user_forumt.User_phone = '" + user.getPhone() + "' order by Comment_time desc;";
 
         swipe_message = findViewById(R.id.swipe_message);
         rv_message = findViewById(R.id.rv_message);
@@ -175,7 +175,7 @@ public class MessageActivity extends AppCompatActivity {
                                 while (rs.next()) {
                                     Comment comment = new Comment();
                                     comment.setComment_id(Integer.toString(rs.getInt("Comment_id")));
-                                    comment.setUser_phone(rs.getString("User_phone"));
+                                    comment.setUser_phone(rs.getString("comment.User_phone"));
                                     comment.setForumt_id(Integer.toString(rs.getInt("Forumt_id")));
                                     comment.setComment_text(rs.getString("Comment_text"));
                                     comment.setComment_time(rs.getString("Comment_time"));
