@@ -434,7 +434,7 @@ public class Recive extends AppCompatActivity {
                 public void run() {
                     db = new DBUtils();
                     //my_user;
-                    rs = db.query("select * from user where User_phone = "+ my_phone + ";");
+                    rs = db.query("select * from user where User_phone = "+ user_phone + ";");
                     try {
                         if(rs.isBeforeFirst()) {
                             while(rs.next()){
