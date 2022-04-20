@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mob.MobSDK;
@@ -25,19 +28,22 @@ import cn.smssdk.SMSSDK;
 public class AssociationApplyActivity extends AppCompatActivity {
     //声明控件
     private ImageButton mBtn_back;
-    private EditText mEt_student_name;
     private EditText mEt_community_name;
     private EditText mEt_phone_number;
     private Button mBtn_get_verification_code;
     private EditText mEt_upload_photo_evidence;
     private ImageButton mBtn_upload_photo;
     private Button mBtn_button_ensure;
-
+    private RadioGroup rg;
+    private RadioButton rb_manager, rb_member;
+    private TextView tv_label_tip;
+    private int id;
     EventHandler handler;
 
     DBUtils db;
-    ResultSet rs1, rs2;
+    ResultSet rs,rs1, rs2;
     Thread t;
+    boolean tmp = true;
     boolean tmp1 = false;
     boolean tmp2 = false;
     String Association_id = null;
@@ -52,13 +58,18 @@ public class AssociationApplyActivity extends AppCompatActivity {
 
         //控件部分
         mBtn_back = findViewById(R.id.association_apply_page_1_button_back);
-        mEt_student_name = findViewById(R.id.association_apply_page_edittext_student_name);
         mEt_community_name = findViewById(R.id.association_apply_page_edittext_community_name);
         mEt_phone_number = findViewById(R.id.association_apply_page_edittext_phone_number);
         mBtn_get_verification_code = findViewById(R.id.association_apply_page_button_get_verification_code);
         mEt_upload_photo_evidence = findViewById(R.id.association_apply_page_edittext_upload_photo_evidence);
         mBtn_upload_photo = findViewById(R.id.association_apply_page_button_upload_photo);
         mBtn_button_ensure = findViewById(R.id.association_apply_page_button_ensure);
+        rb_manager = findViewById(R.id.association_apply_page_radiobutton_manager);
+        rb_member = findViewById(R.id.association_apply_page_radiobutton_member);
+        rg = findViewById(R.id.association_apply_page_radiogroup);
+        tv_label_tip = findViewById(R.id.association_apply_page_textview_label_tip);
+
+        rg.setOnCheckedChangeListener(cBoxListener);
 
         //返回
         mBtn_back.setOnClickListener(new View.OnClickListener() {
@@ -80,16 +91,26 @@ public class AssociationApplyActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(getApplicationContext(), "申请成功！", Toast.LENGTH_LONG).show();
-                                String sql = "insert into apply(User_phone, Association_id) values ('" + mEt_phone_number.getText().toString() + "', '" + Association_id + "');";
+                                id = rg.getCheckedRadioButtonId();
+                                String str_label;
+                                if (R.id.association_apply_page_radiobutton_manager == id) {
+                                    str_label = "manager";
+                                } else {
+                                    str_label = "member";
+                                }
+                                Toast.makeText(getApplicationContext(), "申请已提交，等待管理员审核，审核结果会发送至账号邮箱！（若未绑定邮箱请先绑定）", Toast.LENGTH_LONG).show();
+                                String sql = "insert into apply(User_phone, Association_name, Apply_labe) values ('" + mEt_phone_number.getText().toString() + "'," +
+                                        " '" + mEt_community_name.getText().toString() +"','"+ str_label +"');";
                                 DBUtils dbUtils = new DBUtils();
                                 try {
-                                    new Thread(new Runnable() {
+                                    t=new Thread(new Runnable() {
                                         @Override
                                         public void run() {
                                             dbUtils.update(sql);
                                         }
-                                    }).start();
+                                    });
+                                    t.start();
+                                    while (t.isAlive());
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -153,29 +174,11 @@ public class AssociationApplyActivity extends AppCompatActivity {
         mBtn_button_ensure.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
 
-                if (mEt_student_name.getText().toString().equals("") || mEt_community_name.getText().toString().equals("") || mEt_phone_number.getText().toString().equals("") || mEt_upload_photo_evidence.getText().toString().equals("")) {
+                if (mEt_community_name.getText().toString().equals("") || mEt_phone_number.getText().toString().equals("") || mEt_upload_photo_evidence.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "信息不全", Toast.LENGTH_LONG).show();
-                } else if (mEt_community_name.getText().toString().length() > 20 || mEt_phone_number.getText().toString().length() > 20) {
+                } else if (mEt_community_name.getText().toString().length() > 20 || mEt_phone_number.getText().toString().length() > 15) {
                     Toast.makeText(getApplicationContext(), "社团名或手机号不符合规范", Toast.LENGTH_LONG).show();
                 } else {
-                    t=new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            db = new DBUtils();
-                            rs1 = db.query("select * from Association where Association_name = '" + mEt_community_name.getText().toString() + "';");
-                            try {
-                                if (rs1.next()) {
-                                    Association_id = rs1.getString("Association_id");
-                                    tmp1 = true;
-                                    rs1.previous();
-                                }
-                            } catch (SQLException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                    t.start();
-                    while(t.isAlive());
                     t=new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -193,15 +196,27 @@ public class AssociationApplyActivity extends AppCompatActivity {
                     });
                     t.start();
                     while(t.isAlive());
-                    if (tmp1 && tmp2) {
+                    if (tmp2) {
                         String phone = mEt_phone_number.getText().toString();
                         String number = mEt_upload_photo_evidence.getText().toString();
                         SMSSDK.submitVerificationCode("86", phone, number);
                     } else {
-                        Toast.makeText(getApplicationContext(), "社团名不存在或个人信息错误", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "该手机号并未注册", Toast.LENGTH_LONG).show();
                     }
                 }
             }
         });
     }
+    private RadioGroup.OnCheckedChangeListener cBoxListener = new RadioGroup.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(RadioGroup radioGroup, int i) {
+            if (R.id.association_apply_page_radiobutton_manager == i) {
+                tv_label_tip.setText("您选择的标签：" + rb_manager.getText().toString());
+                setTitle(String.valueOf(rb_manager.getText()));
+            } else {
+                tv_label_tip.setText("您选择的标签：" + rb_member.getText().toString());
+                setTitle(String.valueOf(rb_member.getText()));
+            }
+        }
+    };
 }
