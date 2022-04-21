@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -35,6 +36,7 @@ public class EditorActivity extends AppCompatActivity implements PermissionInter
     private RadioButton rb_study, rb_sport, rb_association_event, rb_other;
     private TextView tv_label_tip;
     private int id;
+    private Bitmap bitmap;
 
     DBUtils db;
     ResultSet rs;
