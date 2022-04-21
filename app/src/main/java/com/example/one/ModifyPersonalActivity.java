@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.one.util.ToastUtil;
@@ -34,6 +35,7 @@ public class ModifyPersonalActivity extends AppCompatActivity {
     String newusername;
     String nowuserphone;
     String oldusername;
+    String signature;
 
     int exit;
 
@@ -66,15 +68,19 @@ public class ModifyPersonalActivity extends AppCompatActivity {
         okBTN = findViewById(R.id.modify_personal_information_page_linearlayout_5_button_ensure);
         radiogroup = findViewById(R.id.modify_personal_information_page_3_radiogroup_sex);
         emailEDT = findViewById(R.id.modify_personal_information_page_1_edittext_exchange_email);
-
         okBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 newusername = user_nameEDT.getText().toString();
+                signature = signatureEDT.getText().toString();
+                String age = ageEDT.getText().toString();
                 final boolean[] successful = new boolean[1];
 
                 if(newusername.isEmpty()) {
                     ToastUtil.showMsg(getApplicationContext(), "用户名不能为空");
+                }
+                else if (signature.length()>50) {
+                    ToastUtil.showMsg(getApplicationContext(), "个性签名太长了(不可以超过50个字)!");
                 }
                 else {
                     try {
@@ -102,7 +108,7 @@ public class ModifyPersonalActivity extends AppCompatActivity {
                                 successful[0] = false;//ToastUtil.showMsg(getApplication(),"用户名称已存在");
                             }
                             else {
-                                String age = ageEDT.getText().toString();
+
                                 String sex;
                                 if(radiogroup.getCheckedRadioButtonId() == R.id.modify_personal_information_page_3_radiogroup_sex1) {
                                     sex = "男";

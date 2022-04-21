@@ -58,7 +58,9 @@ public class PersonalActivity extends AppCompatActivity {
     private Button mBtn_apply;
     private Button mBtn_myrelease;
     private ImageButton mBtn_userpicture;
+
     TextView UserName;
+    TextView signature;
     Button rBt_cancellation;
     Uri photouri;
     ResultSet rs;
@@ -155,7 +157,14 @@ public class PersonalActivity extends AppCompatActivity {
         setHeadImage();
     }
 
-
+    protected void onResume(Bundle savedInstance) {
+        super.onResume();
+        SaveSharedPreference temp = new SaveSharedPreference();
+        UserName = findViewById(R.id.personal_page_1_textview_username);
+        UserName.setText(temp.getUsername());
+        signature = findViewById(R.id.personal_page_1_textview_signature);
+        signature.setText(temp.getSignature());
+    }
 
     //显示头像
     private void setHeadImage (){
@@ -193,11 +202,7 @@ public class PersonalActivity extends AppCompatActivity {
     }
 
 
-    protected void onResume(Bundle savedInstance) {
-        super.onResume();
-        UserName = findViewById(R.id.personal_page_1_textview_username);
-        UserName.setText(new SaveSharedPreference().getUsername());
-    }
+
 
     private void InitUpButtonAndTheirListeners() {
 
@@ -210,6 +215,7 @@ public class PersonalActivity extends AppCompatActivity {
         mBtn_myrelease = findViewById(R.id.personal_page_button_myrelease);
         UserName = findViewById(R.id.personal_page_1_textview_username);
         rBt_cancellation = findViewById(R.id.personal_page_button_cancellation);
+        signature = findViewById(R.id.personal_page_1_textview_signature);
         //历史记录
         mBtn_history.setOnClickListener(new View.OnClickListener() {
             @Override

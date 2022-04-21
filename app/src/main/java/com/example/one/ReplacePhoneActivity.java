@@ -65,7 +65,6 @@ public class ReplacePhoneActivity extends AppCompatActivity {
                                 Intent intent = new Intent(ReplacePhoneActivity.this, MainActivity.class);
                                 startActivity(intent);
 
-
                             }
                         });
 

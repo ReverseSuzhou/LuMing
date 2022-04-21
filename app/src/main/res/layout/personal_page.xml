@@ -28,18 +28,48 @@
             android:scaleType="fitCenter"
             android:src="@drawable/default_userpicture" />
 
-        <TextView
-            android:id="@+id/personal_page_1_textview_username"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:gravity="left"
-            android:text="昵称"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:paddingLeft="20dp"
-            android:paddingTop="15dp"/>
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            >
+
+            <TextView
+                android:id="@+id/personal_page_1_textview_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="昵称"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:paddingLeft="20dp"
+                android:paddingTop="15dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/personal_page_1_textview_sign"
+                    android:paddingLeft="20dp"
+                    android:text="个性签名:"
+                    android:textStyle="bold"
+                    android:textSize="13sp"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:id="@+id/personal_page_1_textview_signature"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:hint="这个人什么都没有留下"
+                    />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout

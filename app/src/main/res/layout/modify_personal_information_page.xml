@@ -109,7 +109,7 @@
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:background="@drawable/background_text"
-            android:hint="个性签名"
+            android:hint="个性签名（小于50字符）"
             android:singleLine="true"
             android:textSize="25sp"
             android:textStyle="bold" />
