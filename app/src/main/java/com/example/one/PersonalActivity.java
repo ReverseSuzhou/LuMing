@@ -162,7 +162,7 @@ public class PersonalActivity extends AppCompatActivity {
         SaveSharedPreference saveSharedPreference = new SaveSharedPreference();
         int id = saveSharedPreference.getUserId(); //获取当前用户id
         System.out.println("id = " + id);
-        String sql = "select img from Pic where User_id=" + id + " and type=1;";
+        String sql = "select img from User where User_id=" + id + ";";
 
         DBUtils dbUtils = new DBUtils();
         try {

@@ -71,46 +71,46 @@ public class StorePicturesUtil {
         }
     }
 
-    public int getNum(){ //帖子中的
-        int ans = 0;
-
-        try {
-            //1、加载驱动
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            System.out.println("驱动加载成功！！！（图片2）");
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        try {
-            //2、获取与数据库的连接
-            connection = DriverManager.getConnection(url, userName, password);
-            System.out.println("连接数据库成功！！（图片2）");
-            //3.sql语句
-            //4.获取用于向数据库发送sql语句的ps
-            ps = connection.prepareStatement("SELECT MAX(Pic_id) FROM Pic");
-            rs = ps.executeQuery();
-            int id = 0;
-            while(rs.next()) {
-                id = rs.getInt(1)+1;
-            }
-            ans = id;
-
-        }catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("插入图片失败");
-        }
-        finally {
-            if(connection!=null){
-                try {
-                    connection.close();
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        }
-        return ans;
-    }
+//    public int getNum(){ //帖子中的
+//        int ans = 0;
+//
+//        try {
+//            //1、加载驱动
+//            Class.forName("com.mysql.jdbc.Driver").newInstance();
+//            System.out.println("驱动加载成功！！！（图片2）");
+//        }
+//        catch (Exception e){
+//            e.printStackTrace();
+//        }
+//        try {
+//            //2、获取与数据库的连接
+//            connection = DriverManager.getConnection(url, userName, password);
+//            System.out.println("连接数据库成功！！（图片2）");
+//            //3.sql语句
+//            //4.获取用于向数据库发送sql语句的ps
+//            ps = connection.prepareStatement("SELECT MAX(Pic_id) FROM Pic");
+//            rs = ps.executeQuery();
+//            int id = 0;
+//            while(rs.next()) {
+//                id = rs.getInt(1)+1;
+//            }
+//            ans = id;
+//
+//        }catch (Exception e) {
+//            e.printStackTrace();
+//            System.out.println("插入图片失败");
+//        }
+//        finally {
+//            if(connection!=null){
+//                try {
+//                    connection.close();
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//        return ans;
+//    }
 
     public void storeHeadImg(Bitmap bitmap){
         String picture = bitmapToString(bitmap);
