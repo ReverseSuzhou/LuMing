@@ -43,6 +43,7 @@ public class Recive extends AppCompatActivity {
     private ImageView rec_collect;
     private ImageView review;
     private ImageView rec_like;
+    private ImageView rec_gender;
     private String my_phone;
     private String user_phone;
     private ImageView picture;
@@ -89,6 +90,7 @@ public class Recive extends AppCompatActivity {
         getiscollect();
         getislike();
         getisfocus();
+        getgender();
         swipe_review.setColorSchemeResources(android.R.color.holo_green_light,android.R.color.holo_red_light,android.R.color.holo_blue_light);
         swipe_review.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -107,6 +109,17 @@ public class Recive extends AppCompatActivity {
                 finish();
             }
         });
+
+        recive_headpic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = null;
+                intent = new Intent(Recive.this, DetailedPersonalInformationActivity.class);
+                intent.putExtra("user_phone", user_phone);
+                startActivity(intent);
+            }
+        });
+
         review.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -425,6 +438,43 @@ public class Recive extends AppCompatActivity {
             throwables.printStackTrace();
         }
     }
+    private void getgender(){
+        try {
+            t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    db = new DBUtils();
+                    //my_user;
+                    rs = db.query("select * from user where User_phone = "+ user_phone + ";");
+                    try {
+                        if(rs.isBeforeFirst()) {
+                            while(rs.next()){
+                                if(rs.getString("User_sex").equals("男"))
+                                rec_gender.setImageResource(R.drawable.man);
+                                else{
+                                    rec_gender.setImageResource(R.drawable.girl);
+                                }
+                            }
+                        }
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+
+
+                }
+            });
+            t.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        while(t.isAlive() == true);
+        try {
+            db.connection.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
     private void initData() {
 
         //第二种
@@ -455,6 +505,8 @@ public class Recive extends AppCompatActivity {
         review = findViewById(R.id.review);
         rec_like = findViewById(R.id.rec_like);
         focus_or_not = findViewById(R.id.focus_or_not);
+        rec_gender = findViewById(R.id.gender);
+        recive_headpic = findViewById(R.id.recive_headpic);
     }
     void Refresh() throws SQLException{
         swipe_review.setRefreshing(false);
@@ -546,7 +598,7 @@ public class Recive extends AppCompatActivity {
                             @Override
                             public void run() {
                                 db = new DBUtils();
-                                db.update("update forumt set F_commentnum=F_commentnum where Forumt_id =" + id_push + ";" );
+                                db.update("update forumt set F_commentnum=F_commentnum+1 where Forumt_id =" + id_push + ";" );
                             }
                         });
                         t.start();

@@ -13,6 +13,9 @@ public class SaveSharedPreference {
     private static String password=null;
     private static int userId;
     private static String phone=null;
+    private static String signature=null;
+    private static String email=null;
+    private static int age;
     private final static File user = new File("data/data/com.example.one/user.txt");
 
     public void setUsername (String username) {
@@ -30,10 +33,20 @@ public class SaveSharedPreference {
         this.phone = phone;
     }
 
+    public void setSignature(String signature) {this.signature = signature;}
+    public void setEmail(String Email) {this.email = Email;}
+    public void setAge(int  age) {this.age = age;}
+
     public String getUsername () { return username; }
     public String getPassword () { return password; }
     public String getPhone () { return phone; }
     public int getUserId() {return userId;}
+
+    public String getSignature() {return signature;}
+    public String getEmail() {return email;}
+    public int getAge() {return age;}
+
+
 
     public void open () {
         if (!user.exists()) {
@@ -51,6 +64,7 @@ public class SaveSharedPreference {
                 bufferedWriter.write(password + "\n");
                 bufferedWriter.write(userId + "\n");
                 bufferedWriter.write(phone + "\n");
+                bufferedWriter.write(signature + "\n");
                 bufferedWriter.close();
                 fileWriter.close();
             } catch (IOException e) {
@@ -65,7 +79,7 @@ public class SaveSharedPreference {
                 password = bufferedReader.readLine();
                 userId = Integer.parseInt(bufferedReader.readLine());
                 phone = bufferedReader.readLine();
-
+                signature = bufferedReader.readLine();
                 bufferedReader.close();
                 fileReader.close();
             } catch (IOException e) {
