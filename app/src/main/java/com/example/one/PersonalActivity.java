@@ -163,7 +163,15 @@ public class PersonalActivity extends AppCompatActivity {
         UserName = findViewById(R.id.personal_page_1_textview_username);
         UserName.setText(temp.getUsername());
         signature = findViewById(R.id.personal_page_1_textview_signature);
-        signature.setText(temp.getSignature());
+        String signtemp = temp.getSignature();
+        if (signtemp.isEmpty())
+        {
+            signature.setText("\\_(0_0)_/ ");
+        }
+        else {
+            signature.setText(signtemp);
+        }
+
     }
 
     //显示头像

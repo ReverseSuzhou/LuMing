@@ -124,6 +124,7 @@ public class ModifyPersonalActivity extends AppCompatActivity {
                                 String update = "update user set User_name = '" + newusername +"' , User_sex = '"+ sex + "' , U_signature = '" +signature+"' , User_email = '"+email+"' , User_age = "+age+" where User_phone = '"+nowuserphone+"' and User_name = '"+ oldusername +"' ;";
                                 db.update(update);
                                 cat.setUsername(newusername);
+                                cat.setSignature(signature);
                                 cat.close();
                                 cat.open();
                                 successful[0] = true;

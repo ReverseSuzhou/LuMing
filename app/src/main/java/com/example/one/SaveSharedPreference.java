@@ -64,6 +64,7 @@ public class SaveSharedPreference {
                 bufferedWriter.write(password + "\n");
                 bufferedWriter.write(userId + "\n");
                 bufferedWriter.write(phone + "\n");
+                bufferedWriter.write(signature + "\n");
                 bufferedWriter.close();
                 fileWriter.close();
             } catch (IOException e) {
@@ -78,7 +79,7 @@ public class SaveSharedPreference {
                 password = bufferedReader.readLine();
                 userId = Integer.parseInt(bufferedReader.readLine());
                 phone = bufferedReader.readLine();
-
+                signature = bufferedReader.readLine();
                 bufferedReader.close();
                 fileReader.close();
             } catch (IOException e) {
