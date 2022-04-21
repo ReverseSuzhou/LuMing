@@ -58,9 +58,7 @@ public class PersonalActivity extends AppCompatActivity {
     private Button mBtn_apply;
     private Button mBtn_myrelease;
     private ImageButton mBtn_userpicture;
-
     TextView UserName;
-    TextView signature;
     Button rBt_cancellation;
     Uri photouri;
     ResultSet rs;
@@ -154,38 +152,17 @@ public class PersonalActivity extends AppCompatActivity {
         InitUpButtonAndTheirListeners();
         InitBelowButtonAndTheirListeners();
         UserName.setText(new SaveSharedPreference().getUsername());
-        if (new SaveSharedPreference().getSignature().isEmpty())
-        {
-            signature.setText("\\_(0_0)_/ ");
-        }
-        else {
-            signature.setText(new SaveSharedPreference().getSignature());
-        }
-
         setHeadImage();
     }
 
-    protected void onResume(Bundle savedInstance) {
-        super.onResume();
-        UserName = findViewById(R.id.personal_page_1_textview_username);
-        UserName.setText(new SaveSharedPreference().getUsername());
-        signature = findViewById(R.id.personal_page_1_textview_signature);
-        if (new SaveSharedPreference().getSignature().isEmpty())
-        {
-            signature.setText("\\_(0_0)_/ ");
-        }
-        else {
-            signature.setText(new SaveSharedPreference().getSignature());
-        }
 
-    }
 
     //显示头像
     private void setHeadImage (){
         SaveSharedPreference saveSharedPreference = new SaveSharedPreference();
         int id = saveSharedPreference.getUserId(); //获取当前用户id
         System.out.println("id = " + id);
-        String sql = "select img from Pic where User_id=" + id + " and type=1;";
+        String sql = "select img from User where User_id=" + id + ";";
 
         DBUtils dbUtils = new DBUtils();
         try {
@@ -216,7 +193,11 @@ public class PersonalActivity extends AppCompatActivity {
     }
 
 
-
+    protected void onResume(Bundle savedInstance) {
+        super.onResume();
+        UserName = findViewById(R.id.personal_page_1_textview_username);
+        UserName.setText(new SaveSharedPreference().getUsername());
+    }
 
     private void InitUpButtonAndTheirListeners() {
 
@@ -229,7 +210,6 @@ public class PersonalActivity extends AppCompatActivity {
         mBtn_myrelease = findViewById(R.id.personal_page_button_myrelease);
         UserName = findViewById(R.id.personal_page_1_textview_username);
         rBt_cancellation = findViewById(R.id.personal_page_button_cancellation);
-        signature = findViewById(R.id.personal_page_1_textview_signature);
         //历史记录
         mBtn_history.setOnClickListener(new View.OnClickListener() {
             @Override
