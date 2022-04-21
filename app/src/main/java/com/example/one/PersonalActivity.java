@@ -154,22 +154,28 @@ public class PersonalActivity extends AppCompatActivity {
         InitUpButtonAndTheirListeners();
         InitBelowButtonAndTheirListeners();
         UserName.setText(new SaveSharedPreference().getUsername());
+        if (new SaveSharedPreference().getSignature().isEmpty())
+        {
+            signature.setText("\\_(0_0)_/ ");
+        }
+        else {
+            signature.setText(new SaveSharedPreference().getSignature());
+        }
+
         setHeadImage();
     }
 
     protected void onResume(Bundle savedInstance) {
         super.onResume();
-        SaveSharedPreference temp = new SaveSharedPreference();
         UserName = findViewById(R.id.personal_page_1_textview_username);
-        UserName.setText(temp.getUsername());
+        UserName.setText(new SaveSharedPreference().getUsername());
         signature = findViewById(R.id.personal_page_1_textview_signature);
-        String signtemp = temp.getSignature();
-        if (signtemp.isEmpty())
+        if (new SaveSharedPreference().getSignature().isEmpty())
         {
             signature.setText("\\_(0_0)_/ ");
         }
         else {
-            signature.setText(signtemp);
+            signature.setText(new SaveSharedPreference().getSignature());
         }
 
     }
