@@ -3,23 +3,14 @@ package com.example.one;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-import androidx.core.os.EnvironmentCompat;
 
 import android.Manifest;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -29,18 +20,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.example.one.util.StorePicturesUtil;
-import com.example.one.util.ToastUtil;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 public class PersonalActivity extends AppCompatActivity {
     //声明控件
@@ -64,6 +49,9 @@ public class PersonalActivity extends AppCompatActivity {
     Button rBt_cancellation;
     Uri photouri;
     ResultSet rs;
+    String phone;
+    String usernametemp;
+    String signaturetemp;
 
     ActivityResultLauncher<String> perssion_camera = registerForActivityResult(
             new ActivityResultContracts.RequestPermission(),
@@ -153,13 +141,16 @@ public class PersonalActivity extends AppCompatActivity {
         setContentView(R.layout.personal_page);
         InitUpButtonAndTheirListeners();
         InitBelowButtonAndTheirListeners();
-        UserName.setText(new SaveSharedPreference().getUsername());
-        if (new SaveSharedPreference().getSignature().isEmpty())
+        getUserInfo();
+        UserName.setText(usernametemp);
+
+
+        if (signaturetemp.isEmpty())
         {
             signature.setText("\\_(0_0)_/ ");
         }
         else {
-            signature.setText(new SaveSharedPreference().getSignature());
+            signature.setText(signaturetemp);
         }
 
         setHeadImage();
@@ -168,18 +159,40 @@ public class PersonalActivity extends AppCompatActivity {
     protected void onResume(Bundle savedInstance) {
         super.onResume();
         UserName = findViewById(R.id.personal_page_1_textview_username);
-        UserName.setText(new SaveSharedPreference().getUsername());
         signature = findViewById(R.id.personal_page_1_textview_signature);
-        if (new SaveSharedPreference().getSignature().isEmpty())
+        getUserInfo();
+        UserName.setText(usernametemp);
+        if (signaturetemp.isEmpty())
         {
             signature.setText("\\_(0_0)_/ ");
         }
         else {
-            signature.setText(new SaveSharedPreference().getSignature());
+            signature.setText(signaturetemp);
         }
 
     }
 
+    private void getUserInfo() {
+        phone = new SaveSharedPreference().getPhone();
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String sql = "select User_name,U_signature from user where User_phone = '"+phone+"' ";
+                DBUtils dblink= new DBUtils();
+                ResultSet rest;
+                rest = dblink.query(sql);
+                try {
+                    rest.next();
+                    usernametemp = rest.getString("User_name");
+                    signaturetemp = rest.getString("U_signature");
+                } catch ( Exception e)  {
+                    e.printStackTrace();
+                }
+            }
+        });
+        t.start();
+        while (t.isAlive()) ;
+    }
     //显示头像
     private void setHeadImage (){
         SaveSharedPreference saveSharedPreference = new SaveSharedPreference();

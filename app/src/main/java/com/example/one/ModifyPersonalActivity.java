@@ -36,6 +36,8 @@ public class ModifyPersonalActivity extends AppCompatActivity {
     String nowuserphone;
     String oldusername;
     String signature;
+    String oldusernametemp;
+
 
     int exit;
 
@@ -46,8 +48,27 @@ public class ModifyPersonalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.modify_personal_information_page);
         SaveSharedPreference cat = new SaveSharedPreference();
-        oldusername = cat.getUsername();
         nowuserphone = cat.getPhone();
+
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String sqlstence = "select User_name from user where User_phone = '"+nowuserphone+"'";
+                DBUtils dblink = new DBUtils();
+                ResultSet rest;
+                rest = dblink.query(sqlstence);
+                try {
+                    rest.next();
+                    oldusernametemp = rest.getString("User_name");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+        while(thread.isAlive());
+        oldusername = oldusernametemp;
 
         //控件部分
         mBtn_back = findViewById(R.id.modify_personal_information_page_1_button_back);
@@ -149,6 +170,8 @@ public class ModifyPersonalActivity extends AppCompatActivity {
                         ToastUtil.showMsg(getApplicationContext(),"成功");
                     }
                 }
+                Intent intent = new Intent(ModifyPersonalActivity.this,PersonalActivity.class);
+                startActivity(intent);
             }
         });
     }
