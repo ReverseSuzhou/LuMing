@@ -15,7 +15,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <!--昵称文本显示框-->
-        <ImageButton
+
+        <ImageView
             android:id="@+id/detailed_personal_information_1_button_userpicture"
             android:layout_width="240px"
             android:layout_height="240px"

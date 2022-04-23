@@ -134,7 +134,6 @@ public class PersonalActivity extends AppCompatActivity {
 
 
             });
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -198,7 +197,7 @@ public class PersonalActivity extends AppCompatActivity {
         SaveSharedPreference saveSharedPreference = new SaveSharedPreference();
         int id = saveSharedPreference.getUserId(); //获取当前用户id
         System.out.println("id = " + id);
-        String sql = "select img from Pic where User_id=" + id + " and type=1;";
+        String sql = "select * from User where User_id=" + id + ";";
 
         DBUtils dbUtils = new DBUtils();
         try {
@@ -212,7 +211,7 @@ public class PersonalActivity extends AppCompatActivity {
             while (t.isAlive()) ;
             if (rs.isBeforeFirst()){
                 rs.next();
-                String string = rs.getString("img");
+                String string = rs.getString("Img");
                 StorePicturesUtil storePicturesUtil = new StorePicturesUtil();
                 Bitmap bitmap = storePicturesUtil.stringToBitmap(string);
                 mBtn_userpicture.setImageBitmap(bitmap);
