@@ -162,7 +162,7 @@ public class Recive extends AppCompatActivity {
                             throwables.printStackTrace();
                         }
                         islike = false;
-                        rec_like.setImageResource(R.drawable.like);
+                        rec_like.setImageResource(R.drawable.agree_black);
                         t = new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -185,7 +185,7 @@ public class Recive extends AppCompatActivity {
                         t.start();
                         while(t.isAlive());
                         islike = true;
-                        rec_like.setImageResource(R.drawable.like_black);
+                        rec_like.setImageResource(R.drawable.agree_red);
                         try {
                             db.connection.close();
                         } catch (SQLException throwables) {
@@ -238,7 +238,7 @@ public class Recive extends AppCompatActivity {
                             throwables.printStackTrace();
                         }
                         iscollect = false;
-                        rec_collect.setImageResource(R.drawable.collect_pic);
+                        rec_collect.setImageResource(R.drawable.shoucang_black);
                         t = new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -262,7 +262,7 @@ public class Recive extends AppCompatActivity {
                         t.start();
                         while(t.isAlive());
                         iscollect = true;
-                        rec_collect.setImageResource(R.drawable.shoucang_black);
+                        rec_collect.setImageResource(R.drawable.redstars);
                         try {
                             db.connection.close();
                         } catch (SQLException throwables) {
@@ -344,11 +344,11 @@ public class Recive extends AppCompatActivity {
                         rs = db.query("select * from likelike where User_phone = "+ my_phone + " and Forumt_id = "+ id_push + ";");
                         try {
                             if(rs.isBeforeFirst()) {
-                                rec_like.setImageResource(R.drawable.like_black);
+                                rec_like.setImageResource(R.drawable.agree_red);
                                 islike = true;
                             }
                             else{
-                                rec_like.setImageResource(R.drawable.like);
+                                rec_like.setImageResource(R.drawable.agree_black);
                                 islike = false;
                             }
                         } catch (SQLException throwables) {
@@ -378,11 +378,11 @@ public class Recive extends AppCompatActivity {
                             rs = db.query("select * from collect where User_phone = "+ my_phone + " and Forumt_id = "+ id_push + ";");
                             try {
                                 if(rs.isBeforeFirst()) {
-                                    rec_collect.setImageResource(R.drawable.shoucang_black);
+                                    rec_collect.setImageResource(R.drawable.redstars);
                                     iscollect = true;
                                 }
                                 else{
-                                    rec_collect.setImageResource(R.drawable.collect_pic);
+                                    rec_collect.setImageResource(R.drawable.shoucang_black);
                                     iscollect = false;
                                 }
                             } catch (SQLException throwables) {
