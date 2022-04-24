@@ -48,6 +48,7 @@ public class EditorActivity extends AppCompatActivity implements PermissionInter
     private RadioButton rb_study, rb_sport, rb_association_event, rb_other;
     private TextView tv_label_tip;
     private int id;
+    private Bitmap bitmap;
 
     DBUtils db;
     ResultSet rs;
@@ -112,6 +113,7 @@ public class EditorActivity extends AppCompatActivity implements PermissionInter
                 try {
                     bmp = CompressImage.getBitmapFormUri(EditorActivity.this, result);
                     imageview.setImageBitmap(bmp);
+                    bitmap = bmp;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -205,10 +207,12 @@ public class EditorActivity extends AppCompatActivity implements PermissionInter
                                     Date PDate = new Date();
                                     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                     String strDate = dateFormat.format(PDate);
+                                    StorePicturesUtil storePicturesUtil = new StorePicturesUtil();
+                                    String picture = storePicturesUtil.bitmapToString(bitmap);
 
-                                    String sql = "insert into Forumt(F_title, Forumt_content,Forumt_date,User_phone,User_name,F_likenum,F_collectnum,F_commentnum,F_lable) " +
+                                    String sql = "insert into Forumt(F_title, Forumt_content,Forumt_date,User_phone,User_name,F_likenum,F_collectnum,F_commentnum,F_lable,img) " +
                                             "values ('" + mEt_title.getText().toString() + "', '" + mEt_text.getText().toString() + "','" + strDate + "','" + new SaveSharedPreference().getPhone() + "'" +
-                                            ",'" + new SaveSharedPreference().getUsername() + "','" + 0 + "','" + 0 + "','" + 0 + "','" + str_label + "');";
+                                            ",'" + new SaveSharedPreference().getUsername() + "','" + 0 + "','" + 0 + "','" + 0 + "','" + str_label +  "','" + picture + "');";
                                     DBUtils dbUtils = new DBUtils();
                                     try {
                                         new Thread(new Runnable() {

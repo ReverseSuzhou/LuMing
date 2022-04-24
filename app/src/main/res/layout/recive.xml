@@ -21,7 +21,7 @@
             android:background="?android:attr/selectableItemBackground"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:tint="#000" />
+            />
 
         <TextView
             android:paddingLeft="15dp"
@@ -36,24 +36,24 @@
         <ImageView
             android:id="@+id/review"
             android:layout_marginRight="20dp"
-            android:src="@drawable/review"
+            android:src="@drawable/comments"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            app:tint="#000" />
+             />
         <ImageView
             android:id="@+id/rec_collect"
             android:layout_marginRight="20dp"
-            android:src="@drawable/collect_pic"
+            android:src="@drawable/shoucang_black"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            app:tint="#000" />
+             />
         <ImageView
             android:id="@+id/rec_like"
             android:layout_marginRight="10dp"
-            android:src="@drawable/like"
+            android:src="@drawable/agree_black"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            app:tint="#000" />
+            />
 
     </LinearLayout>
     <View
@@ -200,7 +200,7 @@
                         android:textSize="15sp" />
                     <ImageView
                         android:src="@drawable/pict"
-                        android:id="@+id/editor_page_imageview_picture"
+                        android:id="@+id/recive_page_imageview_picture"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         />

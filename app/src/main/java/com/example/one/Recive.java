@@ -1,6 +1,7 @@
 package com.example.one;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
@@ -22,7 +23,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.one.Adapter.ReviewAdapter;
 import com.example.one.Bean.Comment;
-
+import com.example.one.util.StorePicturesUtil;
 
 
 import java.sql.ResultSet;
@@ -46,7 +47,10 @@ public class Recive extends AppCompatActivity {
     private ImageView rec_gender;
     private String my_phone;
     private String user_phone;
-    private ImageView picture;
+    private ImageView img; //显示的图片
+    private Bitmap bitmap;
+    private ImageView imgHead;
+    private Bitmap bitmapHead; //头像
 
     private CircleImageView recive_headpic;
 
@@ -91,6 +95,9 @@ public class Recive extends AppCompatActivity {
         getislike();
         getisfocus();
         getgender();
+        getHeadImg();
+        getImg();
+
         swipe_review.setColorSchemeResources(android.R.color.holo_green_light,android.R.color.holo_red_light,android.R.color.holo_blue_light);
         swipe_review.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -162,7 +169,7 @@ public class Recive extends AppCompatActivity {
                             throwables.printStackTrace();
                         }
                         islike = false;
-                        rec_like.setImageResource(R.drawable.like);
+                        rec_like.setImageResource(R.drawable.agree_black);
                         t = new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -185,7 +192,7 @@ public class Recive extends AppCompatActivity {
                         t.start();
                         while(t.isAlive());
                         islike = true;
-                        rec_like.setImageResource(R.drawable.like_black);
+                        rec_like.setImageResource(R.drawable.agree_red);
                         try {
                             db.connection.close();
                         } catch (SQLException throwables) {
@@ -238,7 +245,7 @@ public class Recive extends AppCompatActivity {
                             throwables.printStackTrace();
                         }
                         iscollect = false;
-                        rec_collect.setImageResource(R.drawable.collect_pic);
+                        rec_collect.setImageResource(R.drawable.shoucang_black);
                         t = new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -262,7 +269,7 @@ public class Recive extends AppCompatActivity {
                         t.start();
                         while(t.isAlive());
                         iscollect = true;
-                        rec_collect.setImageResource(R.drawable.shoucang_black);
+                        rec_collect.setImageResource(R.drawable.redstars);
                         try {
                             db.connection.close();
                         } catch (SQLException throwables) {
@@ -344,11 +351,11 @@ public class Recive extends AppCompatActivity {
                         rs = db.query("select * from likelike where User_phone = "+ my_phone + " and Forumt_id = "+ id_push + ";");
                         try {
                             if(rs.isBeforeFirst()) {
-                                rec_like.setImageResource(R.drawable.like_black);
+                                rec_like.setImageResource(R.drawable.agree_red);
                                 islike = true;
                             }
                             else{
-                                rec_like.setImageResource(R.drawable.like);
+                                rec_like.setImageResource(R.drawable.agree_black);
                                 islike = false;
                             }
                         } catch (SQLException throwables) {
@@ -378,11 +385,11 @@ public class Recive extends AppCompatActivity {
                             rs = db.query("select * from collect where User_phone = "+ my_phone + " and Forumt_id = "+ id_push + ";");
                             try {
                                 if(rs.isBeforeFirst()) {
-                                    rec_collect.setImageResource(R.drawable.shoucang_black);
+                                    rec_collect.setImageResource(R.drawable.redstars);
                                     iscollect = true;
                                 }
                                 else{
-                                    rec_collect.setImageResource(R.drawable.collect_pic);
+                                    rec_collect.setImageResource(R.drawable.shoucang_black);
                                     iscollect = false;
                                 }
                             } catch (SQLException throwables) {
@@ -475,6 +482,86 @@ public class Recive extends AppCompatActivity {
         }
     }
 
+    private void getHeadImg(){
+        try {
+            t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    db = new DBUtils();
+                    //my_user;
+                    rs = db.query("select * from user where User_phone = "+ user_phone + ";");
+                    try {
+                        if(rs.isBeforeFirst()) {
+                            while(rs.next()){
+                                String picture = rs.getString("Img");
+                                StorePicturesUtil storePicturesUtil = new StorePicturesUtil();
+                                bitmapHead = storePicturesUtil.stringToBitmap(picture);
+                                imgHead.setImageBitmap(bitmapHead);
+//                                if(rs.getString("Img").equals("男"))
+//                                    rec_gender.setImageResource(R.drawable.man);
+//                                else{
+//                                    rec_gender.setImageResource(R.drawable.girl);
+//                                }
+                            }
+                        }
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+
+
+                }
+            });
+            t.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        while(t.isAlive() == true);
+        try {
+            db.connection.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    private void getImg(){
+        try {
+            t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    db = new DBUtils();
+                    //my_user;
+                    System.out.println("id 的值是" + id_push);
+                    rs = db.query("select * from Forumt where Forumt_id=" + id_push+ ";");
+                    try {
+                        if(rs.isBeforeFirst()) {
+                            while(rs.next()){
+                                System.out.println("hhhhhhh");
+                                String picture = rs.getString("Img");
+                                StorePicturesUtil storePicturesUtil = new StorePicturesUtil();
+                                bitmap = storePicturesUtil.stringToBitmap(picture);
+                                img.setImageBitmap(bitmap);
+
+                            }
+                        }
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+
+
+                }
+            });
+            t.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        while(t.isAlive() == true);
+        try {
+            db.connection.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
     private void initData() {
 
         //第二种
@@ -507,6 +594,8 @@ public class Recive extends AppCompatActivity {
         focus_or_not = findViewById(R.id.focus_or_not);
         rec_gender = findViewById(R.id.gender);
         recive_headpic = findViewById(R.id.recive_headpic);
+        img = findViewById(R.id.recive_page_imageview_picture);
+        imgHead = findViewById(R.id.recive_headpic);
     }
     void Refresh() throws SQLException{
         swipe_review.setRefreshing(false);

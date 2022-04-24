@@ -60,12 +60,13 @@
         <entry key="..\:/android/test-master/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.176" />
         <entry key="..\:/android/test-master/app/src/main/res/layout/association_apply_page.xml" value="0.3453125" />
         <entry key="..\:/android/test-master/app/src/main/res/layout/association_page.xml" value="0.335" />
+        <entry key="..\:/android/test-master/app/src/main/res/layout/detailed_personal_information.xml" value="0.3328125" />
         <entry key="..\:/android/test-master/app/src/main/res/layout/editor_page.xml" value="0.3453125" />
         <entry key="..\:/android/test-master/app/src/main/res/layout/foot_item.xml" value="0.16793313069908813" />
         <entry key="..\:/android/test-master/app/src/main/res/layout/item_home.xml" value="0.335" />
         <entry key="..\:/android/test-master/app/src/main/res/layout/main_page.xml" value="0.16793313069908813" />
         <entry key="..\:/android/test-master/app/src/main/res/layout/modify_personal_information_page.xml" value="0.16793313069908813" />
-        <entry key="..\:/android/test-master/app/src/main/res/layout/recive.xml" value="0.16185410334346503" />
+        <entry key="..\:/android/test-master/app/src/main/res/layout/recive.xml" value="0.25" />
         <entry key="..\:/android/test-master/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.194" />
         <entry key="..\:/android/test-master/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.194" />
         <entry key="..\:/as/test/app/src/main/res/drawable/shape_search.xml" value="0.124" />
@@ -91,6 +92,7 @@
         <entry key="..\:/wenqu/test/app/src/main/res/layout/association_apply_page.xml" value="0.24947916666666667" />
         <entry key="..\:/wenqu/test/app/src/main/res/layout/association_page.xml" value="0.24947916666666667" />
         <entry key="..\:/wenqu/test/app/src/main/res/layout/collect_page.xml" value="0.24947916666666667" />
+        <entry key="..\:/wenqu/test/app/src/main/res/layout/dialog_review.xml" value="0.14375" />
         <entry key="..\:/wenqu/test/app/src/main/res/layout/editor_page.xml" value="0.24947916666666667" />
         <entry key="..\:/wenqu/test/app/src/main/res/layout/foot_item.xml" value="0.24947916666666667" />
         <entry key="..\:/wenqu/test/app/src/main/res/layout/forgetpassword.xml" value="0.24947916666666667" />
@@ -102,6 +104,7 @@
         <entry key="..\:/wenqu/test/app/src/main/res/layout/main_page.xml" value="0.24947916666666667" />
         <entry key="..\:/wenqu/test/app/src/main/res/layout/message_page.xml" value="0.24947916666666667" />
         <entry key="..\:/wenqu/test/app/src/main/res/layout/modify_personal_information_page.xml" value="0.24947916666666667" />
+        <entry key="..\:/wenqu/test/app/src/main/res/layout/myrelease_page.xml" value="0.14375" />
         <entry key="..\:/wenqu/test/app/src/main/res/layout/personal_page.xml" value="0.24947916666666667" />
         <entry key="..\:/wenqu/test/app/src/main/res/layout/post_page.xml" value="0.24947916666666667" />
         <entry key="..\:/wenqu/test/app/src/main/res/layout/recive.xml" value="0.14375" />

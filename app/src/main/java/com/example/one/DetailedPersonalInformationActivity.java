@@ -1,16 +1,21 @@
 package com.example.one;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.one.util.StorePicturesUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DetailedPersonalInformationActivity extends AppCompatActivity {
-    private ImageButton mBtn_userPicture;
+    private ImageView iv_userPicture;
+    private Bitmap bitmap;
     private TextView tv_userName;
     private TextView tv_gender;
     private TextView tv_age;
@@ -25,7 +30,7 @@ public class DetailedPersonalInformationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detailed_personal_information);
 
-        mBtn_userPicture = findViewById(R.id.detailed_personal_information_1_button_userpicture);
+        iv_userPicture = findViewById(R.id.detailed_personal_information_1_button_userpicture);
         tv_userName = findViewById(R.id.detailed_personal_information_1_textview_username);
         tv_gender = findViewById(R.id.detailed_personal_information_2_textview_gender);
         tv_age = findViewById(R.id.detailed_personal_information_2_textview_age);
@@ -51,6 +56,10 @@ public class DetailedPersonalInformationActivity extends AppCompatActivity {
                 tv_age.setText("年龄：" + rs.getString("User_age"));
                 tv_Signature.setText(rs.getString("U_signature"));
                 tv_email.setText("邮箱：" + rs.getString("User_email"));
+                String picture = rs.getString("img");
+                StorePicturesUtil storePicturesUtil = new StorePicturesUtil();
+                bitmap = storePicturesUtil.stringToBitmap(picture);
+                iv_userPicture.setImageBitmap(bitmap);
             }
         } catch (SQLException e) {
             e.printStackTrace();

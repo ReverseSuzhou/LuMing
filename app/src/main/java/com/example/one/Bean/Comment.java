@@ -6,6 +6,7 @@ public class Comment {
     String Forumt_id;
     String Comment_text;
     String Comment_time;
+    String Img;
 
     public String getComment_id() {
         return Comment_id;
@@ -45,5 +46,13 @@ public class Comment {
 
     public void setComment_time(String comment_time) {
         Comment_time = comment_time;
+    }
+
+    public String getImg(String img) {
+        return img;
+    }
+
+    public void setImg(String img) {
+        Img = img;
     }
 }
