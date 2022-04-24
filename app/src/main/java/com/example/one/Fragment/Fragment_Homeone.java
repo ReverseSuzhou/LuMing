@@ -64,7 +64,7 @@ public class Fragment_Homeone extends Fragment{
                 @Override
                 public void run() {
                     db = new DBUtils();
-                    rs = db.query("select * from forumt order by F_likenum desc;");
+                    rs = db.query("select * from admin_forumt order by F_likenum desc;");
                     try {
                         while(rs.next()){
                             Push po = new Push();
