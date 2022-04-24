@@ -95,8 +95,8 @@ public class Recive extends AppCompatActivity {
         getislike();
         getisfocus();
         getgender();
-        getHeadImg();
-        getImg();
+        //getHeadImg();
+        //getImg();
 
         swipe_review.setColorSchemeResources(android.R.color.holo_green_light,android.R.color.holo_red_light,android.R.color.holo_blue_light);
         swipe_review.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -637,6 +637,7 @@ public class Recive extends AppCompatActivity {
             swipe_review.setRefreshing(false);
             swipe_review.setVisibility(View.VISIBLE);
             adapter = new ReviewAdapter(Recive.this,data);
+            rv_review.setVisibility(View.VISIBLE);
             rv_review.setLayoutManager(new LinearLayoutManager(Recive.this));
             rv_review.setAdapter(adapter);
         }
