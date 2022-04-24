@@ -173,7 +173,22 @@ public class MyReleaseActivity extends AppCompatActivity {
             if (direction == SwipeMenuRecyclerView.RIGHT_DIRECTION) {
 
                 //删除操作
-
+                String fid = data.get(adapterPosition).getForumt_id();
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String sqlsentence = "delete from forumt where forumt_id = "+fid+";";
+                        DBUtils dblink = new DBUtils();
+                        dblink.update(sqlsentence);
+                    }
+                });
+                thread.start();
+                while(thread.isAlive()) ;
+                try {
+                    Refresh();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
             }
 
         }

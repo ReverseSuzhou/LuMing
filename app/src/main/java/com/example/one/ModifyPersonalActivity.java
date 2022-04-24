@@ -94,7 +94,7 @@ public class ModifyPersonalActivity extends AppCompatActivity {
             public void onClick(View view) {
                 newusername = user_nameEDT.getText().toString();
                 signature = signatureEDT.getText().toString();
-                String age = ageEDT.getText().toString();
+
                 final boolean[] successful = new boolean[1];
 
                 if(newusername.isEmpty()) {
@@ -142,6 +142,10 @@ public class ModifyPersonalActivity extends AppCompatActivity {
                                 }
                                 String email = emailEDT.getText().toString();
                                 String signature = signatureEDT.getText().toString();
+                                String age = ageEDT.getText().toString();
+                                if(age.isEmpty()) {
+                                    age = null;
+                                }
                                 String update = "update user set User_name = '" + newusername +"' , User_sex = '"+ sex + "' , U_signature = '" +signature+"' , User_email = '"+email+"' , User_age = "+age+" where User_phone = '"+nowuserphone+"' and User_name = '"+ oldusername +"' ;";
                                 db.update(update);
                                 cat.setUsername(newusername);
