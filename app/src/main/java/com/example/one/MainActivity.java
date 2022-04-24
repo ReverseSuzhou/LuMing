@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements PermissionInterfa
     private Button mBtnForget;
     private Button mBtnLogin;
     private RadioButton rBtAutomaticLogin;
-    private EditText mEtUser;
+    private EditText mEtPhone;
     private EditText mEtPassword;
     private PermissionHelper mPermissionHelper;
     private Boolean isOK = false;
@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements PermissionInterfa
             Intent intent = null;
             intent = new Intent(MainActivity.this, HomePage.class);
             startActivity(intent);
+            finish();
         }
         else {
             setContentView(R.layout.login);
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements PermissionInterfa
             huizhi.setSelected(true);
 
             //控件部分
-            mEtUser = findViewById(R.id.etUser);
+            mEtPhone = findViewById(R.id.etPhone);
             mEtPassword = findViewById(R.id.etPassword);
             mBtnLogin = findViewById(R.id.btn_login);
             mBtnRegister = findViewById(R.id.btn_register);
@@ -97,12 +98,12 @@ public class MainActivity extends AppCompatActivity implements PermissionInterfa
         String ok = "登录成功！";
         String fail = "登录失败！";
 
-        if (mEtUser.getText().toString().equals("") || mEtPassword.getText().toString().equals("")) {
-            com.example.one.util.ToastUtil.showMsg(MainActivity.this, "没有输入用户名或者密码");
-        }else if (mEtUser.getText().toString().length() > 10 || mEtPassword.getText().toString().length() > 10) {
-            com.example.one.util.ToastUtil.showMsg(MainActivity.this, "用户名或者密码格式不对");
+        if (mEtPhone.getText().toString().equals("") || mEtPassword.getText().toString().equals("")) {
+            com.example.one.util.ToastUtil.showMsg(MainActivity.this, "没有输入手机号或者密码");
+        }else if (mEtPhone.getText().toString().length() > 15 || mEtPassword.getText().toString().length() > 10) {
+            com.example.one.util.ToastUtil.showMsg(MainActivity.this, "手机号或者密码格式不对");
         }else {
-            String sqlfinduser = "select * from user where User_name = '" + mEtUser.getText().toString() + "';";
+            String sqlfinduser = "select * from user where User_phone = '" + mEtPhone.getText().toString() + "';";
             Intent intent = null;
             isOK = false;
             try {

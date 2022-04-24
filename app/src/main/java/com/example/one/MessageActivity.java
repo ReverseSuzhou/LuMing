@@ -69,7 +69,7 @@ public class MessageActivity extends AppCompatActivity {
         SaveSharedPreference user = new SaveSharedPreference();
         sql[0] = "select * from notice order by Notice_time desc;";
         sql[1] = "select * from user_forumt left join forumt on user_forumt.Forumt_id = forumt.Forumt_id where user_forumt.User_phone = '" + user.getPhone() + "';";
-        sql[2] = "select * from focus left join forumt on follow_phone = User_phone where focus_phone = '" + user.getPhone() + "' order by Forumt_date desc;";
+        sql[2] = "select * from focus left join forumt on follow_phone = User_phone where focus_phone = '" + user.getPhone() + "' order by Forumt_date desc limit 10;";
         sql[3] = "select * from user_forumt left join comment on user_forumt.Forumt_id = comment.Forumt_id where user_forumt.User_phone = '" + user.getPhone() + "' order by Comment_time desc;";
 
         swipe_message = findViewById(R.id.swipe_message);
@@ -94,6 +94,7 @@ public class MessageActivity extends AppCompatActivity {
                 Intent intent = null;
                 intent = new Intent(MessageActivity.this,HomePage.class);
                 startActivity(intent);
+                finish();
             }
         });
 

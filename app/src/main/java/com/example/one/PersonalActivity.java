@@ -146,7 +146,7 @@ public class PersonalActivity extends AppCompatActivity {
 
         if (signaturetemp.isEmpty())
         {
-            signature.setText("\\_(0_0)_/ ");
+            signature.setText("\\_(2dc80_0)_/ ");
         }
         else {
             signature.setText(signaturetemp);
@@ -337,6 +337,7 @@ public class PersonalActivity extends AppCompatActivity {
                 Intent intent = null;
                 intent = new Intent(PersonalActivity.this,HomePage.class);
                 startActivity(intent);
+                finish();
             }
         });
         //社团圈
@@ -346,6 +347,7 @@ public class PersonalActivity extends AppCompatActivity {
                 Intent intent = null;
                 intent = new Intent(PersonalActivity.this,AssociationActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
         //发帖子
@@ -373,6 +375,7 @@ public class PersonalActivity extends AppCompatActivity {
                 Intent intent = null;
                 intent = new Intent(PersonalActivity.this,PersonalActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 //↑↑↑↑↑↑↑↑底下五个按钮的跳转功能↑↑↑↑↑↑↑↑
