@@ -110,7 +110,7 @@ public class ModifyPersonalActivity extends AppCompatActivity {
                             public void run() {
                             db = new DBUtils();
 
-                            String sentence = "select * from user where User_phone = '" +nowuserphone +"' and User_name = '" + newusername+"' ;";
+                            String sentence = "select * from admin_user where User_phone = '" +nowuserphone +"' and User_name = '" + newusername+"' ;";
                             rs = db.query(sentence);
 
                             try {
@@ -176,6 +176,7 @@ public class ModifyPersonalActivity extends AppCompatActivity {
                 }
                 Intent intent = new Intent(ModifyPersonalActivity.this,PersonalActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
