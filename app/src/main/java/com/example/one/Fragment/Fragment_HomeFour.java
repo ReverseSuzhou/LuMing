@@ -64,7 +64,7 @@ public class Fragment_HomeFour extends Fragment{
                 @Override
                 public void run() {
                     db = new DBUtils();
-                    rs = db.query("select * from admin_forumt where F_lable = 'sport' order by Forumt_date desc;");
+                    rs = db.query("select * from admin_forumt where F_lable = 'sport' order by Forumt_date desc limit 10;");
                     try {
                         while(rs.next()){
                             Push po = new Push();

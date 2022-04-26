@@ -95,8 +95,8 @@ public class Recive extends AppCompatActivity {
         getislike();
         getisfocus();
         getgender();
-        //getHeadImg();
-        //getImg();
+        getHeadImg();
+        getImg();
 
         swipe_review.setColorSchemeResources(android.R.color.holo_green_light,android.R.color.holo_red_light,android.R.color.holo_blue_light);
         swipe_review.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

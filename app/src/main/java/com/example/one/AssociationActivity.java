@@ -86,6 +86,7 @@ public class AssociationActivity extends AppCompatActivity {
                 Intent intent = null;
                 intent = new Intent(AssociationActivity.this,HomePage.class);
                 startActivity(intent);
+                finish();
             }
         });
         //社团圈
@@ -95,6 +96,7 @@ public class AssociationActivity extends AppCompatActivity {
                 Intent intent = null;
                 intent = new Intent(AssociationActivity.this,AssociationActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
         //发帖子
@@ -122,6 +124,7 @@ public class AssociationActivity extends AppCompatActivity {
                 Intent intent = null;
                 intent = new Intent(AssociationActivity.this,PersonalActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
         try {
@@ -141,7 +144,7 @@ public class AssociationActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     db = new DBUtils();
-                    rs = db.query("select * from forumt where F_lable = 'association_event' order by Forumt_date desc;");
+                    rs = db.query("select * from admin_forumt where F_lable = 'association_event' order by Forumt_date desc limit 10;");
                     try {
                         while(rs.next()){
                             Push po = new Push();

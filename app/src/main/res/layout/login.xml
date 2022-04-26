@@ -26,14 +26,15 @@
 
     <!--用户名-->
     <EditText
-        android:id="@+id/etUser"
+        android:id="@+id/etPhone"
         android:layout_width="300sp"
         android:layout_height="54sp"
         android:layout_gravity="center"
         android:layout_marginTop="55sp"
         android:background="@drawable/background_text"
-        android:hint="用户名："
-        android:maxLength="10"
+        android:hint="手机号："
+        android:inputType="phone"
+        android:maxLength="15"
         android:singleLine="true"
         android:padding="15dp"
         android:textColor="@color/black"

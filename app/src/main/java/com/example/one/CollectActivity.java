@@ -79,8 +79,8 @@ public class CollectActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     db = new DBUtils();
-                    rs = db.query("select * from forumt, collect where collect.User_phone = '"+ new SaveSharedPreference().getPhone()
-                    +"' and collect.Forumt_id = Forumt.Forumt_id ;");
+                    rs = db.query("select * from admin_forumt, collect where collect.User_phone = '"+ new SaveSharedPreference().getPhone()
+                    +"' and collect.Forumt_id = admin_forumt.Forumt_id order by Forumt_date desc;");
                     try {
                         while(rs.next()){
                             Push po = new Push();

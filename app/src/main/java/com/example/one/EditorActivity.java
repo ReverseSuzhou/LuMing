@@ -150,6 +150,7 @@ public class EditorActivity extends AppCompatActivity implements PermissionInter
                 Intent intent = null;
                 intent = new Intent(EditorActivity.this, HomePage.class);
                 startActivity(intent);
+                finish();
             }
         });
         mBtn_release.setOnClickListener(new View.OnClickListener() {
@@ -228,6 +229,7 @@ public class EditorActivity extends AppCompatActivity implements PermissionInter
                                     Intent intent = null;
                                     intent = new Intent(EditorActivity.this, HomePage.class);
                                     startActivity(intent);
+                                    finish();
                                 }
                             });
                         }

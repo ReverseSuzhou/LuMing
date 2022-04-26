@@ -103,7 +103,7 @@ public class MyReleaseActivity extends AppCompatActivity {
                 public void run() {
                     db = new DBUtils();
                     SaveSharedPreference saveSharedPreference = new SaveSharedPreference();
-                    rs = db.query("select * from forumt where User_phone = '" + saveSharedPreference.getPhone() + "';");
+                    rs = db.query("select * from admin_forumt where User_phone = '" + saveSharedPreference.getPhone() + "'order by Forumt_date desc;");
                     try {
                         while(rs.next()){
                             Push po = new Push();

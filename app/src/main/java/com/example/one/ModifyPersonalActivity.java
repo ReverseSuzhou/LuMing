@@ -176,6 +176,7 @@ public class ModifyPersonalActivity extends AppCompatActivity {
                 }
                 Intent intent = new Intent(ModifyPersonalActivity.this,PersonalActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

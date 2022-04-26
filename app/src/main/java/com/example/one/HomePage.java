@@ -101,6 +101,7 @@ public class HomePage extends AppCompatActivity {
                 Intent intent = null;
                 intent = new Intent(HomePage.this, HomePage.class);
                 startActivity(intent);
+                finish();
             }
         });
         //社团圈
@@ -110,6 +111,7 @@ public class HomePage extends AppCompatActivity {
                 Intent intent = null;
                 intent = new Intent(HomePage.this, AssociationActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
         //发帖子
@@ -138,6 +140,7 @@ public class HomePage extends AppCompatActivity {
                 intent = new Intent(HomePage.this, PersonalActivity.class);
                 intent.putExtra("username", new SaveSharedPreference().getUsername());
                 startActivity(intent);
+                finish();
             }
         });
 
