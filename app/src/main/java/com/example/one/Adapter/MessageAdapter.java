@@ -62,7 +62,13 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             //这是ord_item的内容
             final Message post = data.get(i);
-            String s1 = post.getF_title() + "的点赞", s2 = post.getKudos_number() + "";
+            String s1, s2 = post.getKudos_number() + "";
+            if (post.getF_title().length() <= 10) {
+                s1 = post.getF_title() + "的点赞";
+            }
+            else {
+                s1 = post.getF_title() + "...的点赞";
+            }
             recyclerViewHolder.f_title.setText(s1);
             recyclerViewHolder.kudos_number.setText(s2);
         }
