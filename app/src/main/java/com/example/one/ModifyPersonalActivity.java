@@ -110,21 +110,22 @@ public class ModifyPersonalActivity extends AppCompatActivity {
                             public void run() {
                             db = new DBUtils();
 
-                            String sentence = "select * from admin_user where User_phone = '" +nowuserphone +"' and User_name = '" + newusername+"' ;";
-                            rs = db.query(sentence);
+//                            String sentence = "select * from admin_user where User_phone = '" +nowuserphone +"' and User_name = '" + newusername+"' ;";
+//                            rs = db.query(sentence);
+//
+//                            try {
+//                                if(rs.next()) {
+//                                    exit = 1;
+//                                    rs.previous();
+//                                } else {
+//                                    exit = 0;
+//                                }
 
-                            try {
-                                if(rs.next()) {
-                                    exit = 1;
-                                    rs.previous();
-                                } else {
-                                    exit = 0;
-                                }
 
-                            } catch (SQLException e) {
-                                e.printStackTrace();
-                            }
-
+//                            } catch (SQLException e) {
+//                                e.printStackTrace();
+//                            }
+                            exit =0;
                             if(exit == 1) {
                                 successful[0] = false;//ToastUtil.showMsg(getApplication(),"用户名称已存在");
                             }
