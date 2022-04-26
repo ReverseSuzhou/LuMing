@@ -105,8 +105,8 @@
         android:gravity="center"
         android:textSize="20sp"/>
 
-    <RadioButton
-        android:id="@+id/rbt_automatic_login"
+    <CheckBox
+        android:id="@+id/cbx_automatic_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
