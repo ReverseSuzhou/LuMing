@@ -168,7 +168,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:background="@drawable/background_button"
-        android:text="编辑个人信息"
+        android:text="完善个人信息"
         android:textSize="20sp" />
 
     <Button

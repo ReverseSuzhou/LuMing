@@ -54,8 +54,8 @@ public class DetailedPersonalInformationActivity extends AppCompatActivity {
                 tv_userName.setText(rs.getString("User_name"));
                 tv_gender.setText("性别：" + rs.getString("User_sex"));
                 tv_age.setText("年龄：" + rs.getString("User_age"));
-                tv_Signature.setText(rs.getString("U_signature"));
-                tv_email.setText("邮箱：" + rs.getString("User_email"));
+                tv_Signature.setText("个性签名：\n"+rs.getString("U_signature"));
+                tv_email.setText("邮箱：\n" + rs.getString("User_email"));
                 String picture = rs.getString("img");
                 StorePicturesUtil storePicturesUtil = new StorePicturesUtil();
                 bitmap = storePicturesUtil.stringToBitmap(picture);

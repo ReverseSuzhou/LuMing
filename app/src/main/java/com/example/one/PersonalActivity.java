@@ -242,6 +242,15 @@ public class PersonalActivity extends AppCompatActivity {
         UserName = findViewById(R.id.personal_page_1_textview_username);
         rBt_cancellation = findViewById(R.id.personal_page_button_cancellation);
         signature = findViewById(R.id.personal_page_1_textview_signature);
+        //显示个人信息
+        UserName.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view) {
+                Intent intent = null;
+                intent = new Intent(PersonalActivity.this, DetailedPersonalInformationActivity.class);
+                intent.putExtra("user_phone", new SaveSharedPreference().getPhone());
+                startActivity(intent);
+            }
+        });
         //历史记录
         mBtn_history.setOnClickListener(new View.OnClickListener() {
             @Override
