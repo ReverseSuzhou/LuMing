@@ -67,7 +67,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 s1 = post.getF_title() + "的点赞";
             }
             else {
-                s1 = post.getF_title() + "...的点赞";
+                s1 = post.getF_title().substring(0, 12) + "...的点赞";
             }
             recyclerViewHolder.f_title.setText(s1);
             recyclerViewHolder.kudos_number.setText(s2);

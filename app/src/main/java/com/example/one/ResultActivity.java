@@ -94,7 +94,7 @@ public class ResultActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     db = new DBUtils();
-                    String temp = "select * from forumt where Forumt_content like '%"+info+"%';";
+                    String temp = "select * from admin_forumt where Forumt_content like '%"+info+"%';";
                     rs = db.query(temp);
                     try {
                         while(rs.next()){
