@@ -20,6 +20,7 @@ import com.example.one.R;
 import com.example.one.Recive;
 import com.example.one.SaveSharedPreference;
 
+import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -105,10 +106,34 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             String idnum = data.get(position).getForumt_id();
                             DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                             Timestamp time = new Timestamp(System.currentTimeMillis());
-
-                            String sql = "insert into historyrecord values( '"+ phone+"', "+idnum+", \""+time+"\");";
                             DBUtils db = new DBUtils();
-                            db.update(sql);
+                            ResultSet rst;
+
+                            Boolean exit=false;
+                            String sqlqens="select * from historyrecord where User_phone = '"+phone+"' and Forumt_id = "+idnum+";";
+                            try {
+                                rst = db.query(sqlqens);
+                                if (rst.next()) {
+                                    exit = true;
+                                }
+                                else {
+                                    exit = false;
+                                }
+                            } catch (Exception e)  {
+                                e.printStackTrace();
+                            }
+
+                            if (exit == true) {
+                                String sqlset = "update historyrecord set History_time = \""+time+"\" where User_phone = '"+phone+"' and Forumt_id = "+idnum+";";
+                                DBUtils dbl = new DBUtils();
+                                dbl.update(sqlset);
+                            }
+                            else {
+                                DBUtils dblink = new DBUtils();
+                                String sql = "insert into historyrecord values( '"+ phone+"', "+idnum+", \""+time+"\");";
+                                dblink.update(sql);
+                            }
+
                         }
                     }).start();
                         context.startActivity(in);
