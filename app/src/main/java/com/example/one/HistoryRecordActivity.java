@@ -23,6 +23,7 @@ import java.util.List;
 public class HistoryRecordActivity extends AppCompatActivity {
     //声明控件
     private ImageButton mBtn_back;
+    private ImageButton mBtn_delete;
     private SwipeRefreshLayout swipe_his_rec;
     private RecyclerView rv_his_rec;
     private TextView error_his_rec;
@@ -38,10 +39,10 @@ public class HistoryRecordActivity extends AppCompatActivity {
 
         //控件部分
         mBtn_back = findViewById(R.id.history_record_page_1_1_button_back);
+        mBtn_delete = findViewById(R.id.history_record_page_1_1_button_refresh);
         swipe_his_rec = findViewById(R.id.swipe_his_rec);
         rv_his_rec = findViewById(R.id.rv_his_rec);
         error_his_rec = findViewById(R.id.error_his_rec);
-
         swipe_his_rec.setColorSchemeResources(android.R.color.holo_green_light,android.R.color.holo_red_light,android.R.color.holo_blue_light);
         swipe_his_rec.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -67,6 +68,28 @@ public class HistoryRecordActivity extends AppCompatActivity {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        //
+        mBtn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String phone = new SaveSharedPreference().getPhone();
+                        String sql = "delete from historyrecord where User_phone = '"+phone+"' ;";
+                        DBUtils dblinke = new DBUtils();
+                        dblinke.update(sql);
+                    }
+                });
+                thread.start();
+                while(thread.isAlive()) ;
+                try {
+                    Refresh();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        });
     }
     private void Refresh() throws SQLException {
 

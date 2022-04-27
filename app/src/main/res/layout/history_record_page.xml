@@ -44,7 +44,7 @@
             android:layout_marginRight="5dp"
             android:layout_toRightOf="@+id/history_record_page_1_1_textview_display"
             android:background="@drawable/background_button"
-            app:srcCompat="@drawable/refresh" />
+            app:srcCompat="@drawable/ashbin" />
     </RelativeLayout>
 
     <!--空白框-->
