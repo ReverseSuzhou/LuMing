@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements PermissionInterfa
     private Button mBtnRegister;
     private Button mBtnForget;
     private Button mBtnLogin;
-    private RadioButton rBtAutomaticLogin;
+    private CheckBox rBtAutomaticLogin;
     private EditText mEtPhone;
     private EditText mEtPassword;
     private PermissionHelper mPermissionHelper;
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements PermissionInterfa
             mBtnLogin = findViewById(R.id.btn_login);
             mBtnRegister = findViewById(R.id.btn_register);
             mBtnForget = findViewById(R.id.btn_forget);
-            rBtAutomaticLogin = findViewById(R.id.rbt_automatic_login);
+            rBtAutomaticLogin = findViewById(R.id.cbx_automatic_login);
 
             //注册
             mBtnRegister.setOnClickListener(new View.OnClickListener() {
