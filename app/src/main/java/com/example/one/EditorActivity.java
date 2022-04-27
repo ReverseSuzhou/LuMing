@@ -99,7 +99,15 @@ public class EditorActivity extends AppCompatActivity implements PermissionInter
             new ActivityResultCallback<Uri>() {
                 @Override
                 public void onActivityResult(Uri result) {
-                    launchImageCrop(result);
+                    Bitmap bmp;
+                    try {
+                        bmp = CompressImage.getBitmapFormUri(EditorActivity.this, result);
+                        imageview.setImageBitmap(bmp);
+                        bitmap = bmp;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
 
                 }
             }
@@ -308,23 +316,15 @@ public class EditorActivity extends AppCompatActivity implements PermissionInter
         //已经拥有所需权限，可以放心操作任何东西了
     }
     private void display() {
-        View dialogView = LayoutInflater.from(this).inflate(R.layout.custom_alertdiag_layout,null);
-        Button btncamera = (Button) dialogView.findViewById(R.id.btncamera);
-        Button btnalbum = (Button) dialogView.findViewById(R.id.btnalbum);
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.custom_alterdialog_onlyalbum,null);
 
-        btncamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                perssion_camera.launch(Manifest.permission.CAMERA);
+        Button btnalbum = (Button) dialogView.findViewById(R.id.btnalbum_alterdialog2);
 
-            }
-        });
 
         btnalbum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 perssion_album.launch(Manifest.permission.CAMERA);
-
             }
         });
 
