@@ -144,7 +144,7 @@ public class AssociationActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     db = new DBUtils();
-                    rs = db.query("select * from admin_forumt where F_lable = 'association_event' order by Forumt_date desc limit 10;");
+                    rs = db.query("select * from admin_forumt where F_lable = 'association_event' order by Forumt_date desc ;");
                     try {
                         while(rs.next()){
                             Push po = new Push();
@@ -156,6 +156,7 @@ public class AssociationActivity extends AppCompatActivity {
                             po.setF_collectnum(rs.getInt("F_collectnum"));
                             po.setF_commentnum(rs.getInt("F_commentnum"));
                             po.setUsername(rs.getString("User_name"));
+                            po.setUser_phone(rs.getString("User_phone"));
                             data.add(po);
                         };
                     } catch (SQLException throwables) {

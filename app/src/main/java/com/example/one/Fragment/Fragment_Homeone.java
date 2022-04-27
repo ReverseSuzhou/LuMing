@@ -44,7 +44,6 @@ public class Fragment_Homeone extends Fragment{
 
 
         initView();
-        Refresh();
 
 
 
@@ -55,6 +54,8 @@ public class Fragment_Homeone extends Fragment{
                 Refresh();
             }
         });
+        Refresh();
+
     }
     private void Refresh() {
         swipe_hometabone.setRefreshing(false);
@@ -87,7 +88,6 @@ public class Fragment_Homeone extends Fragment{
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
                     }
-
                 }
             });
             t.start();
@@ -105,6 +105,7 @@ public class Fragment_Homeone extends Fragment{
         else {
             error_hometabone.setVisibility(View.VISIBLE);
         }
+
     }
 
 
