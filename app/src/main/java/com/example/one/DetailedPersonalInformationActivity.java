@@ -21,6 +21,10 @@ public class DetailedPersonalInformationActivity extends AppCompatActivity {
     private TextView tv_age;
     private TextView tv_Signature;
     private TextView tv_email;
+    private TextView tv_identity;
+    private TextView tv_focus;
+    private TextView tv_fan;
+    private TextView tv_forumt;
     DBUtils db;
     Thread t;
     ResultSet rs;
@@ -36,7 +40,10 @@ public class DetailedPersonalInformationActivity extends AppCompatActivity {
         tv_age = findViewById(R.id.detailed_personal_information_2_textview_age);
         tv_Signature = findViewById(R.id.detailed_personal_information_textview_signature);
         tv_email = findViewById(R.id.detailed_personal_information_textview_email);
-
+        tv_identity = findViewById(R.id.detailed_personal_information_textview_identity);
+        tv_focus = findViewById(R.id.detailed_personal_information_textview_focus);
+        tv_fan = findViewById(R.id.detailed_personal_information_textview_fan);
+        tv_forumt = findViewById(R.id.detailed_personal_information_textview_forumt);
         String sql = "select * from user where User_phone = '" + getIntent().getStringExtra("user_phone") + "';";
 
         t = new Thread(new Runnable() {
@@ -60,6 +67,14 @@ public class DetailedPersonalInformationActivity extends AppCompatActivity {
                 StorePicturesUtil storePicturesUtil = new StorePicturesUtil();
                 bitmap = storePicturesUtil.stringToBitmap(picture);
                 iv_userPicture.setImageBitmap(bitmap);
+                int access=rs.getInt("User_access");
+                if(access==1)
+                    tv_identity.setText("身份：认证达人");
+                else
+                    tv_identity.setText("身份：普通用户");
+                tv_focus.setText("累计粉丝数："+rs.getInt("User_focus"));
+                tv_fan.setText("累计关注数："+rs.getInt("User_fans"));
+                tv_forumt.setText("累计发帖数："+rs.getInt("User_forumt"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -45,6 +45,23 @@
         android:layout_marginTop="10dp"
         android:background="#aa000000" />
 
+    <TextView
+        android:id="@+id/detailed_personal_information_textview_identity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="left"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <!--空白框-->
+    <View
+        android:id="@+id/detailed_personal_information_2_view_blank"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#aa000000" />
+
     <LinearLayout
         android:id="@+id/detailed_personal_information_linearlayout_2"
         android:layout_width="match_parent"
@@ -64,7 +81,7 @@
 
         <!--空白框-->
         <View
-            android:id="@+id/detailed_personal_information_2_view_blank"
+            android:id="@+id/detailed_personal_information_3_view_blank"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="10dp"
@@ -84,7 +101,7 @@
 
     <!--空白框-->
     <View
-        android:id="@+id/detailed_personal_information_3_view_blank"
+        android:id="@+id/detailed_personal_information_4_view_blank"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="10dp"
@@ -101,7 +118,7 @@
 
     <!--空白框-->
     <View
-        android:id="@+id/detailed_personal_information_4_view_blank"
+        android:id="@+id/detailed_personal_information_5_view_blank"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="10dp"
@@ -109,6 +126,57 @@
 
     <TextView
         android:id="@+id/detailed_personal_information_textview_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="left"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <!--空白框-->
+    <View
+        android:id="@+id/detailed_personal_information_6_view_blank"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#aa000000" />
+
+    <TextView
+        android:id="@+id/detailed_personal_information_textview_focus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="left"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <!--空白框-->
+    <View
+        android:id="@+id/detailed_personal_information_7_view_blank"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#aa000000" />
+
+    <TextView
+        android:id="@+id/detailed_personal_information_textview_fan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="left"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <!--空白框-->
+    <View
+        android:id="@+id/detailed_personal_information_8_view_blank"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#aa000000" />
+
+    <TextView
+        android:id="@+id/detailed_personal_information_textview_forumt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

@@ -69,7 +69,7 @@ public class Fragment_HomeTwo extends Fragment{
                         @Override
                         public void run() {
                             db = new DBUtils();
-                            rs = db.query("select * from admin_forumt order by Forumt_date desc limit 10;");
+                            rs = db.query("select * from admin_forumt order by Forumt_date desc ;");
                             try {
                                 while(rs.next()){
                                     Push po = new Push();
