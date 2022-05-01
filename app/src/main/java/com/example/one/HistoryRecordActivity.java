@@ -113,6 +113,7 @@ public class HistoryRecordActivity extends AppCompatActivity {
                             po.setF_collectnum(rs.getInt("F_collectnum"));
                             po.setF_commentnum(rs.getInt("F_commentnum"));
                             po.setUsername(rs.getString("User_name"));
+                            po.setUser_phone(rs.getString("User_phone"));
                             data.add(po);
                         };
                     } catch (SQLException throwables) {

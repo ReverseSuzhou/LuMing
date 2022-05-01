@@ -52,7 +52,7 @@ public class Recive extends AppCompatActivity {
     private ImageView imgHead;
     private Bitmap bitmapHead; //头像
 
-    private CircleImageView recive_headpic;
+    //private CircleImageView recive_headpic;
 
     private List<Comment> data = new LinkedList<>();
     //关注按钮
@@ -116,8 +116,8 @@ public class Recive extends AppCompatActivity {
                 finish();
             }
         });
-
-        recive_headpic.setOnClickListener(new View.OnClickListener() {
+        imgHead.setOnClickListener(new View.OnClickListener() {
+        //recive_headpic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = null;
@@ -593,7 +593,7 @@ public class Recive extends AppCompatActivity {
         rec_like = findViewById(R.id.rec_like);
         focus_or_not = findViewById(R.id.focus_or_not);
         rec_gender = findViewById(R.id.gender);
-        recive_headpic = findViewById(R.id.recive_headpic);
+        //recive_headpic = findViewById(R.id.recive_headpic);
         img = findViewById(R.id.recive_page_imageview_picture);
         imgHead = findViewById(R.id.recive_headpic);
     }
